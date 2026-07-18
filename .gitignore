@@ -1,0 +1,25 @@
+# Archivos auxiliares de LaTeX
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+capitulos/*.aux
+
+# Carpeta de compilación
+build/
+
+# Archivos de respaldo
+*-SAVE-ERROR
+*~
+
+# Archivos PDF (compilados)
+*.pdf
