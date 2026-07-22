@@ -1,370 +1,370 @@
 \chapter{Desarrollo}
-En este capítulo se detalla el proceso de construcción del sistema SIVEH, partiendo desde el marco metodológico de trabajo hasta la implementación técnica y despliegue de la infraestructura.
 
-\section{Metodología}
+En este capítulo se describe el proceso de diseño, construcción e implementación de la Plataforma de Análisis Estadístico Académico para la Universidad Politécnica de Texcoco, abarcando desde el marco metodológico adoptado hasta la arquitectura técnica del sistema, el modelo de datos, el desarrollo del backend y frontend, el procesamiento de información estadística y la infraestructura de despliegue.
 
-Para el desarrollo del sistema de gestión para verificentros se adoptó un enfoque basado en metodolo por fases, con el objetivo de facilitar la organización del trabajo, mejorar la comunicación entre los involucrados y permitir una adaptación constante a los requerimientos del sistema. En particular, se empleó Scrum como metodología principal de gestión del proyecto y Extreme Programming como metodología complementaria enfocada en las prácticas de desarrollo de software.
+% ============================================================
+\section{Metodología: Kanban}
+% ============================================================
 
-La combinación de estas metodologías permitió estructurar el trabajo en ciclos de desarrollo cortos, facilitando la entrega progresiva de funcionalidades del sistema y la incorporación de mejoras conforme avanzaba el proyecto.
+Para el desarrollo de la plataforma se adoptó \textbf{Kanban} como metodología ágil ligera, la cual pertenece al marco de las metodologías ágiles y se fundamenta en la gestión visual del flujo de trabajo. A diferencia de otras metodologías ágiles que estructuran el trabajo en iteraciones fijas (sprints), Kanban propone un \textbf{flujo continuo} donde las tareas avanzan de forma progresiva por un tablero visual dividido en columnas que representan los estados del proceso.
 
-\subsection{Scrum como metodología principal}
+El término Kanban proviene del japonés y significa \textit{señal visual} o \textit{tarjeta}. Esta metodología fue desarrollada originalmente por Toyota en la industria manufacturera y posteriormente adaptada al desarrollo de software por David J. Anderson, quien formuló los principios y prácticas esenciales del método \cite{pressman2020}.
 
-Scrum se utilizó como marco de trabajo para organizar y administrar el desarrollo del sistema. Esta metodología permitió dividir el proyecto en diferentes etapas de trabajo llamadas sprints, en las cuales se desarrollaron y evaluaron funcionalidades específicas del sistema.
+\subsection{Principios de Kanban Aplicados al Proyecto}
 
-El uso de Scrum facilitó la planificación de las actividades, la asignación de tareas y el seguimiento del progreso del proyecto. Entre los elementos más importantes aplicados durante el desarrollo se encuentran:
+Los cuatro principios fundamentales de Kanban que guiaron el desarrollo de esta plataforma son:
 
-Definición del Product Backlog: elaboración de una lista priorizada de funcionalidades del sistema, incluyendo el registro de usuarios, control de vehículos, gestión de verificaciones y generación de reportes.
+\begin{enumerate}
+    \item \textbf{Visualización del flujo de trabajo:} Todas las tareas del proyecto (funcionalidades, correcciones, mejoras de esquema de base de datos) se representaron como tarjetas en un tablero, permitiendo al equipo identificar el estado de avance de cada componente en todo momento.
 
-Planeación de sprints: organización del trabajo en periodos de desarrollo cortos que permitieron avanzar de manera progresiva en la construcción del sistema.
+    \item \textbf{Limitación del trabajo en progreso (WIP --- Work In Progress):} En cada etapa del tablero se limitó el número de tareas activas simultáneamente. Esto evitó la sobrecarga del equipo y aseguró que cada módulo fuera completado y validado antes de iniciar el siguiente.
 
-Seguimiento del progreso: revisión constante de las tareas realizadas para asegurar que cada funcionalidad cumpliera con los requerimientos establecidos.
+    \item \textbf{Gestión del flujo continuo:} En lugar de planificar iteraciones de duración fija, las tarjetas de trabajo fluyeron de manera continua desde el estado \textit{Pendiente} hasta \textit{Desplegado}, priorizando aquellas funcionalidades con mayor impacto en los usuarios de la Dirección Académica.
 
-Entrega incremental: desarrollo gradual de los módulos del sistema, permitiendo validar su funcionamiento antes de continuar con nuevas características.
+    \item \textbf{Mejora continua (Kaizen):} Durante el desarrollo se realizaron reuniones periódicas de revisión en las que se analizaron cuellos de botella, se corrigieron decisiones de diseño previas y se refinaron tanto el esquema de datos como las interfaces de usuario.
+\end{enumerate}
 
-Gracias a este enfoque, fue posible mantener un control continuo del avance del proyecto y asegurar que el sistema respondiera a las necesidades planteadas desde el inicio.
+\newpage
+\subsection{Tablero Kanban del Proyecto}
 
-\section{Fases de desarrollo}
+El tablero Kanban utilizado durante el desarrollo se organizó en cinco columnas principales:
 
-\subsection{Planificación:} 
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|p{9cm}|}
+\hline
+\textbf{Columna} & \textbf{Descripción} \\
+\hline
+\textbf{Backlog} & Lista priorizada de todas las funcionalidades identificadas en el documento de requerimientos. \\
+\hline
+\textbf{Análisis} & Tareas en estudio de factibilidad técnica, definición del modelo de datos o diseño de la interfaz. \\
+\hline
+\textbf{En Desarrollo} & Tarjeta activamente codificada. WIP máximo: 2 tarjetas simultáneas. \\
+\hline
+\textbf{En Pruebas} & Funcionalidad implementada bajo verificación con pruebas automatizadas (pytest) y revisión manual. \\
+\hline
+\textbf{Desplegado} & Funcionalidad integrada a la rama principal y disponible en el entorno de producción mediante CI/CD. \\
+\hline
+\end{tabular}
+\caption{Columnas del tablero Kanban.}
+\end{table}
 
-En esta etapa se define el objetivo del ciclo y se seleccionan las funcionalidades prioritarias del backlog. Aquí se determinan los cambios técnicos necesarios en el esquema de la Base de Datos (PostgreSQL) o en los modelos de la Aplicación Django, asegurando que los requerimientos operativos del Vericentro se traduzcan en tareas de desarrollo específicas y alcanzables.
+\subsection{Tarjetas Kanban Principales del Proyecto}
 
-\subsection{Ejecución y Seguimiento:} 
-
-Es la fase de desarrollo activo donde se implementa la lógica de negocio en Python. Las reuniones permiten monitorear que el código fluya correctamente a través del servidor Gunicorn (WSGI) y que la configuración de Nginx como proxy inverso permita servir los archivos estáticos de forma eficiente. En esta fase se aplican prácticas de XP como la refactorización constante para mantener la calidad del software que llegará al usuario final vía HTTPS.
-
-\subsection{Revisión:} 
-
-Se presenta el incremento funcional terminado a los interesados para su validación. El éxito de la fase se confirma comprobando el flujo completo mostrado en el diagrama de producción: desde el acceso del cliente por internet hasta el almacenamiento persistente en la base de datos. Esta revisión asegura que las nuevas características son operativas y que la infraestructura soporta la carga de trabajo real.
-\\
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{imagenes/fases.png}
-    \caption{Fases de desarrollo}
-    \label{fig:fases_desarrollo}
-\end{figure}
-
-\section{Arquitectura del Sistema}
-Para el desarrollo del sistema se implemento una  arquitectura de tres capas del sistema SIVEH, la cual garantiza una separación clara entre la interfaz, el procesamiento de datos y el almacenamiento. 
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{imagenes/diagrama.png}
-    \caption{Diagrama de bloques}
-    \label{fig:Diagrama Bloques}
-\end{figure}
-
-A continuación, se detalla la función de cada componente y su interacción:
-
-Capa de Presentación (Frontend): Es el entorno con el que interactúa el usuario final, desarrollado en HTML y JavaScript. Su función es capturar los datos de los vehículos y solicitudes administrativas para enviarlos mediante solicitudes HTTP hacia el servidor.
-
-Capa de Lógica de Negocio (Backend): Construida sobre el framework Django y el lenguaje Python, actúa como el núcleo del sistema. Recibe las peticiones del frontend, aplica las reglas de negocio (como la validación de UUIDs o generación de folios) y coordina la comunicación con la base de datos.
-
-Capa de Datos (Base de Datos): Utiliza el motor relacional PostgreSQL para el almacenamiento persistente. Esta capa responde a la lógica del sistema guardando o recuperando información crítica, como registros de verificaciones, inventario de hologramas y reportes financieros, asegurando la integridad y consistencia de toda la operación.
-
-\section{Reingeniería de Procesos}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{imagenes/anexo2.png}
-    \caption{Diagrama flujo de trabajo SIVEH}
-    \label{fig:Flujo SIVEH}
-\end{figure}
-En la figura \ref{fig:Flujo SIVEH} se presenta la reingeniería del proceso bajo el ecosistema SIVEH. A diferencia del modelo tradicional, la arquitectura permite que la información sea capturada una sola vez y persista a lo largo de todos los módulos. Esta integración asegura que el módulo de caja y el de entrega de resultados consulten la misma instancia de la base de datos PostgreSQL, garantizando la consistencia de los datos y reduciendo el tiempo de atención al usuario final.
-
-\section{Infraestructura de producción del sistema}
-A continuación, se presenta la descripción técnica de cada componente de la infraestructura de producción del sistema SIVEH, detallando su función específica dentro del flujo de datos:
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{imagenes/infraestructura.png}
-    \caption{Diagrama inf.}
-    \label{fig:infraestructura_diagrama}
-\end{figure}
-
-\subsection{Base de Datos (PostgreSQL)} 
-
-Es la capa de persistencia donde se almacena toda la información crítica del Vericentro, incluyendo registros vehiculares, inventarios y movimientos financieros. Utiliza PostgreSQL por su robustez y cumplimiento de las propiedades ACID, garantizando que cada transacción sea íntegra y permanente. Esta capa se comunica exclusivamente con la aplicación Django a través del ORM, manteniendo los datos protegidos del acceso externo directo. Se muestra acontinuación el Modelo entidad relación de la base de datos. En el anexo se agrega a detalle las tablas que componen la base de datos ver \autoref{anexo:Tablas BD}. 
+En el Anexo \ref{anexo:kanban-migraciones} se resumen las tarjetas de trabajo más significativas que transitaron por el tablero Kanban a lo largo del desarrollo, asociadas a su correspondiente migración de base de datos.
 
 
-\subsection{Aplicación Django} 
 
-Representa el cerebro del sistema o la Lógica de Negocio. Desarrollada en Python, esta capa recibe las peticiones del usuario y decide qué acciones tomar: validar un UUID, calcular una cortesía o generar un reporte contable. Django actúa como el orquestador que consulta la base de datos y renderiza la información necesaria, aplicando siempre filtros de seguridad y permisos de usuario antes de entregar cualquier respuesta.
+La progresión de estas tarjetas evidencia un desarrollo guiado por la retroalimentación continua de los usuarios de la Dirección Académica: cada reunión de revisión generó nuevas tarjetas o modificó las existentes, reflejando el principio ágil de \textit{responder al cambio sobre seguir un plan}.
 
-\subsection{Servidor WSGI (Gunicorn)} 
+% ============================================================
+\section{Requerimientos del Sistema}
+% ============================================================
 
-Debido a que los servidores web tradicionales no pueden ejecutar código Python de forma nativa, se implementa Gunicorn como servidor WSGI (Web Server Gateway Interface). Su función es actuar como un puente o traductor de alto rendimiento que recibe las peticiones HTTP procesadas por el proxy y las convierte en señales que la aplicación Django puede entender y ejecutar. Es el componente encargado de gestionar múltiples procesos simultáneos para que el sistema no se ralentice.
+Con base en el documento de requerimientos de software y las reuniones sostenidas con los usuarios de la Dirección Académica, se identificaron los siguientes requerimientos:
 
-\subsection{Proxy Inverso / Archivos Estáticos (Nginx)}
-
-Nginx cumple una doble función vital en la arquitectura:
-
-Proxy Inverso: Actúa como un escudo y receptor de tráfico; recibe las peticiones de internet y las distribuye eficientemente al servidor WSGI, protegiendo la identidad interna del servidor de aplicaciones.
-
-Gestión de Archivos Estáticos: Se encarga de servir directamente los recursos visuales (CSS, JavaScript e imágenes) sin pasar por Django. Esto libera de carga al backend y acelera significativamente la velocidad de carga de la interfaz de usuario.
-
-\subsection{Internet HTTPS}
-
-Representa el punto de contacto con el usuario final. Toda la comunicación entre el navegador del cliente y el servidor se realiza a través del protocolo HTTPS, lo que significa que los datos viajan cifrados mediante certificados SSL/TLS. Esto garantiza la confidencialidad de la información sensible (como folios de pago y datos de propietarios) y asegura la identidad del servidor de Hostinger ante cualquier intento de interceptación en la red.\\
-
-\section{Codificación e Implementación}
-
-La implementación del sistema SIVEH se estructuró bajo el patrón arquitectónico Modelo-Vista-Template (MVT) de Django, lo que permitió una separación estricta entre la persistencia de datos, la lógica de control y la interfaz de usuario. La orquestación del sistema se centraliza en el archivo \verb|urls.py| para el enrutamiento de peticiones, mientras que la inteligencia operativa reside en  \verb|views.py|.
-
-En esta etapa de codificación, se priorizó la seguridad y la integridad de los datos mediante el uso de Identificadores Únicos Universales (UUIDs) y validaciones a nivel de servidor que previenen la duplicidad de folios. Asimismo, se integraron bibliotecas especializadas como Openpyxl para automatizar la generación de reportes contables en formato  \verb|.xlsx|, y se implementaron selectores dinámicos en las plantillas HTML para minimizar errores de captura manual.
-
-A continuación, se analizan los fragmentos de código más representativos de la lógica del sistema, detallando el funcionamiento de las vistas que gestionan los procesos críticos del verificentro:
-
-\subsection{Vista: reporte\_ventas\_view (Módulo de Administración)}
-
-Esta sección del código corresponde a una vista desarrollada en el framework Django, cuya finalidad es generar reportes financieros dinámicos dentro del sistema SIVEH.
-
-A nivel de programación, esta vista fue construida utilizando el patrón Modelo-Vista-Template (MVT) propio de Django, donde la vista actúa como intermediaria entre la interfaz del usuario y la base de datos. El flujo inicia cuando el administrador envía una solicitud HTTP (generalmente mediante un formulario con filtros de fecha y tipo de pago). El sistema recibe estos parámetros y ejecuta consultas a través del ORM de Django, evitando el uso directo de SQL.
-
-El código realiza principalmente las siguientes acciones:
+\subsection{Requerimientos Funcionales}
 
 \begin{itemize}
-    \item Valida que el usuario tenga una sesión activa y permisos administrativos, garantizando la seguridad del sistema. 
-    \item Filtra los registros de verificaciones y ventas en función de los parámetros proporcionados. 
-    \item Realiza operaciones de agregación (sumatorias) directamente en la base de datos, optimizando el rendimiento. 
-    \item Organiza los resultados en estructuras de datos que posteriormente son renderizadas en la interfaz. 
+    \item \textbf{RF-01:} El sistema debe permitir la carga masiva de datos académicos históricos mediante archivos CSV o Excel (.xlsx/.xls) de hasta 200 MB.
+    \item \textbf{RF-02:} El sistema debe validar automáticamente cada fila de los archivos cargados, reportando los errores por columna con su valor inválido y el motivo.
+    \item \textbf{RF-03:} El sistema debe calcular y mostrar los indicadores: Matrícula Actual, Aprovechamiento, Reprobación, Deserción, Eficiencia Terminal, Índice de Titulación, Cobertura y Evaluación Docente.
+    \item \textbf{RF-04:} El sistema debe presentar los indicadores en tableros gráficos interactivos con filtros por subsistema educativo, ciclo escolar, cuatrimestre y programa educativo.
+    \item \textbf{RF-05:} El sistema debe permitir la gestión de usuarios con tres niveles de acceso: administrador general, administrador escolar y usuario consultor.
+    \item \textbf{RF-06:} El sistema debe generar reportes descargables en formato PDF.
+    \item \textbf{RF-07:} El sistema debe registrar en una bitácora de auditoría todas las acciones relevantes de los usuarios.
+    \item \textbf{RF-08:} El sistema debe permitir la administración del catálogo de ciclos generacionales y subsistemas.
 \end{itemize}
-Adicionalmente, se implementa una funcionalidad de exportación a Excel, la cual se programó utilizando librerías de Python que permiten generar archivos en formato .xlsx. Esta característica facilita la portabilidad de la información y su uso en procesos contables externos.
 
-En resumen, esta vista fue diseñada para automatizar el análisis financiero del verificentro, reduciendo errores humanos y tiempos de procesamiento.\\
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{imagenes/Reporte de ventas.png}
-    \caption{Captura }
-    \label{fig:Reporte Ven V}
-\end{figure}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{imagenes/desarrollo1.1.png}
-    \caption{Reporte Ventas View}
-    \label{fig:reporte_ventas_view}
-\end{figure}
-
-\subsection{Vista: captura\_view (Módulo de Recepción)}
-
-Esta vista representa uno de los componentes más críticos del sistema, ya que es responsable del registro y validación de los vehículos que ingresan al proceso de verificación.
-
-Desde el punto de vista técnico, el código fue desarrollado bajo principios de Programación Orientada a Objetos (POO), donde cada entidad (vehículo, taller, servicio) se modela como un objeto dentro del sistema. La vista interactúa con estos modelos mediante el ORM de Django.
-
-El funcionamiento del código se basa en:
+\subsection{Requerimientos No Funcionales}
 
 \begin{itemize}
-    \item Recepción de datos desde formularios en el frontend. 
-    \item Validación de campos obligatorios como placas, número de serie y tipo de servicio. 
-    \item Verificación de reglas de negocio, como: 
+    \item \textbf{RNF-01:} El procesamiento de archivos CSV masivos debe realizarse de forma asíncrona para no bloquear la interfaz del usuario.
+    \item \textbf{RNF-02:} La autenticación debe implementarse mediante JSON Web Tokens (JWT) con tokens de acceso de 15 minutos y tokens de refresco de 7 días.
+    \item \textbf{RNF-03:} Las contraseñas deben almacenarse con el algoritmo criptográfico Argon2, resistente a ataques de fuerza bruta.
+    \item \textbf{RNF-04:} El sistema debe limitar las peticiones a 120 solicitudes por minuto por dirección IP para prevenir ataques de denegación de servicio.
+    \item \textbf{RNF-05:} El sistema debe estar completamente contenedorizado mediante Docker para garantizar la portabilidad entre entornos.
+    \item \textbf{RNF-06:} El tiempo de respuesta de la API no debe superar los 500ms en condiciones normales de operación.
+\end{itemize}
+
+\subsection{Actores del Sistema}
+
+\begin{itemize}
+    \item \textbf{Administrador General:} Acceso total al sistema. Gestiona usuarios, subsistemas, ciclos generacionales y tiene acceso a la bitácora de auditoría.
+    \item \textbf{Administrador Escolar:} Puede cargar archivos de datos para su subsistema asignado y visualizar todos los indicadores.
+    \item \textbf{Usuario Consultor:} Acceso de solo lectura a los tableros estadísticos y reportes del sistema.
+\end{itemize}
+
+% ============================================================
+\section{Arquitectura del Sistema}
+% ============================================================
+
+El sistema adopta una \textbf{arquitectura de tres capas} en su concepción lógica, implementada físicamente mediante contenedores Docker orquestados con Docker Compose. El flujo de tráfico se estructura de la siguiente manera:
+
+\begin{center}
+$ \texttt{Nginx (Puerto 80)} \longrightarrow \begin{cases} \texttt{React SPA} & \text{(archivos estáticos)} \\ \texttt{FastAPI} & \text{(peticiones /api/*)} \end{cases} \longrightarrow \begin{cases} \texttt{PostgreSQL 16} \\ \texttt{Redis 7} \longleftrightarrow \texttt{Celery Worker} \end{cases} $
+\end{center}
+
+\subsection{Capa de Presentación (Frontend)}
+
+Desarrollada en React 18 con TypeScript y compilada por Vite, esta capa implementa una \textbf{Aplicación de una Sola Página (SPA)} que se carga completamente en el primer acceso del navegador. Todas las interacciones posteriores consumen únicamente datos en formato JSON desde la API, sin recargar la página completa. Los tableros estadísticos se renderizan mediante Apache ECharts, y el estado global de los filtros se administra con Zustand.
+
+\subsection{Capa de Lógica de Negocio (Backend)}
+
+El núcleo del sistema está implementado con FastAPI sobre Python 3.12. Esta capa expone 15 routers con endpoints REST, aplica las reglas de validación mediante Pydantic, gestiona la autenticación mediante JWT y coordina el procesamiento asíncrono de archivos a través de Celery. Las interacciones con la base de datos se realizan de forma asíncrona mediante SQLAlchemy 2.0 con el driver \texttt{asyncpg}.
+
+\subsection{Capa de Datos y Mensajería}
+
+\begin{itemize}
+    \item \textbf{PostgreSQL 16:} Almacena de forma persistente todos los datos académicos e institucionales, con propiedades ACID garantizadas.
+    \item \textbf{Redis 7:} Actúa como broker de mensajería entre FastAPI y los workers de Celery, almacenando temporalmente las tareas de procesamiento pendientes y sus resultados.
+    \item \textbf{Celery Worker:} Proceso independiente que ejecuta en segundo plano el análisis, validación y carga masiva de archivos CSV y Excel, sin bloquear el hilo principal de la API.
+\end{itemize}
+
+% ============================================================
+\section{Modelo de Base de Datos}
+% ============================================================
+
+El esquema de la base de datos fue diseñado de forma incremental a través de 13 migraciones controladas con Alembic. Las entidades principales del sistema son las siguientes:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|p{8.5cm}|}
+\hline
+\textbf{Entidad} & \textbf{Descripción} \\
+\hline
+\texttt{subsistemas} & Catálogo de los 7 subsistemas educativos de la UPTex. \\
+\hline
+\texttt{users} & Usuarios del sistema con rol (admin\_general, admin\_escolar, usuario), correo único y contraseña cifrada con Argon2. \\
+\hline
+\texttt{matricula} & Registro de alumnos por ciclo escolar, cuatrimestre y programa educativo. Incluye total, nuevo ingreso, bajas por reprobación y deserción, desglose por género. \\
+\hline
+\texttt{evaluacion\_academica} & Promedio general por programa educativo y número de programas evaluados por ciclo. \\
+\hline
+\texttt{evaluacion\_docente} & Puntajes de evaluación por docente, distinguiendo evaluaciones de alumnos y de directivos. \\
+\hline
+\texttt{titulacion} & Datos generacionales de egreso: matrícula inicial de la generación, alumnos que concluyeron estudios, egresados y titulados. \\
+\hline
+\texttt{becas} & Desglose de alumnado becado por tipo de beca, programa, ciclo y sexo. \\
+\hline
+\texttt{caracterizacion} & Datos de alumnado con discapacidad o pertenencia étnica, clasificados por tipo, programa y sexo. \\
+\hline
+\texttt{ciclos\_generacionales} & Catálogo de ciclos escolares válidos para cada subsistema. \\
+\hline
+\texttt{upload\_jobs} & Registro de los trabajos de carga de archivos: estado (pendiente, procesando, exitoso, fallido), filas totales, procesadas y con error. \\
+\hline
+\texttt{audit\_logs} & Bitácora de auditoría con registro de acciones por usuario, marca de tiempo y datos del cambio. \\
+\hline
+\end{tabular}
+\caption{Entidades principales de la base de datos.}
+\end{table}
+
+El sistema implementa restricciones \texttt{UNIQUE} compuestas para evitar duplicidad de registros. Por ejemplo, la tabla \texttt{matricula} tiene la restricción \texttt{uq\_matricula\_periodo} sobre los campos \texttt{(subsistema\_id, ciclo\_escolar, cuatrimestre, programa\_educativo)}, lo que garantiza que una re-carga de datos actualice el registro existente en lugar de crear uno duplicado (operación \textit{upsert}).
+
+% ============================================================
+\section{Backend: API REST con FastAPI}
+% ============================================================
+
+El backend expone una API REST documentada automáticamente bajo el estándar OpenAPI. Los 15 routers del sistema se organizan en los siguientes grupos funcionales:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Router} & \textbf{Prefijo} & \textbf{Función} \\
+\hline
+health & \texttt{/api} & Estado de salud del sistema \\
+auth & \texttt{/api/v1/auth} & Login y renovación de tokens \\
+users & \texttt{/api/v1/users} & Gestión de usuarios \\
+uploads & \texttt{/api/v1/uploads} & Carga y análisis de archivos \\
+matricula & \texttt{/api/v1/matricula} & Indicadores de matrícula \\
+rendimiento & \texttt{/api/v1/rendimiento} & Aprovechamiento y reprobación \\
+eficiencia & \texttt{/api/v1/eficiencia} & Eficiencia terminal y titulación \\
+docentes & \texttt{/api/v1/docentes} & Evaluación docente \\
+caracterizacion & \texttt{/api/v1/caracterizacion} & Becas, discapacidad y etnia \\
+reports & \texttt{/api/v1/reports} & Generación de reportes PDF \\
+subsistemas & \texttt{/api/v1/subsistemas} & Catálogo de subsistemas \\
+ciclos & \texttt{/api/v1/ciclos} & Ciclos generacionales \\
+suggestions & \texttt{/api/v1/suggestions} & Sugerencias para filtros \\
+templates & \texttt{/api/v1/templates} & Plantillas de carga CSV \\
+audit & \texttt{/api/v1/audit-logs} & Bitácora de auditoría \\
+\hline
+\end{tabular}
+\caption{Grupos funcionales (Routers) de la API REST.}
+\end{table}
+
+\subsection{Autenticación y Control de Acceso}
+
+El sistema implementa autenticación sin estado mediante JWT. Al iniciar sesión, el servidor genera dos tokens firmados con una clave secreta aleatoria de 32 bytes:
+
+\begin{itemize}
+    \item \textbf{Token de Acceso:} Vigencia de 15 minutos. Se incluye en la cabecera \texttt{Authorization: Bearer \textless token\textgreater} de cada petición a la API.
+    \item \textbf{Token de Refresco:} Vigencia de 7 días. Se utiliza únicamente para solicitar un nuevo token de acceso sin requerir credenciales nuevamente.
+\end{itemize}
+
+El control de acceso basado en roles (RBAC) se implementa mediante dependencias de FastAPI (\texttt{Depends}) que verifican el campo \texttt{role} del token decodificado antes de permitir el acceso a cada endpoint protegido.
+
+% ============================================================
+\section{Procesamiento de Datos: Pandas y Celery}
+% ============================================================
+
+El módulo de carga de archivos es el componente más complejo del sistema. Su diseño responde al requerimiento de procesar archivos de hasta 200 MB sin degradar la experiencia del usuario. El flujo de procesamiento es el siguiente:
+
+\begin{enumerate}
+    \item El usuario selecciona y sube un archivo CSV o Excel desde la interfaz web.
+    \item FastAPI recibe el archivo, lo almacena temporalmente en el servidor y registra un \texttt{UploadJob} en la base de datos con estado \texttt{pending}.
+    \item FastAPI encola una tarea en Celery a través del broker Redis y responde de inmediato al cliente con el identificador único del trabajo (\texttt{job\_id}).
+    \item El worker de Celery retoma la tarea de la cola y ejecuta el procesamiento completo:
     \begin{itemize}
-        \item Evitar registros duplicados en el mismo periodo. 
-        \item Validar si el vehículo tiene rechazos previos. 
-        \item Determinar si aplica una justificación (multa o reemplazo). 
+        \item Parsea el archivo con Pandas, detectando automáticamente el separador, la codificación y la fila de encabezados.
+        \item Valida cada fila: tipo de dato, valores negativos, valores fuera de rango, valores no permitidos según el catálogo y consistencia con la base de datos.
+        \item Elimina duplicados internos en el archivo mediante las claves de deduplicación definidas por tipo de dataset.
+        \item Ejecuta un \textit{upsert} masivo en PostgreSQL mediante \texttt{INSERT ... ON CONFLICT DO UPDATE}.
+    \end{itemize}
+    \item El \texttt{UploadJob} se actualiza con el resultado: filas procesadas, filas con error y lista detallada de los primeros 500 errores.
+    \item La interfaz del usuario consulta periódicamente el estado del job hasta que el procesamiento concluye.
+\end{enumerate}
+
+El sistema define 7 tipos de dataset con sus campos obligatorios, opcionales, valores permitidos y restricciones numéricas:
+\texttt{matricula}, \texttt{evaluacion\_academica}, \texttt{titulacion}, \texttt{evaluacion\_docente}, \texttt{becas}, \texttt{discapacidad} y \texttt{etnia}.
+
+% ============================================================
+\section{Cálculo de Indicadores Académicos}
+% ============================================================
+
+Los indicadores estadísticos calculados por el sistema corresponden a las métricas oficiales de evaluación institucional. Las fórmulas matemáticas implementadas son las siguientes:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Indicador} & \textbf{Fórmula} \\
+\hline
+Matrícula Actual & $M = T - B_r - B_d + NI$ \\
+\hline
+Índice de Reprobación & $IR = \dfrac{B_r}{T} \times 100$ \\
+\hline
+Índice de Deserción & $ID = \dfrac{B_d}{T} \times 100$ \\
+\hline
+Aprovechamiento & $A = \dfrac{\sum (P_{PE} \times N_{PE})}{\sum N_{PE}}$ \\
+\hline
+Eficiencia Terminal & $ET = \dfrac{CE}{MG} \times 100$ \\
+\hline
+Índice de Titulación & $IT = \dfrac{TIT}{CE} \times 100$ \\
+\hline
+Cobertura & $COB = \dfrac{M}{PEE}$ \\
+\hline
+Absorción NMS & $ABS = \dfrac{E_{NMS}}{NI}$ \\
+\hline
+\end{tabular}
+\caption{Fórmulas matemáticas de los indicadores institucionales.}
+\end{table}
+
+Donde: $T$ = total de alumnos, $B_r$ = bajas por reprobación, $B_d$ = bajas por deserción, $NI$ = nuevo ingreso, $P_{PE}$ = promedio del programa educativo, $N_{PE}$ = número de alumnos del PE, $CE$ = concluyeron estudios, $MG$ = matrícula generacional, $TIT$ = titulados, $PEE$ = población en edad escolar, $E_{NMS}$ = egresados de nivel medio superior.
+
+Todos los indicadores soportan filtros dinámicos por subsistema, ciclo escolar, cuatrimestre y programa educativo, calculándose en tiempo real sobre los datos almacenados en PostgreSQL.
+
+% ============================================================
+\section{Frontend: React 18 con TypeScript}
+% ============================================================
+
+La interfaz de usuario está compuesta por 8 módulos principales más un panel de administración:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Módulo} & \textbf{Ruta} & \textbf{Acceso} \\
+\hline
+Login & \texttt{/login} & Público \\
+Dashboard & \texttt{/} & Todos los roles \\
+Matrícula & \texttt{/matricula} & Todos los roles \\
+Rendimiento & \texttt{/rendimiento} & Todos los roles \\
+Eficiencia Terminal & \texttt{/eficiencia} & Todos los roles \\
+Evaluación Docente & \texttt{/docentes} & Todos los roles \\
+Caracterización & \texttt{/caracterizacion} & Todos los roles \\
+Cargas de Datos & \texttt{/cargas} & Admin escolar / Admin general \\
+Gestión de Usuarios & \texttt{/admin/usuarios} & Admin escolar / Admin general \\
+Auditoría & \texttt{/admin/auditoria} & Admin general \\
+\hline
+\end{tabular}
+\caption{Módulos principales de la interfaz de usuario.}
+\end{table}
+
+Los tableros gráficos utilizan Apache ECharts para renderizar gráficas de barras comparativas, líneas de tendencia temporal y gráficas de pastel. El estado asíncrono de las peticiones HTTP se gestiona con TanStack Query, que maneja automáticamente los estados de carga, error y éxito, así como la invalidación y revalidación de datos en caché cuando se completa una nueva carga de archivo.
+
+% ============================================================
+\section{Infraestructura y Despliegue}
+% ============================================================
+
+El sistema se despliega mediante Docker Compose, que orquesta 5 contenedores en una red virtual privada:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Servicio} & \textbf{Imagen base} & \textbf{Función} \\
+\hline
+\texttt{postgres} & PostgreSQL 16 & Base de datos principal \\
+\texttt{redis} & Redis 7 Alpine & Broker de mensajería \\
+\texttt{backend} & Python 3.12 Slim & API FastAPI + Uvicorn \\
+\texttt{worker} & Python 3.12 Slim & Worker Celery \\
+\texttt{frontend} & Nginx Alpine & Serve SPA + Proxy inverso \\
+\hline
+\end{tabular}
+\caption{Contenedores Docker utilizados en la infraestructura.}
+\end{table}
+
+El despliegue en producción se automatiza mediante un pipeline de integración y entrega continua (CI/CD) configurado en GitHub Actions (\texttt{.github/workflows/deploy.yml}). Ante cada \textit{push} a la rama principal (\texttt{main}), el pipeline actualiza el código en el servidor y ejecuta el script \texttt{start.sh}, que aplica las migraciones de base de datos pendientes y reinicia todos los servicios sin tiempo de inactividad.
+
+Para el entorno de desarrollo, el script \texttt{dev.sh} levanta todos los servicios con \textit{hot-reload} activo: los cambios en el código del backend o del frontend se reflejan instantáneamente sin necesidad de reconstruir los contenedores.
+
+% ============================================================
+\section{Pruebas}
+% ============================================================
+
+La estrategia de pruebas del sistema cubre los componentes más críticos de la lógica de negocio mediante pruebas automatizadas ejecutadas con \textbf{pytest}.
+
+\subsection{Pruebas Unitarias}
+
+Se implementaron pruebas unitarias para las funciones de cálculo de fórmulas y los servicios de validación de datos:
+
+\begin{itemize}
+    \item \textbf{Fórmulas estadísticas:} Se verificó que la función de cálculo de matrícula actual respete la fórmula oficial $M = T - B_r - B_d + NI$ y que el cálculo de porcentaje maneje correctamente el caso de denominador cero.
+
+    \item \textbf{Procesador CSV:} Se probaron los siguientes escenarios:
+    \begin{itemize}
+        \item Rechazo de filas con tipos de datos incorrectos (entero esperado, texto recibido).
+        \item Rechazo de filas con valores numéricos negativos.
+        \item Conversión de valores \texttt{NaN} opcionales a \texttt{None} para compatibilidad con la base de datos.
+        \item Normalización de valores a formas canónicas (ej. \texttt{p.a.} → \texttt{P.A.}).
+        \item Rechazo de puntajes fuera del rango permitido (1--10 para evaluación docente).
+        \item Rechazo de valores infinitos o no numéricos en campos de tipo flotante.
     \end{itemize}
 \end{itemize}
-El sistema también implementa restricciones que impiden guardar información incompleta o inconsistente, lo cual se logra mediante validaciones tanto en el frontend (JavaScript) como en el backend (Python).
 
-Otro aspecto importante es el control de permisos, donde solo usuarios autorizados pueden modificar registros existentes. Esto se implementa mediante decoradores de Django y validaciones de sesión.
+\subsection{Pruebas de Validación de Reglas de Negocio}
 
-En términos de desarrollo, esta vista fue programada con enfoque en la integridad de datos, asegurando que toda la información capturada cumpla con las reglas operativas del verificentro antes de almacenarse en la base de datos.
-\\
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{imagenes/pruebas2.png}
-    \caption{Captura }
-    \label{fig:Captura V}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{imagenes/desarrollo1.3.png}
-    \caption{Vista Captura-view}
-    \label{fig:captura_view_1_3}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{imagenes/desarrollo1.2.png}
-    \caption{Vista Captura-view 2}
-    \label{fig:captura_view_1_2}
-\end{figure}
-
-
-\subsection{Vista: caja\_view (Módulo de Cobro)}
-
-El código de esta vista gestiona todo el flujo de pagos dentro del sistema, integrando múltiples métodos de cobro y validaciones comerciales.
-
-A nivel técnico, esta vista se encarga de procesar transacciones, por lo que fue diseñada considerando principios de atomicidad (propiedad ACID de la base de datos). Esto significa que cada operación de pago se ejecuta completamente o no se ejecuta, evitando inconsistencias.
-
-El proceso programado en el código incluye:
+Se automatizaron pruebas para las validaciones que requieren contexto de la base de datos:
 
 \begin{itemize}
-    \item Recepción del folio del vehículo previamente registrado. 
-    \item Validación de métodos de pago (efectivo, tarjeta, crédito, prepago o cortesía). 
-    \item Verificación de boletos de prepago mediante consultas a la base de datos. 
-    \item Validación de correspondencia entre el boleto y el taller, evitando fraudes o errores administrativos. 
+    \item \textbf{Validación de becas tipo ``Madres solteras'':} Se verificó que el sistema rechace registros con sexo masculino para este tipo de beca y que la cantidad de madres solteras no pueda superar el total de mujeres matriculadas en el mismo programa y ciclo.
+    \item \textbf{Validación de ciclos en catálogo:} Se verificó que el sistema rechace datos de ciclos escolares que no existan en el catálogo de ciclos generacionales habilitados.
+    \item \textbf{Análisis de archivos Excel:} Se probó la detección automática de hojas, encabezados y mapeo de columnas en archivos con estructuras no estándar.
+    \item \textbf{Detección de cambios en re-cargas:} Se verificó el módulo de comparación de datos que identifica filas nuevas, modificadas y sin cambios entre una carga previa y la nueva.
 \end{itemize}
-Una funcionalidad destacada es el programa de lealtad, el cual fue implementado mediante lógica condicional en el backend. El sistema lleva un conteo automático de servicios realizados por cliente y, al alcanzar un umbral (ocho servicios), genera un boleto de cortesía.
 
-Finalmente, el código registra:
+\subsection{Herramientas de Calidad de Código}
+
+Adicionalmente a las pruebas funcionales, el proyecto aplica las siguientes herramientas de verificación estática configuradas en \texttt{pyproject.toml}:
 
 \begin{itemize}
-    \item El usuario (cajero) que realizó la operación. 
-    \item El método de pago utilizado. 
-    \item La transacción en la base de datos. 
-\end{itemize}
-Posteriormente, redirige al módulo de impresión de tickets.
-
-Esta vista fue programada para garantizar rapidez en la atención al cliente y precisión en el control financiero.
-\\
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{imagenes/prueba5.png}
-    \caption{Caja modulo cobro de servicio }
-    \label{fig:caja_modulo_cobro}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{imagenes/desarrollo1.4.png}
-    \caption{Vista caja-view}
-    \label{fig:caja_view_1_4}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{imagenes/desarrollo1.5.png}
-    \caption{Vista caja-view pt.2}
-    \label{fig:caja_view_1_5}
-\end{figure}
-
-
-\subsection{Vista: entrega\_view (Módulo de Entrega de Resultados)}
-
-Esta vista corresponde a la etapa final del proceso de verificación vehicular, donde se entrega el resultado y el holograma correspondiente.
-
-El código implementa una lógica automatizada que determina el tipo de holograma basado en características del vehículo, como:
-
-\begin{itemize}
-    \item Año modelo 
-    \item Tipo de combustible 
-    \item Resultado de la verificación (aprobado o rechazado) 
-\end{itemize}
-A nivel técnico, el flujo del sistema es el siguiente:
-
-\begin{itemize}
-    \item Validación de que el pago haya sido realizado previamente (integración con módulo de caja). 
-    \item Consulta del inventario de hologramas disponible en la base de datos. 
-    \item Asignación automática del siguiente folio físico disponible. 
-    \item Registro del dictamen técnico y del usuario responsable. 
-\end{itemize}
-El sistema también incluye controles de seguridad avanzados:
-
-\begin{itemize}
-    \item Restricción de cancelación de hologramas a usuarios con rol administrativo. 
-    \item Protección de registros históricos para evitar alteraciones indebidas. 
-    \item Trazabilidad completa de cada holograma asignado. 
-\end{itemize}
-La programación de esta vista se realizó priorizando la sincronización entre módulos y la reducción de errores humanos, utilizando consultas eficientes y validaciones en tiempo real.
-\\
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{imagenes/prueba11.png}
-    \caption{Entrega de resultados}
-    \label{fig:entrega_resultados}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{imagenes/desarrollo1.6.png}
-    \caption{Vista entrega view}
-    \label{fig:entrega_view_1_6}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{imagenes/desarrollo1.7.png}
-    \caption{Vista entrega view}
-    \label{fig:entrega_view_1_7}
-\end{figure}
-
-
-\textbf{Debido a la extensión del proyecto, en este apartado se exponen solo los componentes clave del código. La versión íntegra y funcional del software está disponible para su consulta en el repositorio de GitHub referenciado en el \ref{anexo:github}}
-\\
-
-\section{Pruebas}
-El objetivo de esta seccion es documentar el proceso de verificación y validación del sistema SIVEH, asegurando que cada componente cumpla con los requisitos técnicos y operativos establecidos. Se aplicó una estrategia de pruebas multinivel para garantizar la estabilidad, seguridad e integridad de los datos en el entorno de producción.
-\subsection{Pruebas Unitarias}
-Las pruebas unitarias se enfocaron en la verificación de funciones y métodos individuales de forma aislada. En el ecosistema Django, se utilizaron las herramientas nativas de \verb|django.test| para validar la lógica crítica sin depender de factores externos.
-
-\begin{itemize}
-    \item \textbf{Validación de UUIDs:} Se comprobó que cada registro generado contara con un identificador único y que el sistema rechazara cualquier intento de acceso mediante ID secuenciales.
-    \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{imagenes/validacion UUID.png}
-    \caption{Validacion de UUIDs}
-    \label{fig:validacio uuid}
-\end{figure}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{imagenes/validacion UUID2.png}
-    \caption{Intento con ID simple}
-    \label{fig:validacion uidd2}
-\end{figure}
-Las Figuras \ref{fig:validacio uuid} y \ref{fig:validacion uidd2} evidencian la implementación de UUIDs; el sistema rechaza peticiones mediante identificadores secuenciales, protegiendo la información de intentos de enumeración de recursos.
-
-    \item \textbf{Cálculo de Costos y Cortesías:} Se ejecutaron casos de prueba para asegurar que la lógica de 'octava verificación gratuita' se active exactamente al cumplir los criterios, evitando errores en el saldo del cajero.
-    \item \textbf{Reglas de Negocio en Modelos:} Se validaron las restricciones de los campos en PostgreSQL, como la imposibilidad de registrar una placa duplicada en el mismo periodo semestral.
+    \item \textbf{Ruff:} Linter con reglas de estilo, complejidad, buenas prácticas y seguridad.
+    \item \textbf{Mypy (modo estricto):} Verificación estática de tipos en todo el código del backend.
+    \item \textbf{pytest-cov:} Generación de informes de cobertura de código de las pruebas.
 \end{itemize}
 
-\subsection{Pruebas de Integración}
-Estas pruebas evaluaron la comunicación efectiva entre los diferentes módulos del sistema y las capas de la arquitectura. Se puso especial énfasis en el flujo de datos desde la interfaz hasta la persistencia final.
-
-\begin{itemize}
-    \item \textbf{Interacción ORM-Base de Datos:} Se verificó que las consultas complejas realizadas mediante el ORM de Django se tradujeran en transacciones SQL eficientes en PostgreSQL, manteniendo la integridad referencial.
-    \item \textbf{Comunicación WSGI:} Se realizaron pruebas de comunicación entre Gunicorn y la aplicación Django para asegurar que las peticiones HTTP fueran procesadas y respondidas sin pérdida de cabeceras de seguridad.
-    \item \textbf{Gestión de Archivos Estáticos:} Se validó que Nginx sirviera correctamente los recursos CSS y JavaScript, permitiendo que la lógica del frontend (selectores en cascada) operara en sincronía con los datos del backend.
-\end{itemize}
-
-\subsection{Pruebas Funcionales}
-Las pruebas funcionales validaron que el sistema respondiera correctamente a las necesidades del usuario final mediante la simulación de escenarios reales.
-
-\begin{itemize}
-    \item \textbf{Ciclo Completo de Verificación:} Se simuló el flujo desde la captura inicial del vehículo, el paso por el módulo de caja para el cobro del servicio, hasta la asignación final del holograma.
-    \item \textbf{Generación de Reportes:} Se verificó que el módulo de administración generara archivos Excel (.xlsx) con datos precisos, filtrando correctamente por fechas y estados de pago, tal como se especificó en los requerimientos.
-    \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{imagenes/ReporteExcel.png}
-    \caption{Reporte generado del ultimo mes}
-    \label{fig:Reporte Excel}
-\end{figure}
-En la Fig.Fig.\ref{fig:Reporte Excel} se muestra el reporte generado por el sistema en formato .xlsx, validando que la integración con la biblioteca Openpyxl extrae correctamente los montos y fechas de la base de datos PostgreSQL.
-\end{itemize}
-
-\subsection{Pruebas de Rendimiento}
-Dada la naturaleza crítica del tiempo de atención en un verificentro, se midió la respuesta del sistema bajo condiciones de carga en el servidor de producción.
-
-\begin{itemize}
-    \item \textbf{Concurrencia:} Se monitoreó el comportamiento del servidor ante múltiples peticiones simultáneas en los módulos de captura y caja, observando que el uso de memoria se mantuvo estable gracias a la gestión de procesos de Gunicorn.
-    
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{imagenes/rendimiento.png}
-    \caption{Rendimiento VPS}
-    \label{fig:Rendimiento}
-\end{figure}
-
-    \item \textbf{Tiempos de Respuesta:} Se registraron tiempos de respuesta promedio inferiores a 200ms en consultas locales y menos de 1s en la generación de reportes complejos, cumpliendo con los estándares de eficiencia esperados para una aplicación web moderna.
-\end{itemize}
+\newpage
 
 
-
-\subsection{Pruebas de Usuario}
-Finalmente, el sistema fue evaluado por el personal operativo del verificentro. Estas pruebas se integraron de manera incremental durante las revisiones de los martes, de acuerdo con la metodología Scrum.
-
-\begin{itemize}
-    \item \textbf{Usabilidad:} Los usuarios confirmaron que la interfaz reduce la fatiga visual durante jornadas largas de trabajo.
-    \item \textbf{Experiencia de Usuario:} Se validó que la reducción de pasos manuales y la eliminación de hojas de cálculo externas facilitan el aprendizaje del sistema para nuevos empleados.
-    \item \textbf{Aceptación Final:} El personal administrativo validó la precisión de los cierres de caja automáticos, otorgando el visto bueno para la transición completa al ecosistema SIVEH.
-\end{itemize}
 

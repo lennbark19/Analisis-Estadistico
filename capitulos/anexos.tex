@@ -4,11 +4,12 @@
 
 \appendix
 \renewcommand{\thesection}{Anexo \Alph{section}} 
+\addtocontents{toc}{\protect\fixAnexoToc}
 
 \section{Repositorio GitHub}
 \label{anexo:github}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\linewidth]{imagenes/Repositorio.png}
     \caption{Repositorio de Github}
@@ -65,7 +66,7 @@ Se realizaron cuestionarios a los usuarios del sistema, los cuestionarios fueron
 \section{Manuales}
 A continuacion se presentan los codigos QR para acceder a los manuales necesarios para uso del sistema.
 \subsection{Manual Tecnico}
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.5\linewidth]{imagenes/QR Manual Tecnico.png}
     \caption{Manual Tecnico}
@@ -73,7 +74,7 @@ A continuacion se presentan los codigos QR para acceder a los manuales necesario
 \end{figure}
 
 \subsection{Manual de Usuario}
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.5\linewidth]{imagenes/QR Manual Usuario.png}
     \caption{Manual de Usuario}
@@ -84,7 +85,7 @@ A continuacion se presentan los codigos QR para acceder a los manuales necesario
 \label{anexo:Tablas BD}
 
 \subsection{Tabla Catálogos Taller}
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.5\linewidth]{imagenes/cstalogo talleres.png}
     \caption{Catalogo Talleres}
@@ -93,7 +94,7 @@ A continuacion se presentan los codigos QR para acceder a los manuales necesario
 Almacena la información detallada de los talleres externos vinculados al verificentro. Contiene datos de identificación legal, información de contacto y campos específicos para la gestión financiera, como límites de crédito, saldos actuales y el seguimiento de cortesías acumuladas por volumen de compra.
 
 \subsection{Tabla Catálogos Técnico}
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.5\linewidth]{imagenes/cstalogo tecnico.png}
     \caption{Catalogo Tecnicos}
@@ -103,3 +104,29 @@ Entidad destinada al registro del personal técnico encargado de realizar las pr
 
 
 
+
+
+\section{Tarjetas Kanban y Migraciones}
+\label{anexo:kanban-migraciones}
+
+\begin{center}
+\begin{tabular}{|c|p{5.5cm}|l|}
+\hline
+\textbf{Tarjeta} & \textbf{Descripción} & \textbf{Estado Final} \\
+\hline
+K-01 & Schema inicial: subsistemas, usuarios, matrícula, evaluaciones, titulación & Desplegado \\
+K-02 & Carga de catálogo de 7 subsistemas educativos & Desplegado \\
+K-03 & Campos de auditoría en trabajos de carga & Desplegado \\
+K-04 & Corrección de longitud en columna de estado & Desplegado \\
+K-05 & Rol directivo y bitácora de auditoría & Desplegado \\
+K-06 & Configuración de mapeo de columnas en Excel & Desplegado \\
+K-07 & Renombrado y redefinición de roles del sistema & Desplegado \\
+K-08 & Módulo de caracterización (discapacidad y etnia) & Desplegado \\
+K-09 & Módulo de becas estudiantiles & Desplegado \\
+K-10 & Catálogo de ciclos generacionales válidos & Desplegado \\
+K-11 & Corrección semántica de campo docente & Desplegado \\
+K-12 & Ajuste de campos nulos en titulación & Desplegado \\
+K-13 & Desglose por sexo en becas y caracterización & Desplegado \\
+\hline
+\end{tabular}
+\end{center}
