@@ -18,7 +18,7 @@ Cuando un sistema maneja operaciones costosas en tiempo de ejecución, como el a
 \subsection{Mapeo Objeto-Relacional (ORM)}
 El Mapeo Objeto-Relacional es una técnica de programación que permite traducir los datos almacenados en una base de datos relacional (tablas y registros) a objetos en el lenguaje de programación orientado a objetos, facilitando la interacción con la base de datos sin escribir sentencias de SQL de forma manual. El ORM proporciona abstracción sobre el motor de base de datos específico, protegiendo al sistema contra vulnerabilidades como la inyección de código SQL mediante la parametrización automática de consultas.
 
----
+
 
 \section{Tecnologías del Backend}
 
@@ -42,7 +42,7 @@ Pandas es la biblioteca estándar en la industria para el análisis y manipulaci
 \subsection{Celery}
 Celery es una biblioteca para Python que implementa una cola de tareas asíncronas basada en el paso de mensajes distribuidos. Se enfoca en operaciones en tiempo real, soportando también la programación de tareas periódicas. Celery permite desacoplar los procesos pesados de ingestión de CSV del flujo de ejecución de la API de FastAPI. Cuando un usuario sube un archivo, FastAPI registra el trabajo en Celery y le responde de inmediato al cliente, mientras que un proceso worker independiente ejecuta el análisis y validación del archivo en segundo plano sin interrumpir la disponibilidad de la plataforma.
 
----
+
 
 \section{Tecnologías del Frontend}
 
@@ -69,7 +69,7 @@ TanStack Query es una biblioteca declarativa de gestión de estado para aplicaci
 \subsection{Zustand}
 Zustand es una biblioteca ligera de gestión de estado global para React basada en hooks. Se caracteriza por su simplicidad sintáctica y por no requerir de arquitecturas complejas de proveedores de contexto (Context Providers). En este proyecto, Zustand se utiliza para sincronizar de manera eficiente las selecciones del panel de filtros globales (como el subsistema educativo, cuatrimestre y carrera) entre todos los componentes independientes que conforman los dashboards interactivos de la aplicación.
 
----
+
 
 \section{Base de Datos, Gestión de Tareas e Infraestructura}
 
@@ -87,7 +87,7 @@ Docker es una plataforma de software que permite automatizar el despliegue de ap
 \subsection{Nginx}
 Nginx es un servidor web y un proxy inverso de alto rendimiento diseñado para manejar de forma concurrente cientos de miles de peticiones HTTP con un bajo consumo de recursos de CPU y memoria. En la infraestructura de producción, Nginx actúa como la puerta de acceso principal del sistema: se encarga de recibir todas las conexiones en el puerto de red público, servir directamente y con baja latencia los archivos estáticos generados por el compilador de React (HTML, JS, CSS) y redirigir dinámicamente las solicitudes destinadas a la API REST hacia el servidor de aplicaciones de FastAPI de forma segura.
 
----
+
 
 \section{Seguridad y Autenticación}
 

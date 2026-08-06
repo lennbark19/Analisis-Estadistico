@@ -2,19 +2,13 @@
 
  La administración educativa moderna requiere de herramientas tecnológicas capaces de transformar datos operativos en información estratégica. El presente documento detalla el diseño y desarrollo de la Plataforma de Análisis Estadístico para la Dirección Académica Escolar, un sistema integral creado para optimizar la toma de decisiones institucionales mediante la automatización y el procesamiento centralizado de datos. El objetivo principal de esta plataforma es agilizar la gestión y el análisis de indicadores académicos críticos. 
  El sistema abarca módulos fundamentales para el entorno escolar, tales como el seguimiento de la matrícula, eficiencia, rendimiento, procesos de titulación, asignación de becas, caracterización estudiantil y evaluaciones docentes. Para proporcionar una perspectiva analítica precisa y evaluar la evolución de la institución, la plataforma consolida y analiza información histórica a un plazo de 3 años hacia el pasado, permitiendo así identificar tendencias, ciclos generacionales y áreas de oportunidad con base en datos reales.  
- A través de una arquitectura robusta —que contempla el procesamiento de datos en segundo plano, validación de cargas masivas de archivos y la generación dinámica de reportes—, el proyecto busca eliminar los cuellos de botella asociados al manejo manual de la información. Los siguientes apartados de este documento profundizan en las especificaciones, requerimientos de software, arquitectura del sistema y las decisiones tecnológicas implementadas para consolidar esta solución en beneficio de la administración escolar.
+ A través de una arquitectura robusta que contempla el procesamiento de datos en segundo plano, validación de cargas masivas de archivos y la generación dinámica de reportes, el proyecto busca eliminar los cuellos de botella asociados al manejo manual de la información. Los siguientes apartados de este documento profundizan en las especificaciones, requerimientos de software, arquitectura del sistema y las decisiones tecnológicas implementadas para consolidar esta solución en beneficio de la administración escolar.
 
 
 
 
 \section{Antecedentes}
 
-La Dirección Académica de la Universidad Politécnica de Texcoco ha enfrentado históricamente el reto de gestionar un volumen creciente de información escolar sin contar con una herramienta informática centralizada y especializada para el análisis estadístico de sus indicadores clave. 
-Tradicionalmente, el almacenamiento y la administración de los datos institucionales se han delegado en hojas de cálculo electrónicas, específicamente archivos de Microsoft Excel. Si bien este método ha sido una solución accesible para el registro inicial de datos, 
-la escala operativa de la universidad ha superado las capacidades de esta herramienta, debido a que la información correspondiente a la matrícula, la asignación de becas, el rendimiento, la eficiencia terminal, los ciclos generacionales y los procesos de titulación se encuentra dispersa en múltiples archivos individuales, cada uno estructurado con complejas estructuras de varias hojas de trabajo. 
-Esta fragmentación de la información provoca que cuando surge la necesidad de consultar datos específicos o consolidados, el personal académico deba navegar de forma manual a través de decenas de pestañas y archivos independientes, volviendo el proceso de búsqueda y manejo de información sumamente tedioso, propenso a errores humanos y tardado, lo que disminuye drásticamente la capacidad de respuesta institucional. Asimismo, la evaluación del desempeño escolar requiere analizar la evolución académica con una perspectiva de al menos tres años hacia el pasado. 
-Realizar este análisis histórico cruzando múltiples hojas de cálculo incrementa exponencialmente el riesgo de duplicidad, pérdida de consistencia en los datos y errores en la aplicación de fórmulas estadísticas, además de impedir la generación dinámica e inmediata de reportes ejecutivos o tableros visuales para los directivos.
-\newpage
 
 1. \textbf{Romero Alepuz, J. (2026). Dashboard web para la gestión y visualización dinámica de datos heterogéneos. Universitat Oberta de Catalunya (UOC).}
 
@@ -39,13 +33,7 @@ como un mecanismo de monitoreo integral para rastrear el desempeño de cada inst
     \label{fig:dashboard_anexo2}
 \end{figure}
 
-3. \textbf{Rangel Narváez, A. (2016). Programación de un Web Dashboard para la presentación de estadísticas en una empresa. Facultad de Ciencias, Universidad Nacional Autónoma de México (UNAM).}
-
-En este proyecto profesional se aborda la necesidad de optimizar la administración de los datos históricos de operación dentro de una organización, partiendo del principio de que esta información es el recurso más valioso para medir el comportamiento de un entorno y guiar su rumbo. 
-El autor explica que el almacenamiento tradicional en registros individuales genera serios inconvenientes para el personal, ya que extraer la información requiere conocimientos técnicos avanzados y organizar millones de datos de forma manual vuelve muy lenta la entrega de reportes. 
-Para resolver esta situación, se programó una plataforma web interactiva con gráficos, tablas y alertas que consolidan las métricas en un solo lugar con el fin de ofrecer una visión clara para el análisis de operaciones y la toma de decisiones rápidas. El desarrollo demuestra cómo automatizar las rutinas de cálculo para que la información esté actualizada constantemente y disponible para ser consultada a través de internet.
-\newpage
-4. \textbf{Martínez Luna, I. (2024). Elaboración de un dashboard, aplicado a la minería de datos para el apoyo a la toma de decisiones en el departamento de ventas. Facultad de Estudios Superiores Cuautitlán, UNAM.}
+3. \textbf{Martínez Luna, I. (2024). Elaboración de un dashboard, aplicado a la minería de datos para el apoyo a la toma de decisiones en el departamento de ventas. Facultad de Estudios Superiores Cuautitlán, UNAM.}
 
 En esta tesis de licenciatura se analiza la problemática de las organizaciones que aún gestionan su información mediante procesos tradicionales y manuales, lo que genera retrasos en la elaboración de reportes, inconsistencia en los datos y poca confiabilidad al momento de evaluar los resultados. 
 Para optimizar este flujo de trabajo, el autor implementó una metodología sistemática orientada a descubrir conocimiento dentro de las bases de datos, permitiendo transformar la información cruda en reportes consistentes dirigidos a los altos mandos. 
@@ -58,30 +46,21 @@ El resultado permite automatizar los informes y aplicar modelos estadísticos av
     \caption{Dashboard para departamento de ventas}
     \label{fig:dashboard_anexo3}
 \end{figure}
-\newpage
 
-5. \textbf{Baltazar Alcaraz, K. (2024). Revisión sistemática del uso de tecnologías inteligentes enfocadas en los procesos de las industrias sostenibles. Centro Nacional de Investigación y Desarrollo Tecnológico (CENIDET), Tecnológico Nacional de México.}
+
+4. \textbf{Baltazar Alcaraz, K. (2024). Revisión sistemática del uso de tecnologías inteligentes enfocadas en los procesos de las industrias sostenibles. Centro Nacional de Investigación y Desarrollo Tecnológico (CENIDET), Tecnológico Nacional de México.}
 
 En esta tesis de maestría se presenta una investigación exhaustiva orientada a evaluar la incorporación de las tecnologías inteligentes de la Industria 4.0 en los entornos de manufactura, con el propósito de fortalecer la sostenibilidad ambiental, económica y social. La investigación abordó la falta de síntesis sistemática sobre cómo la automatización y la digitalización optimizan la eficiencia operativa sin comprometer los recursos naturales ni el bienestar social.
 Para llevar a cabo el estudio, la autora aplicó la metodología de revisión sistemática de Cochrane bajo la estructura del esquema PICO, explorando bases de datos científicas de alto impacto como IEEE Xplore, ScienceDirect y SpringerLink. Mediante el uso de herramientas especializadas para la gestión y depuración bibliográfica como Zotero y Rayyan, se analizaron inicialmente más de 273,000 registros, seleccionando finalmente 103 artículos científicos clave publicados entre 2015 y 2023.
 Los hallazgos de la investigación permitieron identificar 21 tecnologías inteligentes, entre las cuales destacan cinco pilares fundamentales: el Internet de las Cosas (IoT), el aprendizaje automático (Machine Learning), los gemelos digitales (Digital Twins), la manufactura aditiva (impresión 3D) y la inteligencia artificial. El estudio concluye que la integración de estas herramientas permite monitorear consumos energéticos en tiempo real, predecir emisiones de $CO_2$, minimizar el desperdicio de materia prima y optimizar la toma de decisiones estratégicas, impulsando una transición efectiva hacia sistemas de producción ecoeficientes y sostenibles.
 
-\newpage
-6. \textbf{Quiguanas Chila, B. y Arias Bocanegra, D. L. (2024). Herramienta de monitoreo y análisis: Dashboard interactivo del desempeño académico de los estudiantes de Ciencia Política en la UNAD. Escuela de Ciencias Básicas, Tecnología e Ingeniería, Universidad Nacional Abierta y a Distancia (UNAD).}
+5. \textbf{Quiguanas Chila, B. y Arias Bocanegra, D. L. (2024). Herramienta de monitoreo y análisis: Dashboard interactivo del desempeño académico de los estudiantes de Ciencia Política en la UNAD. Escuela de Ciencias Básicas, Tecnología e Ingeniería, Universidad Nacional Abierta y a Distancia (UNAD).}
 
 Este proyecto aplicado aborda la problemática de la fragmentación y desorganización de los datos académicos y socioeconómicos en la educación superior, los cuales se encontraban almacenados de forma aislada en más de 114 archivos independientes del aplicativo Analítica del sistema SII 5.0. Esta dispersión impedía al personal docente y administrativo monitorear de manera oportuna los factores de riesgo de deserción y evaluar con precisión la evolución del rendimiento estudiantil a lo largo de los periodos académicos.
 Para resolver esta limitante, los autores implementaron la metodología ágil Scrum para la gestión del desarrollo, y utilizaron el lenguaje de programación Python junto con la librería Pandas para automatizar la extracción, depuración y consolidación masiva de los datos, resolviendo la variabilidad en la estructura de columnas e incorporando la dimensión temporal del periodo académico. Posteriormente, la información normalizada se integró en la plataforma de Business Intelligence Power BI para el diseño del tablero de control interactivo.
 El resultado del proyecto fue la creación de un dashboard analítico que centralizó y relacionó los indicadores clave de desempeño (KPIs) de 2,471 registros estudiantiles, abarcando variables de permanencia, deserción, estratificación socioeconómica, situación laboral y distribución geográfica. El sistema permitió constatar que factores como el desempleo (que afectaba al 59.01\% de los estudiantes) y la baja calificación en cohortes recientes influyen directamente en la continuidad académica. La plataforma proporcionó a los directivos una herramienta de monitoreo visual en tiempo real que optimiza la toma de decisiones y facilita la implementación de intervenciones tempranas para la retención estudiantil.
 
-\newpage
-7. \textbf{Pérez Paucar, L. O. (2019). Análisis de información utilizando un dashboard para la toma de decisiones en la Coordinación Zonal 1 – Educación. Facultad de Sistemas Mercantiles, Universidad Regional Autónoma de los Andes (UNIANDES).}
-
-En este trabajo de titulación de maestría se analiza el reto operativo que enfrentaba la Coordinación Zonal 1 del Ministerio de Educación del Ecuador, donde la gestión y el seguimiento de la ejecución presupuestaria y de la información docente e institucional se realizaban mediante hojas de cálculo manuales en Excel. Este esquema tradicional generaba cuellos de botella, lentitud en la elaboración de reportes ejecutivos, inconsistencias en los datos e incertidumbre administrativa en la toma de decisiones gerenciales.
-La metodología adoptada combinó enfoques cualitativos y cuantitativos a través de encuestas aplicadas al personal directivo y analistas técnicos. Para el diseño e implementación del almacén de datos, se utilizó la metodología Hefesto, estructurando las etapas de análisis de requerimientos, modelado dimensional y procesos de extracción, transformación y carga (ETL) a partir de los registros del sistema financiero eSIGEF. La visualización de la información se desarrolló sobre la plataforma analítica de código abierto Knowage.
-El tablero de control desarrollado integró dimensiones analíticas por Entidad Operativa Desconcentrada (EOD), grupos de gasto, actividades, programas y temporalidad mensual. La implementación del dashboard permitió detectar de forma inmediata alertas críticas, tales como una ejecución presupuestaria de solo el 19.92\% en la sede Zonal en comparación con otros distritos operativos. Asimismo, facilitó la consulta comparativa de la distribución de docentes por tipo de contrato y la caracterización de instituciones educativas por sostenimiento y tipología. La investigación demostró que la sustitución de herramientas estáticas por tableros de Business Intelligence optimiza sustancialmente los tiempos de respuesta y fortalece el cumplimiento de los objetivos de Gobierno por Resultados (GPR).
-
-\newpage
-8. \textbf{Pincay Ponce, F. B., Baque Pinargote, O. S., Caicedo Plúa, C. R. y Paladines Morán, J. P. (2024). Dashboard para el control y seguimiento académico de los estudiantes en la educación superior. Revista Científica de Innovación Educativa y Sociedad Actual "ALCON", Vol. 4, Núm. 5.}
+6. \textbf{Pincay Ponce, F. B., Baque Pinargote, O. S., Caicedo Plúa, C. R. y Paladines Morán, J. P. (2024). Dashboard para el control y seguimiento académico de los estudiantes en la educación superior. Revista Científica de Innovación Educativa y Sociedad Actual "ALCON", Vol. 4, Núm. 5.}
 
 Este artículo de investigación analiza la deficiente supervisión del recorrido académico de los estudiantes en la carrera de Tecnologías de la Información de la Universidad Estatal del Sur de Manabí (UNESUM). La problemática radicaba en que el 62\% de los profesores registraban las calificaciones en libretas físicas y el 38\% en archivos de Excel independientes, evaluando la información únicamente al final del periodo lectivo, lo que impedía identificar tempranamente el bajo rendimiento y actuar oportunamente para evitar el abandono escolar.
 Para solucionar este inconveniente, los autores aplicaron una investigación de carácter descriptivo con enfoque mixto, recolectando datos mediante encuestas a 255 estudiantes y entrevistas a 15 docentes. La arquitectura del sistema de información se diseñó siguiendo las seis fases de la metodología de modelado dimensional de Ralph Kimball. La consolidación y el tratamiento de los datos de calificaciones, parciales y asistencia se llevaron a cabo utilizando la herramienta Power BI.
@@ -90,6 +69,15 @@ Los resultados permitieron poner en funcionamiento un dashboard de control acad�
 \newpage
 \section{Planteamiento del problema}
 
+
+La Dirección Académica de la Universidad Politécnica de Texcoco ha enfrentado históricamente el reto de gestionar un volumen creciente de información escolar sin contar con una herramienta informática centralizada y especializada para el análisis estadístico de sus indicadores clave. 
+Tradicionalmente, el almacenamiento y la administración de los datos institucionales se han delegado en hojas de cálculo electrónicas, específicamente archivos de Microsoft Excel. Si bien este método ha sido una solución accesible para el registro inicial de datos, 
+la escala operativa de la universidad ha superado las capacidades de esta herramienta, debido a que la información correspondiente a la matrícula, la asignación de becas, el rendimiento, la eficiencia terminal, los ciclos generacionales y los procesos de titulación se encuentra dispersa en múltiples archivos individuales, cada uno estructurado con complejas estructuras de varias hojas de trabajo. 
+Esta fragmentación de la información provoca que cuando surge la necesidad de consultar datos específicos o consolidados, el personal académico deba navegar de forma manual a través de decenas de pestañas y archivos independientes, volviendo el proceso de búsqueda y manejo de información sumamente tedioso, propenso a errores humanos y tardado, lo que disminuye drásticamente la capacidad de respuesta institucional. Asimismo, la evaluación del desempeño escolar requiere analizar la evolución académica con una perspectiva de al menos tres años hacia el pasado. 
+Realizar este análisis histórico cruzando múltiples hojas de cálculo incrementa exponencialmente el riesgo de duplicidad, pérdida de consistencia en los datos y errores en la aplicación de fórmulas estadísticas, además de impedir la generación dinámica e inmediata de reportes ejecutivos o tableros visuales para los directivos.
+
+
+\newpage
 En la Universidad Politécnica de Texcoco, el área de Dirección Académica tiene la tarea de controlar y revisar datos muy importantes, como la cantidad de alumnos que entran y salen, el rendimiento académico de los estudiantes, la eficiencia terminal, la titulación, las becas y las evaluaciones. 
 Toda esta información sirve para que las autoridades de la escuela puedan planear mejoras y saber qué pasos dar en el futuro. 
 \begin{figure}[H]
@@ -140,4 +128,22 @@ Desarrollar un sistema web para el análisis y visualización de indicadores ins
      \item Ejecutar pruebas integrales de rendimiento, validación de datos y usabilidad para verificar que la generación de las gráficas interactivas sea exacta, fluida y cumpla con los requerimientos operativos de la universidad.
  \end{itemize}
 
- 
+\section{Estado del Arte}
+
+Para el desarrollo de la Plataforma de Análisis Estadístico, se seleccionaron tecnologías modernas que aseguran que el sistema sea rápido, seguro y fácil de usar. A continuación, se comparan las herramientas y versiones específicas elegidas frente a opciones anteriores o alternativas en el mercado, justificando su implementación de una manera accesible.
+
+\textbf{El lado visual de la plataforma (Frontend)}
+
+Para construir la interfaz con la que interactúan los directivos, se eligió \textbf{React en su versión 18}. A diferencia de su versión anterior (React 17), la versión 18 introduce la capacidad de pausar y reanudar tareas visuales pesadas en segundo plano sin congelar la pantalla. Esto significa que cuando el usuario carga cientos de gráficas al mismo tiempo, la página sigue respondiendo de manera fluida. Aunque existen alternativas como Angular, React se destaca por trabajar como bloques de construcción, permitiendo armar pantallas complejas de manera ordenada y rápida.
+
+En lugar de usar herramientas tradicionales de diseño como Bootstrap, que muchas veces hacen que todas las páginas web se vean iguales, se optó por \textbf{Tailwind CSS}. Esta herramienta nos da la libertad de crear un diseño visual único y moderno sin tener que cargar archivos estéticos innecesarios que volverían lenta la página.
+
+Para mostrar los datos estadísticos, se integró \textbf{Apache ECharts}. Mientras que otras opciones como Chart.js son buenas para gráficos sencillos, ECharts es capaz de manejar grandes cantidades de información sin que la pantalla se congele. Esto es fundamental cuando se revisan años de historial académico, asegurando que las gráficas sean fluidas e interactivas.
+
+\textbf{El cerebro del sistema (Backend y Base de Datos)}
+
+En la parte interna que procesa la información, se utilizó \textbf{Python en su versión 3.12} mediante la herramienta \textbf{FastAPI}. En el mercado existen lenguajes como PHP o Node.js, pero Python es líder mundial para análisis estadísticos. Específicamente, dar el salto a Python 3.12 representa una mejora enorme frente a versiones pasadas (como la 3.9 o 3.10), ya que es considerablemente más veloz procesando datos matemáticos y consume mucha menos memoria del servidor. Combinado con FastAPI y \textbf{SQLAlchemy 2.0} (que ahora permite hacer múltiples conexiones a la vez de forma automática frente a su antigua versión 1.4), el sistema puede atender a muchos usuarios simultáneamente organizando tareas pesadas sin bloquearse.
+
+Para guardar toda esta información, se seleccionó \textbf{PostgreSQL en su versión 16} como base de datos. Si bien existen opciones más famosas como MySQL, PostgreSQL es el estándar profesional por ser extremadamente seguro y confiable. Elegir la versión 16 frente a las versiones 14 o 15 nos permite aprovechar nuevas mejoras en la velocidad con la que el sistema busca y filtra millones de registros, garantizando que los reportes se generen en tiempo récord. Además, protege la integridad de los historiales estudiantiles para que nunca se pierdan o mezclen.
+
+Finalmente, para que todo el sistema funcione de manera estable en internet, se utilizaron herramientas de contención como \textbf{Docker} y \textbf{Nginx}, apoyados por \textbf{Redis 7} para organizar los mensajes internos de forma ultra rápida. Estas opciones son el estándar actual porque actúan como barreras de seguridad y orden, asegurando que el sistema opere las 24 horas del día sin interrupciones, sin importar cuántas personas lo utilicen a la vez.
