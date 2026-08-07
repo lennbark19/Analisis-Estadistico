@@ -62,52 +62,74 @@ Se realizaron cuestionarios a los usuarios del sistema, los cuestionarios fueron
     \item ¿El tiempo de respuesta del sistema al generar reportes o procesar capturas es el adecuado para el flujo del verificentro?
     \item ¿Cuál es su nivel de confianza al usar el sistema para realizar sus actividades diarias sin temor a perder información?
 \end{enumerate}
-
+\newpage
 \section{Manuales}
 A continuacion se presentan los codigos QR para acceder a los manuales necesarios para uso del sistema.
-\subsection{Manual Tecnico}
+
+
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.5\linewidth]{imagenes/QR Manual Tecnico.png}
+    \includegraphics[width=0.8\linewidth]{imagenes/Manual tecnico.jpeg}
     \caption{Manual Tecnico}
-    \label{fig:manualtec_qr}
+    \label{fig:manualtec}
 \end{figure}
 
-\subsection{Manual de Usuario}
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.5\linewidth]{imagenes/QR Manual Usuario.png}
+    \includegraphics[width=0.8\linewidth]{imagenes/Manual de usuario.jpeg}
     \caption{Manual de Usuario}
-    \label{fig:manualuser_qr}
+    \label{fig:manualuser}
 \end{figure}
+\newpage
 
-\section{Tablas de Base de datos}
-\label{anexo:Tablas BD}
 
-\subsection{Tabla Catálogos Taller}
+\section{Diagramas}
+\label{anexo:diagramas}
+
+\subsection{Diagrama Modelo-Relacional}
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.5\linewidth]{imagenes/cstalogo talleres.png}
-    \caption{Catalogo Talleres}
-    \label{fig:tabla Talleres}
+    \includegraphics[width=0.8\linewidth]{imagenes/Diagrama Modelo-Relacional.jpeg}
+    \caption{Diagrama Modelo-Relacional}
+    \label{fig:diag_modelo_relacional}
 \end{figure}
-Almacena la información detallada de los talleres externos vinculados al verificentro. Contiene datos de identificación legal, información de contacto y campos específicos para la gestión financiera, como límites de crédito, saldos actuales y el seguimiento de cortesías acumuladas por volumen de compra.
 
-\subsection{Tabla Catálogos Técnico}
+\clearpage
+\subsection{Diagrama de Dominio}
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.5\linewidth]{imagenes/cstalogo tecnico.png}
-    \caption{Catalogo Tecnicos}
-    \label{fig:tabla Tecnicos}
+    \includegraphics[width=0.8\linewidth]{imagenes/Diagrama de Dominio.jpeg}
+    \caption{Diagrama de Dominio}
+    \label{fig:diag_dominio}
 \end{figure}
-Entidad destinada al registro del personal técnico encargado de realizar las pruebas de verificación. Incluye una clave de identificación única por técnico y un campo \texttt{codigo\_url} de tipo UUID, utilizado para la generación de enlaces seguros o identificación digital dentro del sistema SIVEH.
 
+\clearpage
+\subsection{Diagrama de Servicios}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\linewidth]{imagenes/Diagrama de Servicios.jpeg}
+    \caption{Diagrama de Servicios}
+    \label{fig:diag_servicios}
+\end{figure}
 
-
-
+\clearpage
+\subsection{Diagrama de Flujo}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\linewidth]{imagenes/Diagrama de flujo.jpeg}
+    \caption{Diagrama de Flujo}
+    \label{fig:diag_flujo}
+\end{figure}
 
 \section{Tarjetas Kanban y Migraciones}
 \label{anexo:kanban-migraciones}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\linewidth]{imagenes/KANBAN.png}
+    \caption{Tablero Kanban}
+    \label{fig:kanban}
+\end{figure}
 
 \begin{center}
 \begin{tabular}{|c|p{5.5cm}|l|}
