@@ -4,6 +4,7 @@ En este capítulo se describe el proceso de diseño, construcción e implementac
 
 % ============================================================
 \section{Metodología: Kanban}
+\label{sec:metodologia-kanban}
 % ============================================================
 
 Para el desarrollo de la plataforma se adoptó \textbf{Kanban} como metodología ágil ligera, la cual pertenece al marco de las metodologías ágiles y se fundamenta en la gestión visual del flujo de trabajo. A diferencia de otras metodologías ágiles que estructuran el trabajo en iteraciones fijas (sprints), Kanban propone un \textbf{flujo continuo} donde las tareas avanzan de forma progresiva por un tablero visual dividido en columnas que representan los estados del proceso.
@@ -297,7 +298,42 @@ Los tableros gráficos utilizan Apache ECharts para renderizar gráficas de barr
 \section{Infraestructura y Despliegue}
 % ============================================================
 
-El sistema se despliega mediante Docker Compose, que orquesta 5 contenedores en una red virtual privada:
+Además de programar la aplicación, fue necesario preparar el lugar donde esta se ejecutaría de forma permanente y accesible para el personal de la Dirección Académica. Esta sección describe, de manera general, cómo se acondicionó el servidor que aloja la plataforma y de qué manera las tarjetas del tablero Kanban correspondientes a la columna \textit{Desplegado} (Sección \ref{anexo:kanban-migraciones}) llegan a convertirse en un sistema realmente disponible en internet.
+
+\subsection{Preparación del Servidor}
+
+El sistema se aloja en un equipo físico con sistema operativo Ubuntu Linux, dedicado a mantener en funcionamiento los servicios de la universidad las 24 horas del día. Antes de instalar la plataforma fue necesario:
+
+\begin{itemize}
+    \item Configurar el acceso remoto y administrativo al equipo mediante el protocolo SSH, de forma que el sistema pudiera instalarse, actualizarse y supervisarse sin necesidad de tener acceso físico a la máquina.
+    \item Instalar Docker, la herramienta encargada de ejecutar la aplicación de manera aislada y ordenada (véase la Sección \ref{sec:docker-infra}).
+    \item Configurar un cortafuegos (\textit{firewall}) que únicamente permite el paso de las conexiones estrictamente necesarias para el funcionamiento del sistema, bloqueando cualquier otro intento de acceso al servidor.
+\end{itemize}
+
+\subsection{Publicación del Sistema en Internet}
+
+Dado que el servidor no cuenta con una dirección de internet fija (esto ocurre comúnmente en conexiones residenciales o institucionales de bajo costo, donde la dirección puede cambiar de vez en cuando), fue necesario emplear un servicio de \textbf{DNS dinámico}. Este servicio mantiene actualizado, de manera automática y cada pocos minutos, el nombre de dominio de la plataforma (\texttt{estadistica.ddns.net}) para que siempre apunte a la dirección real del servidor, sin importar si esta cambia con el tiempo. Gracias a esto, los usuarios de la Dirección Académica pueden acceder al sistema escribiendo siempre el mismo nombre en su navegador, sin necesidad de conocer ni actualizar manualmente ninguna dirección técnica.
+
+\subsection{Cifrado de las Comunicaciones (HTTPS)}
+
+Toda la información que viaja entre el navegador del usuario y el servidor —incluyendo las contraseñas y los datos académicos— se transmite de forma cifrada mediante el protocolo HTTPS. El certificado digital que hace posible este cifrado fue obtenido de manera gratuita a través de la autoridad certificadora \textit{Let's Encrypt}, utilizando la herramienta \texttt{certbot}, la cual además se encarga de renovar automáticamente el certificado antes de que expire, sin requerir intervención manual.
+
+\subsection{Nginx como Puerta de Entrada del Sistema}
+
+Todas las peticiones que llegan al servidor pasan primero por Nginx, que funciona como una especie de recepcionista: recibe cada conexión entrante, decide hacia dónde debe redirigirla y devuelve la respuesta correspondiente. En el caso de esta plataforma, Nginx cumple tres funciones principales:
+
+\begin{itemize}
+    \item Redirige automáticamente las conexiones que llegan sin cifrar (HTTP) hacia su versión seguras (HTTPS).
+    \item Reenvía cada solicitud del usuario hacia el contenedor de la aplicación que corresponde, sin que el usuario perciba que, internamente, el sistema está dividido en varios componentes independientes.
+    \item Publica de forma directa algunos archivos de consulta pública del proyecto, como los manuales de usuario y los diagramas del sistema.
+\end{itemize}
+
+\subsection{Empaquetado de la Aplicación con Contenedores Docker}
+\label{sec:docker-infra}
+
+Para evitar los problemas comunes de instalación (``en mi computadora sí funciona''), la aplicación completa se empaquetó mediante \textbf{Docker}, una herramienta que permite ejecutar cada componente del sistema dentro de un contenedor: un entorno aislado y autosuficiente que ya incluye todo lo necesario para funcionar (lenguaje de programación, librerías y configuración), sin depender de lo que esté instalado en el servidor. Esto garantiza que el sistema se comporte exactamente igual en el equipo de desarrollo que en el servidor de producción.
+
+Mediante Docker Compose se orquestan 5 contenedores que trabajan de manera coordinada dentro de una red privada y aislada:
 
 \begin{table}[H]
 \centering
@@ -315,7 +351,20 @@ El sistema se despliega mediante Docker Compose, que orquesta 5 contenedores en 
 \caption{Contenedores Docker utilizados en la infraestructura.}
 \end{table}
 
-El despliegue en producción se automatiza mediante un pipeline de integración y entrega continua (CI/CD) configurado en GitHub Actions (\texttt{.github/workflows/deploy.yml}). Ante cada \textit{push} a la rama principal (\texttt{main}), el pipeline actualiza el código en el servidor y ejecuta el script \texttt{start.sh}, que aplica las migraciones de base de datos pendientes y reinicia todos los servicios sin tiempo de inactividad.
+Un script de instalación (\texttt{start.sh}) automatiza la puesta en marcha completa del sistema: genera las contraseñas y claves de seguridad del entorno de manera aleatoria, construye los contenedores, espera a que la base de datos esté lista, aplica las migraciones pendientes y crea la cuenta del administrador inicial, de modo que el sistema quede operativo con una sola instrucción.
+
+\subsection{Despliegue Automático y Continuo (CI/CD)}
+
+En congruencia con el principio de \textit{flujo continuo} de la metodología Kanban descrito en la Sección \ref{sec:metodologia-kanban}, el paso de una funcionalidad terminada hacia el entorno de producción no se realiza de forma manual. En su lugar, el propio servidor funciona como un ``ejecutor'' (\textit{runner}) de GitHub Actions: cada vez que se integra una nueva versión del código a la rama principal del repositorio, el servidor recibe la notificación de manera automática y ejecuta, sin intervención humana, los siguientes pasos:
+
+\begin{enumerate}
+    \item Descarga la versión más reciente del código fuente desde el repositorio.
+    \item Reconstruye únicamente los contenedores cuyo código haya cambiado.
+    \item Aplica las migraciones de base de datos pendientes.
+    \item Reinicia los servicios afectados, restableciendo la disponibilidad del sistema en cuestión de segundos.
+\end{enumerate}
+
+Esta automatización reduce considerablemente el margen de error humano durante el despliegue y permite que las mejoras solicitadas por la Dirección Académica estén disponibles para su uso poco después de haber sido validadas, tal como lo señala el tablero Kanban del proyecto.
 
 Para el entorno de desarrollo, el script \texttt{dev.sh} levanta todos los servicios con \textit{hot-reload} activo: los cambios en el código del backend o del frontend se reflejan instantáneamente sin necesidad de reconstruir los contenedores.
 
