@@ -1,6 +1,5 @@
 \section*{Resumen.}
 
----------
+La gestión ineficiente de grandes volúmenes de información académica en la Dirección Académica de la Universidad Politécnica de Texcoco ha dificultado históricamente el análisis y la toma de decisiones estratégicas. El manejo manual de datos dispersos en hojas de cálculo generaba retrasos, errores de captura y limitaba la visibilidad de indicadores clave como la matrícula, el aprovechamiento, la deserción, la eficiencia terminal y la titulación a lo largo de ciclos generacionales. Para resolver esta problemática, el presente trabajo de titulación describe el diseño y desarrollo de una Plataforma de Análisis Estadístico Académico, un sistema web centralizado capaz de ingerir de manera automatizada grandes conjuntos de datos históricos en formato CSV para su posterior cálculo y visualización gráfica.
 
-
-
+El proyecto fue construido bajo la metodología ágil Kanban, implementando una arquitectura cliente-servidor basada en tecnologías modernas. El backend, desarrollado con Python (FastAPI), SQLAlchemy asíncrono y Pandas, procesa la información en segundo plano a través de Celery y Redis, salvaguardando los datos en una base de datos relacional PostgreSQL. Por su parte, la interfaz de usuario interactiva (frontend) fue construida con React 18, Tailwind CSS y Apache ECharts, brindando tableros de control (dashboards) dinámicos que garantizan fluidez y rapidez al consultar varios años de información. El sistema resultante elimina los cuellos de botella administrativos y ofrece a las autoridades escolares una herramienta segura, aislada por subsistema y altamente escalable para el monitoreo institucional en tiempo real, fundamentando así la toma de decisiones basada en evidencia objetiva para elevar la calidad educativa.
