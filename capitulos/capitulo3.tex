@@ -62,39 +62,7 @@ La progresión de estas tarjetas evidencia un desarrollo guiado por la retroalim
 \section{Requerimientos del Sistema}
 % ============================================================
 
-Con base en el documento de requerimientos de software y las reuniones sostenidas con los usuarios de la Dirección Académica, se identificaron los siguientes requerimientos:
-
-\subsection{Requerimientos Funcionales}
-
-\begin{itemize}
-    \item \textbf{RF-01:} El sistema debe permitir la carga masiva de datos académicos históricos mediante archivos CSV o Excel (.xlsx/.xls) de hasta 200 MB.
-    \item \textbf{RF-02:} El sistema debe validar automáticamente cada fila de los archivos cargados, reportando los errores por columna con su valor inválido y el motivo.
-    \item \textbf{RF-03:} El sistema debe calcular y mostrar los indicadores: Matrícula Actual, Aprovechamiento, Reprobación, Deserción, Eficiencia Terminal, Índice de Titulación, Cobertura y Evaluación Docente.
-    \item \textbf{RF-04:} El sistema debe presentar los indicadores en tableros gráficos interactivos con filtros por subsistema educativo, ciclo escolar, cuatrimestre y programa educativo.
-    \item \textbf{RF-05:} El sistema debe permitir la gestión de usuarios con tres niveles de acceso: administrador general, administrador escolar y usuario consultor.
-    \item \textbf{RF-06:} El sistema debe generar reportes descargables en formato PDF.
-    \item \textbf{RF-07:} El sistema debe registrar en una bitácora de auditoría todas las acciones relevantes de los usuarios.
-    \item \textbf{RF-08:} El sistema debe permitir la administración del catálogo de ciclos generacionales y subsistemas.
-\end{itemize}
-
-\subsection{Requerimientos No Funcionales}
-
-\begin{itemize}
-    \item \textbf{RNF-01:} El procesamiento de archivos CSV masivos debe realizarse de forma asíncrona para no bloquear la interfaz del usuario.
-    \item \textbf{RNF-02:} La autenticación debe implementarse mediante JSON Web Tokens (JWT) con tokens de acceso de 15 minutos y tokens de refresco de 7 días.
-    \item \textbf{RNF-03:} Las contraseñas deben almacenarse con el algoritmo criptográfico Argon2, resistente a ataques de fuerza bruta.
-    \item \textbf{RNF-04:} El sistema debe limitar las peticiones a 120 solicitudes por minuto por dirección IP para prevenir ataques de denegación de servicio.
-    \item \textbf{RNF-05:} El sistema debe estar completamente contenedorizado mediante Docker para garantizar la portabilidad entre entornos.
-    \item \textbf{RNF-06:} El tiempo de respuesta de la API no debe superar los 500ms en condiciones normales de operación.
-\end{itemize}
-
-\subsection{Actores del Sistema}
-
-\begin{itemize}
-    \item \textbf{Administrador General:} Acceso total al sistema. Gestiona usuarios, subsistemas, ciclos generacionales y tiene acceso a la bitácora de auditoría.
-    \item \textbf{Administrador Escolar:} Puede cargar archivos de datos para su subsistema asignado y visualizar todos los indicadores.
-    \item \textbf{Usuario Consultor:} Acceso de solo lectura a los tableros estadísticos y reportes del sistema.
-\end{itemize}
+El documento oficial correspondiente al levantamiento de requisitos del sistema, el cual ha sido validado y firmado por los usuarios de la Dirección Académica, se encuentra adjunto en el Anexo \ref{anexo:levantamiento_requisitos}.
 
 % ============================================================
 \section{Arquitectura del Sistema}
