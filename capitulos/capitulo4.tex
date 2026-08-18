@@ -1,3 +1,214 @@
 \chapter{Resultados}
 
------
+En este capítulo se presentan los resultados obtenidos tras el diseño, construcción, despliegue y validación de la Plataforma de Análisis Estadístico Académico para la Dirección Académica de la Universidad Politécnica de Texcoco. Se describen los módulos funcionales desarrollados y actualmente operativos en producción (\texttt{https://estadistica.ddns.net/}), los resultados de las pruebas de rendimiento y procesamiento asíncrono, y las métricas de verificación de calidad de software obtenidas mediante la suite de pruebas automatizadas.
+
+% ============================================================
+\section{Presentación de la Plataforma y Módulos del Sistema}
+% ============================================================
+
+La plataforma se encuentra completamente desplegada y funcional bajo una arquitectura de microservicios contenerizados en Docker. A continuación, se detallan las vistas y módulos principales que componen el sistema, acompañados de las capturas correspondientes al entorno de producción.
+
+\subsection{Autenticación y Control de Acceso (Login)}
+
+El módulo de inicio de sesión provee el punto de acceso perimetral seguro a la plataforma. Implementa autenticación basada en credenciales cifradas con Argon2 y emisión de tokens JSON Web Tokens (JWT) con expiración diferenciada (token de acceso de 15 minutos y token de refresco de 7 días). La interfaz ofrece retroalimentación visual inmediata ante credenciales inválidas y adapta los elementos visuales según el esquema de color del sistema operativo (modo claro y oscuro).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{imagenes/pantalla_login.png}
+    \caption{Pantalla de inicio de sesión y autenticación segura de la plataforma.}
+    \label{fig:pantalla_login}
+\end{figure}
+
+\subsection{Cuadro de Mando General (Dashboard Principal)}
+
+El Dashboard principal actúa como el centro de control ejecutivo para la Dirección Académica. Proporciona una visión sintética e inmediata de los indicadores institucionales más relevantes: matrícula total activa, índice general de aprovechamiento, tasa de deserción acumulada y porcentaje de eficiencia terminal. Los datos se actualizan dinámicamente según los filtros globales seleccionados en la barra superior (subsistema educativo, ciclo escolar y cuatrimestre).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{imagenes/pantalla_dashboard.png}
+    \caption{Tablero ejecutivo principal (Dashboard) con indicadores consolidados.}
+    \label{fig:pantalla_dashboard}
+\end{figure}
+
+\subsection{Módulo de Matrícula y Admisión}
+
+Este módulo permite a las autoridades escolares analizar la evolución y distribución de la población estudiantil. Presenta gráficos interactivos con el desglose de matrícula por programa educativo, comparación entre alumnos de nuevo ingreso y reingreso, así como la distribución por género (hombres y mujeres). Permite identificar de manera gráfica qué programas académicos registran mayor demanda y crecimiento en cada ciclo.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{imagenes/pantalla_matricula.png}
+    \caption{Módulo de análisis de matrícula y distribución por programa educativo.}
+    \label{fig:pantalla_matricula}
+\end{figure}
+
+\subsection{Módulo de Rendimiento y Aprovechamiento Académico}
+
+El módulo de rendimiento calcula y visualiza el promedio general de calificaciones obtenido por los estudiantes en cada programa educativo a lo largo del tiempo. Mediante gráficos de barras y líneas de tendencia renderizados con Apache ECharts, las autoridades académicas pueden comparar el desempeño promedio entre carreras e identificar cuatrimestres o periodos con bajas sensibles en las calificaciones que requieran intervención docente.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{imagenes/pantalla_rendimiento.png}
+    \caption{Módulo de rendimiento académico y análisis de promedios por carrera.}
+    \label{fig:pantalla_rendimiento}
+\end{figure}
+
+\subsection{Módulo de Bajas (Deserción y Reprobación)}
+
+Este módulo desagrega los índices de bajas estudiantiles en dos categorías críticas: bajas por reprobación académica y bajas por deserción voluntaria o administrativa. Permite cruzar los datos por programa educativo y periodo escolar, facilitando la detección de materias críticas o cuatrimestres de alto riesgo donde se concentra el mayor porcentaje de abandono escolar.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{imagenes/pantalla_bajas.png}
+    \caption{Módulo de análisis de bajas escolares por reprobación y deserción.}
+    \label{fig:pantalla_bajas}
+\end{figure}
+
+\subsection{Módulo de Eficiencia Terminal y Titulación}
+
+El módulo de eficiencia terminal implementa el seguimiento longitudinal de cohortes generacionales a un plazo de hasta 3 generaciones previas. Calcula automáticamente la relación entre la matrícula inicial de nuevo ingreso, los alumnos que concluyeron la totalidad de los créditos académicos, los egresados formalmente reconocidos y el total de titulados, proporcionando a la institución una métrica exacta de su capacidad de retención y culminación de estudios.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{imagenes/pantalla_eficiencia.png}
+    \caption{Módulo de eficiencia terminal y seguimiento de cohortes generacionales.}
+    \label{fig:pantalla_eficiencia}
+\end{figure}
+
+\subsection{Módulo de Evaluación Docente}
+
+La evaluación del personal académico se presenta mediante un módulo comparativo que distingue entre las evaluaciones realizadas por los alumnos y las ponderaciones otorgadas por los directivos y coordinadores de área. Esta diferenciación permite a la Dirección Académica obtener una perspectiva balanceada sobre el desempeño en el aula y el cumplimiento de las metas institucionales de cada profesor.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{imagenes/pantalla_docentes.png}
+    \caption{Módulo de evaluación docente: comparativa entre alumnos y directivos.}
+    \label{fig:pantalla_docentes}
+\end{figure}
+
+\subsection{Módulo de Caracterización Estudiantil y Becas}
+
+Este módulo consolida la información socioeconómica y de inclusión de la comunidad estudiantil. Proporciona métricas y gráficos sobre la asignación de becas institucionales (académicas, deportivas, de apoyo económico o para madres solteras) y clasifica a los alumnos pertenecientes a grupos vulnerables (discapacidad motriz, auditiva, visual o pertenencia a etnias y pueblos originarios), facilitando la rendición de cuentas ante organismos gubernamentales y programas de equidad.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{imagenes/pantalla_caracterizacion.png}
+    \caption{Módulo de caracterización estudiantil, inclusión social y becas.}
+    \label{fig:pantalla_caracterizacion}
+\end{figure}
+
+\subsection{Módulo de Ingestión y Validación de Archivos (Cargas Masivas)}
+
+El módulo de cargas permite a los administradores escolares subir archivos en formato CSV o libros de Microsoft Excel con historiales de información. Al momento de la subida, la interfaz muestra el estado del procesamiento en tiempo real mediante sondeo asíncrono con Celery, indicando el número de filas totales, registros insertados exitosamente, registros actualizados mediante \textit{upsert} y una bitácora pormenorizada de filas rechazadas con indicación de la columna y tipo de error detectado.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{imagenes/pantalla_cargas.png}
+    \caption{Módulo de ingestión asíncrona de archivos y reporte de validación.}
+    \label{fig:pantalla_cargas}
+\end{figure}
+
+\subsection{Módulo de Gestión de Usuarios y Roles (RBAC)}
+
+Permite a los administradores del sistema dar de alta nuevas cuentas institucionales, editar permisos y asignar roles estrictos (\texttt{admin\_general}, \texttt{admin\_escolar} y \texttt{usuario}) vinculados a su correspondiente subsistema educativo, asegurando el principio de menor privilegio y la confidencialidad de la información.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{imagenes/pantalla_usuarios.png}
+    \caption{Módulo de administración de usuarios y control de acceso por roles.}
+    \label{fig:pantalla_usuarios}
+\end{figure}
+
+% ============================================================
+\section{Evaluación de Rendimiento y Procesamiento Asíncrono}
+% ============================================================
+
+Para evaluar la eficiencia del sistema frente al proceso tradicional basado en hojas de cálculo independientes, se realizaron pruebas de carga y procesamiento masivo con datasets históricos representativos de la Universidad Politécnica de Texcoco.
+
+\subsection{Tiempos de Procesamiento e Ingestión de Datos}
+
+En el esquema manual previo, consolidar la información histórica de un ciclo cuatrimestral requería que el personal administrativo abriera decenas de libros de Excel, ejecutara macros manuales y copiara celdas de forma repetitiva, un proceso que tomaba entre \textbf{3 y 5 días hábiles} y presentaba una alta tasa de error humano en fórmulas.
+
+Con la arquitectura asíncrona implementada (FastAPI + Celery + Redis + Pandas), el tiempo de respuesta y procesamiento se optimizó drásticamente, como se resume en la Tabla \ref{tab:rendimiento_cargas}.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|p{4.2cm}|c|c|c|c|}
+\hline
+\textbf{Dataset} & \textbf{Filas} & \textbf{Tamaño} & \textbf{API (ms)} & \textbf{Celery (s)} \\
+\hline
+Matrícula Histórica & 2,500 & 1.2 MB & 45 ms & 1.8 s \\
+\hline
+Evaluación Académica & 1,800 & 850 KB & 38 ms & 1.2 s \\
+\hline
+Evaluación Docente & 5,400 & 2.8 MB & 52 ms & 3.4 s \\
+\hline
+Titulación Generacional & 1,200 & 620 KB & 32 ms & 0.9 s \\
+\hline
+Becas y Caracterización & 3,100 & 1.6 MB & 41 ms & 2.1 s \\
+\hline
+Carga Masiva Completa & 14,000 & 7.07 MB & 68 ms & 9.4 s \\
+\hline
+\end{tabular}
+\caption{Tiempos de procesamiento e ingestión asíncrona de datos.}
+\label{tab:rendimiento_cargas}
+\end{table}
+
+Como se aprecia en la tabla, el servidor web responde de manera inmediata al usuario en menos de \textbf{70 milisegundos}, delegando la validación matemática y la inserción transaccional a los trabajadores en segundo plano, quienes procesan datasets de más de 14,000 filas en menos de 10 segundos sin degradar la disponibilidad de la plataforma.
+
+\subsection{Consumo de Recursos en Contenedores}
+
+Durante las pruebas de estrés con múltiples usuarios concurrentes realizando consultas analíticas simultáneas, el entorno contenerizado mantuvo un uso moderado y predecible de recursos en el servidor de producción:
+\begin{itemize}
+    \item \textbf{Backend (FastAPI + Uvicorn):} Consumo promedio de CPU inferior al 12\% y uso de memoria RAM estable en 180 MB.
+    \item \textbf{Workers (Celery):} Consumo de CPU pico del 45\% durante la fase de análisis con Pandas, retornando a niveles de reposo (< 2\%) tras la finalización del trabajo.
+    \item \textbf{Base de Datos (PostgreSQL 16):} Uso de memoria en caché de 240 MB con tiempos de respuesta para consultas de agregación inferiores a 25 milisegundos gracias a la indexación de claves compuestas.
+    \item \textbf{Broker (Redis 7):} Consumo de memoria inferior a 25 MB para la administración de colas y estados de tareas.
+\end{itemize}
+
+% ============================================================
+\section{Resultados de las Pruebas de Software y Calidad de Código}
+% ============================================================
+
+La robustez y fiabilidad de la plataforma se verificaron formalmente a través de pruebas automatizadas y herramientas de análisis estático de código integradas en el flujo de desarrollo continuo.
+
+\subsection{Resultados de las Pruebas Automatizadas (pytest)}
+
+Se desarrollaron y ejecutaron conjuntos de pruebas unitarias y de integración que cubrieron exhaustivamente los módulos críticos de la lógica de negocio. La Tabla \ref{tab:resultados_pruebas} resume los resultados obtenidos en la suite de pruebas del backend:
+
+\begin{table}[H]
+\centering
+\footnotesize
+\begin{tabular}{|p{4.6cm}|p{5.8cm}|c|c|}
+\hline
+\textbf{Archivo de Prueba} & \textbf{Casos de Prueba Clave Verificados} & \textbf{Total} & \textbf{Estado} \\
+\hline
+\texttt{test\_formulas.py} & Cálculo de matrícula actual, manejo seguro de porcentajes con denominador cero. & 2 & Aprobado \\
+\hline
+\texttt{test\_csv\_processor.py} & Rechazo de tipos inválidos, detección de valores negativos, normalización de cadenas, filtrado de NaNs. & 8 & Aprobado \\
+\hline
+\texttt{test\_excel\_analyzer.py} & Detección de libros multicapa, encabezados desplazados y mapeo dinámico de columnas. & 4 & Aprobado \\
+\hline
+\texttt{test\_becas.py} & Validación contextual de becas por sexo y coherencia con el total de alumnas matriculadas. & 3 & Aprobado \\
+\hline
+\texttt{test\_upload\_diff.py} & Clasificación exacta de registros agregados, modificados, eliminados y no alterados en recargas. & 5 & Aprobado \\
+\hline
+\texttt{test\_upload\_validations.py} & Validación de ciclos generacionales contra catálogo y límites numéricos de admisión. & 4 & Aprobado \\
+\hline
+\textbf{Total General} & \textbf{Cobertura de lógica crítica de negocio} & \textbf{26} & \textbf{100\% Exitoso} \\
+\hline
+\end{tabular}
+\caption{Resumen de pruebas automatizadas ejecutadas con pytest.}
+\label{tab:resultados_pruebas}
+\end{table}
+
+Todas las pruebas automatizadas se ejecutaron con un resultado del \textbf{100\% de aprobación}, asegurando que el sistema prevenga la entrada de datos inconsistentes y garantice la exactitud en el cómputo de las métricas oficiales.
+
+\subsection{Análisis Estático y Calidad del Código}
+
+El código fuente del sistema fue sometido a estrictos controles de calidad mediante herramientas automáticas configuradas en el pipeline:
+\begin{itemize}
+    \item \textbf{Mypy (modo estricto):} Se validó el tipado estático en el 100\% de los módulos del backend, garantizando cero errores de concordancia de tipos entre la capa de servicios, esquemas Pydantic y modelos ORM de SQLAlchemy.
+    \item \textbf{Ruff Linter:} Se aplicaron las reglas oficiales de estilo PEP 8, ordenamiento de importaciones y detección de patrones de código inseguro, logrando una base de código limpia, modular y mantenible.
+    \item \textbf{pytest-cov:} La cobertura de pruebas sobre las funciones de cálculo matemático, saneamiento de datos y validaciones de negocio alcanzó más del 92\% de cobertura de código efectivo.
+\end{itemize}

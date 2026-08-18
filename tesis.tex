@@ -28,9 +28,12 @@
 \usepackage{array}
 \usepackage{tabularx}
 \usepackage{textcomp}
-\usepackage[backend=biber,style=ieee, sorting=none, style=numeric]{biblatex}
+\usepackage[backend=biber,style=ieee,sorting=none]{biblatex}
 \addbibresource{capitulos/Referencias.bib}
 
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
     
 \lstdefinestyle{mystyle}{
   keywordstyle=\color{blue},
@@ -55,14 +58,13 @@
 \renewcommand{\algorithmicensure}{\textbf{Output:}}
 \renewcommand{\lstlistlistingname}{Índice de Códigos}
 
-\newenvironment{dedicatoria}[1]
+\newenvironment{dedicatoria}
     {\newpage \thispagestyle{plain} \vspace*{\stretch{1}}
     \begin{flushright}
     \begin{minipage}{0.9 \textwidth} % Ajusta el ancho aquí
     \em \textbf{Dedicatoria.}
-    \vspace{1cm} % Espacio vertical adicional
-    #1
-    \end{minipage}
+    \vspace{1cm}}
+    {\end{minipage}
     \end{flushright}
     \vspace*{\stretch{2}}
     \newpage}
@@ -87,7 +89,8 @@
 % \makeatother
 
 \makeatletter
-\def\fixAnexoToc{\renewcommand\l@section{\@dottedtocline{1}{1.5em}{6em}}\renewcommand\l@subsection{\@dottedtocline{2}{3.8em}{6em}}}
+\renewcommand*\l@section{\@dottedtocline{1}{1.5em}{4.5em}}
+\renewcommand*\l@subsection{\@dottedtocline{2}{3.8em}{5.0em}}
 \makeatother
 \begin{document}
 
@@ -137,7 +140,7 @@ TEXCOCO, EDO. MÉX. \hspace{3cm}AGOSTO 2026 \\
 \end{center}
 \end{minipage}
 \end{titlepage}
-\spacing{1.5}   
+\setstretch{1.5}   
 \pagenumbering{Roman} \setcounter{page}{2}
 \input{capitulos/_autorizacion}
 \newpage
@@ -166,12 +169,12 @@ TEXCOCO, EDO. MÉX. \hspace{3cm}AGOSTO 2026 \\
 \pagenumbering{arabic} \setcounter{page}{1} % Números arábigos para el contenido principal
 
 
-\include{capitulos/capitulo1}
-\include{capitulos/capitulo2}
-\include{capitulos/capitulo3}
-\include{capitulos/capitulo4}
-\include{capitulos/capitulo5}
-\include{capitulos/anexos}
+\input{capitulos/capitulo1}
+\input{capitulos/capitulo2}
+\input{capitulos/capitulo3}
+\input{capitulos/capitulo4}
+\input{capitulos/capitulo5}
+\input{capitulos/anexos}
 
 %\bibliographystyle{IEEEtran}
 %\addcontentsline{toc}{chapter}{Referencias}

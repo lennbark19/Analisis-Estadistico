@@ -1,0 +1,21 @@
+services:
+  compile:
+    image: texlive/texlive:latest
+    working_dir: /workdir
+    volumes:
+      - .:/workdir
+    command: latexmk -pdf -interaction=nonstopmode tesis.tex
+
+  watch:
+    image: texlive/texlive:latest
+    working_dir: /workdir
+    volumes:
+      - .:/workdir
+    command: latexmk -pvc -pdf -interaction=nonstopmode tesis.tex
+
+  clean:
+    image: texlive/texlive:latest
+    working_dir: /workdir
+    volumes:
+      - .:/workdir
+    command: sh -c "latexmk -c tesis.tex && rm -f *.aux *.bbl *.bcf *.blg *.fdb_latexmk *.fls *.lof *.log *.lot *.out *.run.xml *.toc capitulos/*.aux"

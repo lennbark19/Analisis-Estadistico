@@ -1,22 +1,20 @@
 \chapter{Desarrollo}
 
-En este capítulo se describe el proceso de diseño, construcción e implementación de la Plataforma de Análisis Estadístico Académico para la Universidad Politécnica de Texcoco, abarcando desde el marco metodológico adoptado hasta la arquitectura técnica del sistema, el modelo de datos, el desarrollo del backend y frontend, el procesamiento de información estadística y la infraestructura de despliegue.
+En este capítulo se describe el proceso de diseño, construcción e implementación de la Plataforma de Análisis Estadístico Académico para la Universidad Politécnica de Texcoco, abarcando desde el marco metodológico adoptado hasta la especificación de requerimientos, la arquitectura técnica del sistema, el modelo de base de datos, el desarrollo del backend y frontend, el procesamiento analítico de información estadística y la infraestructura de despliegue continuo.
 
 % ============================================================
 \section{Metodología: Kanban}
 \label{sec:metodologia-kanban}
 % ============================================================
 
-Para el desarrollo de la plataforma se adoptó \textbf{Kanban} como metodología ágil ligera, la cual pertenece al marco de las metodologías ágiles y se fundamenta en la gestión visual del flujo de trabajo. A diferencia de otras metodologías ágiles que estructuran el trabajo en iteraciones fijas (sprints), Kanban propone un \textbf{flujo continuo} donde las tareas avanzan de forma progresiva por un tablero visual dividido en columnas que representan los estados del proceso.
-
-El término Kanban proviene del japonés y significa \textit{señal visual} o \textit{tarjeta}. Esta metodología fue desarrollada originalmente por Toyota en la industria manufacturera y posteriormente adaptada al desarrollo de software por David J. Anderson, quien formuló los principios y prácticas esenciales del método.
+Para el desarrollo de la plataforma se adoptó \textbf{Kanban} como metodología ágil ligera, fundamentada en la gestión visual del flujo de trabajo \cite{anderson2010}. A diferencia de los marcos que estructuran el desarrollo en iteraciones fijas (\textit{sprints}), Kanban propone un \textbf{flujo continuo} donde las tareas avanzan de forma progresiva por un tablero visual dividido en columnas que representan los estados del proceso. El término proviene del japonés (\textit{señal visual} o \textit{tarjeta}) y fue concebido originalmente por Toyota en la manufactura para ser posteriormente adaptado a la ingeniería de software por David J. Anderson, quien formuló sus principios y prácticas esenciales \cite{anderson2010}.
 
 \subsection{Principios de Kanban Aplicados al Proyecto}
 
 Los cuatro principios fundamentales de Kanban que guiaron el desarrollo de esta plataforma son:
 
 \begin{enumerate}
-    \item \textbf{Visualización del flujo de trabajo:} Todas las tareas del proyecto (funcionalidades, correcciones, mejoras de esquema de base de datos) se representaron como tarjetas en un tablero, permitiendo al equipo identificar el estado de avance de cada componente en todo momento.
+    \item \textbf{Visualización del flujo de trabajo:} Todas las tareas del proyecto (funcionalidades, correcciones, optimización del esquema de base de datos) se representaron como tarjetas en un tablero, permitiendo al equipo identificar el estado de avance de cada componente en todo momento.
 
     \item \textbf{Limitación del trabajo en progreso (WIP --- Work In Progress):} En cada etapa del tablero se limitó el número de tareas activas simultáneamente. Esto evitó la sobrecarga del equipo y aseguró que cada módulo fuera completado y validado antes de iniciar el siguiente.
 
@@ -25,7 +23,6 @@ Los cuatro principios fundamentales de Kanban que guiaron el desarrollo de esta 
     \item \textbf{Mejora continua (Kaizen):} Durante el desarrollo se realizaron reuniones periódicas de revisión en las que se analizaron cuellos de botella, se corrigieron decisiones de diseño previas y se refinaron tanto el esquema de datos como las interfaces de usuario.
 \end{enumerate}
 
-\newpage
 \subsection{Tablero Kanban del Proyecto}
 
 El tablero Kanban utilizado durante el desarrollo se organizó en cinco columnas principales:
@@ -40,9 +37,9 @@ El tablero Kanban utilizado durante el desarrollo se organizó en cinco columnas
 \hline
 \textbf{Análisis} & Tareas en estudio de factibilidad técnica, definición del modelo de datos o diseño de la interfaz. \\
 \hline
-\textbf{En Desarrollo} & Tarjeta activamente codificada. WIP máximo: 2 tarjetas simultáneas. \\
+\textbf{En Desarrollo} & Tarjeta activamente codificada. Límite WIP: 2 tarjetas simultáneas. \\
 \hline
-\textbf{En Pruebas} & Funcionalidad implementada bajo verificación con pruebas automatizadas (pytest) y revisión manual. \\
+\textbf{En Pruebas} & Funcionalidad implementada bajo verificación con pruebas automatizadas (\texttt{pytest}) y revisión manual. \\
 \hline
 \textbf{Desplegado} & Funcionalidad integrada a la rama principal y disponible en el entorno de producción mediante CI/CD. \\
 \hline
@@ -52,17 +49,14 @@ El tablero Kanban utilizado durante el desarrollo se organizó en cinco columnas
 
 \subsection{Tarjetas Kanban Principales del Proyecto}
 
-En el Anexo \ref{anexo:kanban-migraciones} se resumen las tarjetas de trabajo más significativas que transitaron por el tablero Kanban a lo largo del desarrollo, asociadas a su correspondiente migración de base de datos.
-
-
-
-La progresión de estas tarjetas evidencia un desarrollo guiado por la retroalimentación continua de los usuarios de la Dirección Académica: cada reunión de revisión generó nuevas tarjetas o modificó las existentes, reflejando el principio ágil de \textit{responder al cambio sobre seguir un plan}.
+En el Anexo \ref{anexo:kanban-migraciones} se resumen las tarjetas de trabajo más significativas que transitaron por el tablero Kanban a lo largo del desarrollo, asociadas a su correspondiente migración de base de datos. La progresión de estas tarjetas evidencia un desarrollo guiado por la retroalimentación continua de los usuarios de la Dirección Académica: cada reunión de revisión generó nuevas tarjetas o modificó las existentes, reflejando el principio ágil de \textit{responder al cambio sobre seguir un plan}.
 
 % ============================================================
 \section{Requerimientos del Sistema}
+\label{sec:requerimientos}
 % ============================================================
 
-El documento oficial correspondiente al levantamiento de requisitos del sistema, el cual ha sido validado y firmado por los usuarios de la Dirección Académica, se encuentra adjunto en el Anexo \ref{anexo:levantamiento_requisitos}.
+El documento oficial correspondiente al levantamiento y especificación de requisitos del sistema, el cual ha sido validado y firmado por los usuarios de la Dirección Académica de la Universidad Politécnica de Texcoco, se encuentra adjunto en el Anexo \ref{anexo:levantamiento_requisitos}.
 
 % ============================================================
 \section{Arquitectura del Sistema}
@@ -71,7 +65,7 @@ El documento oficial correspondiente al levantamiento de requisitos del sistema,
 El sistema adopta una \textbf{arquitectura de tres capas} en su concepción lógica, implementada físicamente mediante contenedores Docker orquestados con Docker Compose. El flujo de tráfico se estructura de la siguiente manera:
 
 \begin{center}
-$ \texttt{Nginx (Puerto 80)} \longrightarrow \begin{cases} \texttt{React SPA} & \text{(archivos estáticos)} \\ \texttt{FastAPI} & \text{(peticiones /api/*)} \end{cases} \longrightarrow \begin{cases} \texttt{PostgreSQL 16} \\ \texttt{Redis 7} \longleftrightarrow \texttt{Celery Worker} \end{cases} $
+$ \texttt{Nginx (Puerto 80/443)} \longrightarrow \begin{cases} \texttt{React SPA} & \text{(archivos estáticos)} \\ \texttt{FastAPI} & \text{(peticiones /api/*)} \end{cases} \longrightarrow \begin{cases} \texttt{PostgreSQL 16} \\ \texttt{Redis 7} \longleftrightarrow \texttt{Celery Worker} \end{cases} $
 \end{center}
 
 \subsection{Capa de Presentación (Frontend)}
@@ -194,8 +188,16 @@ El módulo de carga de archivos es el componente más complejo del sistema. Su d
     \item La interfaz del usuario consulta periódicamente el estado del job hasta que el procesamiento concluye.
 \end{enumerate}
 
-El sistema define 7 tipos de dataset con sus campos obligatorios, opcionales, valores permitidos y restricciones numéricas:
-\texttt{matricula}, \texttt{evaluacion\_academica}, \texttt{titulacion}, \texttt{evaluacion\_docente}, \texttt{becas}, \texttt{discapacidad} y \texttt{etnia}.
+El sistema define 7 tipos de datasets estructurados con sus correspondientes reglas de validación y restricciones:
+\begin{itemize}
+    \item \texttt{matricula}: Registro de matrícula general, nuevo ingreso, bajas y desglose por género.
+    \item \texttt{evaluacion\_academica}: Calificaciones y promedios por programa educativo.
+    \item \texttt{titulacion}: Cohortes generacionales, egresados y titulados.
+    \item \texttt{evaluacion\_docente}: Calificaciones a docentes asignadas por estudiantes y directivos.
+    \item \texttt{becas}: Distribución de apoyos y becas institucionales.
+    \item \texttt{discapacidad}: Caracterización del alumnado con necesidades especiales.
+    \item \texttt{etnia}: Registro de pertenencia a pueblos y comunidades originarias.
+\end{itemize}
 
 % ============================================================
 \section{Cálculo de Indicadores Académicos}
@@ -221,9 +223,9 @@ Eficiencia Terminal & $ET = \dfrac{CE}{MG} \times 100$ \\
 \hline
 Índice de Titulación & $IT = \dfrac{TIT}{CE} \times 100$ \\
 \hline
-Cobertura & $COB = \dfrac{M}{PEE}$ \\
+Cobertura & $COB = \dfrac{M}{PEE} \times 100$ \\
 \hline
-Absorción NMS & $ABS = \dfrac{E_{NMS}}{NI}$ \\
+Absorción NMS & $ABS = \dfrac{NI}{E_{NMS}} \times 100$ \\
 \hline
 \end{tabular}
 \caption{Fórmulas matemáticas de los indicadores institucionales.}
@@ -260,128 +262,126 @@ Auditoría & \texttt{/admin/auditoria} & Admin general \\
 \caption{Módulos principales de la interfaz de usuario.}
 \end{table}
 
-Los tableros gráficos utilizan Apache ECharts para renderizar gráficas de barras comparativas, líneas de tendencia temporal y gráficas de pastel. El estado asíncrono de las peticiones HTTP se gestiona con TanStack Query, que maneja automáticamente los estados de carga, error y éxito, así como la invalidación y revalidación de datos en caché cuando se completa una nueva carga de archivo.
+Los tableros gráficos utilizan Apache ECharts para renderizar gráficas de barras comparativas, líneas de tendencia temporal y diagramas de distribución. El estado asíncrono de las peticiones HTTP se gestiona con TanStack Query, que maneja automáticamente los estados de carga, error y éxito, así como la invalidación y revalidación de datos en caché cuando se completa una nueva carga de archivo.
 
 % ============================================================
 \section{Infraestructura y Despliegue}
 % ============================================================
 
-Además de programar la aplicación, fue necesario preparar el lugar donde esta se ejecutaría de forma permanente y accesible para el personal de la Dirección Académica. Esta sección describe, de manera general, cómo se acondicionó el servidor que aloja la plataforma y de qué manera las tarjetas del tablero Kanban correspondientes a la columna \textit{Desplegado} (Sección \ref{anexo:kanban-migraciones}) llegan a convertirse en un sistema realmente disponible en internet.
+El aprovisionamiento de la infraestructura y el diseño de la topología de despliegue se orientaron a garantizar la alta disponibilidad, seguridad y portabilidad de la plataforma. Esta sección detalla la configuración del servidor de producción, los mecanismos de red y la automatización del despliegue continuo (CI/CD).
 
-\subsection{Preparación del Servidor}
+\subsection{Aprovisionamiento y Seguridad del Servidor Host}
 
-El sistema se aloja en un equipo físico con sistema operativo Ubuntu Linux, dedicado a mantener en funcionamiento los servicios de la universidad las 24 horas del día. Antes de instalar la plataforma fue necesario:
-
-\begin{itemize}
-    \item Configurar el acceso remoto y administrativo al equipo mediante el protocolo SSH, de forma que el sistema pudiera instalarse, actualizarse y supervisarse sin necesidad de tener acceso físico a la máquina.
-    \item Instalar Docker, la herramienta encargada de ejecutar la aplicación de manera aislada y ordenada (véase la Sección \ref{sec:docker-infra}).
-    \item Configurar un cortafuegos (\textit{firewall}) que únicamente permite el paso de las conexiones estrictamente necesarias para el funcionamiento del sistema, bloqueando cualquier otro intento de acceso al servidor.
-\end{itemize}
-
-\subsection{Publicación del Sistema en Internet}
-
-Dado que el servidor no cuenta con una dirección de internet fija (esto ocurre comúnmente en conexiones residenciales o institucionales de bajo costo, donde la dirección puede cambiar de vez en cuando), fue necesario emplear un servicio de \textbf{DNS dinámico}. Este servicio mantiene actualizado, de manera automática y cada pocos minutos, el nombre de dominio de la plataforma (\texttt{estadistica.ddns.net}) para que siempre apunte a la dirección real del servidor, sin importar si esta cambia con el tiempo. Gracias a esto, los usuarios de la Dirección Académica pueden acceder al sistema escribiendo siempre el mismo nombre en su navegador, sin necesidad de conocer ni actualizar manualmente ninguna dirección técnica.
-
-\subsection{Cifrado de las Comunicaciones (HTTPS)}
-
-Toda la información que viaja entre el navegador del usuario y el servidor —incluyendo las contraseñas y los datos académicos— se transmite de forma cifrada mediante el protocolo HTTPS. El certificado digital que hace posible este cifrado fue obtenido de manera gratuita a través de la autoridad certificadora \textit{Let's Encrypt}, utilizando la herramienta \texttt{certbot}, la cual además se encarga de renovar automáticamente el certificado antes de que expire, sin requerir intervención manual.
-
-\subsection{Nginx como Puerta de Entrada del Sistema}
-
-Todas las peticiones que llegan al servidor pasan primero por Nginx, que funciona como una especie de recepcionista: recibe cada conexión entrante, decide hacia dónde debe redirigirla y devuelve la respuesta correspondiente. En el caso de esta plataforma, Nginx cumple tres funciones principales:
+El sistema se aloja en un servidor físico dedicado con sistema operativo Ubuntu Server Linux. Para garantizar la seguridad e integridad del host se implementaron las siguientes directivas:
 
 \begin{itemize}
-    \item Redirige automáticamente las conexiones que llegan sin cifrar (HTTP) hacia su versión seguras (HTTPS).
-    \item Reenvía cada solicitud del usuario hacia el contenedor de la aplicación que corresponde, sin que el usuario perciba que, internamente, el sistema está dividido en varios componentes independientes.
-    \item Publica de forma directa algunos archivos de consulta pública del proyecto, como los manuales de usuario y los diagramas del sistema.
+    \item \textbf{Acceso Remoto Seguro:} Configuración de acceso administrativo mediante el protocolo SSH utilizando autenticación por llaves criptográficas públicas/privadas, deshabilitando el acceso directo de root y contraseñas por texto plano.
+    \item \textbf{Aislamiento por Contenedores:} Instalación del motor Docker y Docker Compose para ejecutar todos los servicios en espacios de nombres (\textit{namespaces}) y grupos de control (\textit{cgroups}) aislados (véase la Sección \ref{sec:docker-infra}).
+    \item \textbf{Políticas de Cortafuegos (UFW):} Configuración estricta de cortafuegos perimetral (\textit{Uncomplicated Firewall}), cerrando todos los puertos innecesarios y permitiendo únicamente el tráfico sobre los puertos 22 (SSH administrativo), 80 (HTTP) y 443 (HTTPS).
 \end{itemize}
 
-\subsection{Empaquetado de la Aplicación con Contenedores Docker}
+\subsection{Resolución de Dominio y Enrutamiento Dinámico (DDNS)}
+
+Dado que el enlace de red institucional disponía de direccionamiento IP público dinámico, se integró un cliente de \textbf{DNS Dinámico (DDNS)} para mantener sincronizado el Nombre de Dominio Completamente Calificado (FQDN \texttt{estadistica.ddns.net}) con la IP pública del servidor en intervalos regulares. Esto garantiza que el personal directivo acceda de forma constante y transparente sin verse afectado por reasignaciones de IP en el enlace de telecomunicaciones.
+
+\subsection{Seguridad en Tránsito y Certificados SSL/TLS (HTTPS)}
+
+Todo el tráfico entre los navegadores de los usuarios y el servidor se transmite cifrado bajo el protocolo HTTPS utilizando algoritmos modernos de TLS 1.3. La plataforma implementa un certificado digital X.509 emitido por la autoridad certificadora \textit{Let's Encrypt}, gestionado mediante la herramienta \texttt{certbot} bajo el protocolo ACME, el cual ejecuta tareas programadas para la renovación automática antes del vencimiento del certificado sin requerir intervención manual.
+
+\subsection{Nginx como Proxy Inverso y Servidor Perimetral}
+
+Nginx se configuró como el punto de entrada único perimetral del sistema, desempeñando tres funciones críticas de arquitectura:
+
+\begin{itemize}
+    \item \textbf{Redirección HTTPS Obligatoria:} Redirección automática de todas las solicitudes entrantes en HTTP (puerto 80) hacia su versión cifrada HTTPS (puerto 443).
+    \item \textbf{Enrutamiento Inverso de Servicios:} Despacho de tráfico hacia el contenedor del backend FastAPI para rutas bajo el prefijo \texttt{/api/*} y servicio de alto rendimiento con encabezados de compresión Gzip para los archivos estáticos de React SPA.
+    \item \textbf{Publicación Controlada de Documentación:} Exposición segura de documentación técnica del proyecto, incluyendo los manuales de usuario y diagramas de arquitectura.
+\end{itemize}
+
+\subsection{Virtualización con Contenedores Docker}
 \label{sec:docker-infra}
 
-Para evitar los problemas comunes de instalación (``en mi computadora sí funciona''), la aplicación completa se empaquetó mediante \textbf{Docker}, una herramienta que permite ejecutar cada componente del sistema dentro de un contenedor: un entorno aislado y autosuficiente que ya incluye todo lo necesario para funcionar (lenguaje de programación, librerías y configuración), sin depender de lo que esté instalado en el servidor. Esto garantiza que el sistema se comporte exactamente igual en el equipo de desarrollo que en el servidor de producción.
+Para mitigar la divergencia de configuraciones entre entornos de desarrollo y producción (eliminando el antipatrón de dependencias locales del sistema operativo), la plataforma se empaquetó mediante contenedores de software compatibles con el estándar OCI (\textit{Open Container Initiative}).
 
-Mediante Docker Compose se orquestan 5 contenedores que trabajan de manera coordinada dentro de una red privada y aislada:
+Mediante Docker Compose se orquestan 5 contenedores interconectados a través de una red virtual privada y segura:
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|l|l|l|}
+\begin{tabular}{|l|l|p{7.5cm}|}
 \hline
-\textbf{Servicio} & \textbf{Imagen base} & \textbf{Función} \\
+\textbf{Servicio} & \textbf{Imagen Base} & \textbf{Función en la Arquitectura} \\
 \hline
-\texttt{postgres} & PostgreSQL 16 & Base de datos principal \\
-\texttt{redis} & Redis 7 Alpine & Broker de mensajería \\
-\texttt{backend} & Python 3.12 Slim & API FastAPI + Uvicorn \\
-\texttt{worker} & Python 3.12 Slim & Worker Celery \\
-\texttt{frontend} & Nginx Alpine & Serve SPA + Proxy inverso \\
+\texttt{postgres} & PostgreSQL 16 & Almacenamiento relacional persistente \\
+\hline
+\texttt{redis} & Redis 7 Alpine & Broker de mensajería y caché en memoria \\
+\hline
+\texttt{backend} & Python 3.12 Slim & API REST con FastAPI y Uvicorn \\
+\hline
+\texttt{worker} & Python 3.12 Slim & Procesamiento asíncrono con Celery \\
+\hline
+\texttt{frontend} & Nginx Alpine & Servidor de SPA y Proxy Inverso perimetral \\
 \hline
 \end{tabular}
-\caption{Contenedores Docker utilizados en la infraestructura.}
+\caption{Servicios y contenedores orquestados en Docker Compose.}
 \end{table}
 
-Un script de instalación (\texttt{start.sh}) automatiza la puesta en marcha completa del sistema: genera las contraseñas y claves de seguridad del entorno de manera aleatoria, construye los contenedores, espera a que la base de datos esté lista, aplica las migraciones pendientes y crea la cuenta del administrador inicial, de modo que el sistema quede operativo con una sola instrucción.
+Un script de inicialización (\texttt{start.sh}) automatiza la puesta en marcha: genera variables de entorno criptográficas seguras, construye las imágenes, ejecuta las migraciones de Alembic y siembra el usuario administrador inicial.
 
-\subsection{Despliegue Automático y Continuo (CI/CD)}
+\subsection{Integración y Despliegue Continuo (CI/CD)}
 
-En congruencia con el principio de \textit{flujo continuo} de la metodología Kanban descrito en la Sección \ref{sec:metodologia-kanban}, el paso de una funcionalidad terminada hacia el entorno de producción no se realiza de forma manual. En su lugar, el propio servidor funciona como un ``ejecutor'' (\textit{runner}) de GitHub Actions: cada vez que se integra una nueva versión del código a la rama principal del repositorio, el servidor recibe la notificación de manera automática y ejecuta, sin intervención humana, los siguientes pasos:
+En concordancia con el principio de \textit{flujo continuo} de Kanban (Sección \ref{sec:metodologia-kanban}), el despliegue a producción se automatizó mediante un \textit{runner} propio de GitHub Actions configurado en el servidor host:
 
 \begin{enumerate}
-    \item Descarga la versión más reciente del código fuente desde el repositorio.
-    \item Reconstruye únicamente los contenedores cuyo código haya cambiado.
-    \item Aplica las migraciones de base de datos pendientes.
-    \item Reinicia los servicios afectados, restableciendo la disponibilidad del sistema en cuestión de segundos.
+    \item Al realizar un \textit{merge} o \textit{push} en la rama principal (\texttt{main}), GitHub Actions notifica automáticamente al servidor.
+    \item El runner descarga los últimos cambios del repositorio.
+    \item Reconstruye de forma incremental únicamente las imágenes de los contenedores modificados.
+    \item Aplica las migraciones de base de datos pendientes con Alembic.
+    \item Reinicia los contenedores afectados con tiempo de inactividad mínimo (\textit{zero-downtime deployment}).
 \end{enumerate}
 
-Esta automatización reduce considerablemente el margen de error humano durante el despliegue y permite que las mejoras solicitadas por la Dirección Académica estén disponibles para su uso poco después de haber sido validadas, tal como lo señala el tablero Kanban del proyecto.
-
-Para el entorno de desarrollo, el script \texttt{dev.sh} levanta todos los servicios con \textit{hot-reload} activo: los cambios en el código del backend o del frontend se reflejan instantáneamente sin necesidad de reconstruir los contenedores.
+Para el entorno de desarrollo local, el script \texttt{dev.sh} habilita el modo \textit{hot-reload} tanto en FastAPI como en Vite, permitiendo reflejar cambios de código instantáneamente.
 
 % ============================================================
 \section{Pruebas}
 % ============================================================
 
-La estrategia de pruebas del sistema cubre los componentes más críticos de la lógica de negocio mediante pruebas automatizadas ejecutadas con \textbf{pytest}.
+La estrategia de pruebas del sistema cubre los componentes más críticos de la lógica de negocio mediante pruebas automatizadas ejecutadas con \textbf{pytest} \cite{myers2011, pressman2020}.
 
 \subsection{Pruebas Unitarias}
 
 Se implementaron pruebas unitarias para las funciones de cálculo de fórmulas y los servicios de validación de datos:
 
 \begin{itemize}
-    \item \textbf{Fórmulas estadísticas:} Se verificó que la función de cálculo de matrícula actual respete la fórmula oficial $M = T - B_r - B_d + NI$ y que el cálculo de porcentaje maneje correctamente el caso de denominador cero.
+    \item \textbf{Fórmulas estadísticas:} Se verificó que la función de cálculo de matrícula actual respete la fórmula oficial $M = T - B_r - B_d + NI$ y que el cálculo de porcentajes maneje de forma segura denominadores iguales a cero sin generar excepciones de división por cero.
 
-    \item \textbf{Procesador CSV:} Se probaron los siguientes escenarios:
+    \item \textbf{Procesador CSV y Validación de Esquemas:} Se cubrieron los siguientes casos de prueba:
     \begin{itemize}
-        \item Rechazo de filas con tipos de datos incorrectos (entero esperado, texto recibido).
-        \item Rechazo de filas con valores numéricos negativos.
-        \item Conversión de valores \texttt{NaN} opcionales a \texttt{None} para compatibilidad con la base de datos.
-        \item Normalización de valores a formas canónicas (ej. \texttt{p.a.} → \texttt{P.A.}).
-        \item Rechazo de puntajes fuera del rango permitido (1--10 para evaluación docente).
-        \item Rechazo de valores infinitos o no numéricos en campos de tipo flotante.
+        \item Rechazo de filas con tipos de datos inválidos (cadenas de texto en campos numéricos).
+        \item Rechazo de registros con valores numéricos negativos.
+        \item Conversión adecuada de valores nulos (\texttt{NaN}) a \texttt{None} para su persistencia en PostgreSQL.
+        \item Normalización de cadenas a formas canónicas institucionales (ej. \texttt{p.a.} $\rightarrow$ \texttt{P.A.}).
+        \item Restricción de puntajes de evaluación docente en el rango válido de 1 a 10.
+        \item Detección y descarte de valores infinitos (\texttt{Inf}) en campos flotantes.
     \end{itemize}
 \end{itemize}
 
 \subsection{Pruebas de Validación de Reglas de Negocio}
 
-Se automatizaron pruebas para las validaciones que requieren contexto de la base de datos:
+Se automatizaron pruebas de integración para validar la coherencia contextual en base de datos:
 
 \begin{itemize}
-    \item \textbf{Validación de becas tipo ``Madres solteras'':} Se verificó que el sistema rechace registros con sexo masculino para este tipo de beca y que la cantidad de madres solteras no pueda superar el total de mujeres matriculadas en el mismo programa y ciclo.
-    \item \textbf{Validación de ciclos en catálogo:} Se verificó que el sistema rechace datos de ciclos escolares que no existan en el catálogo de ciclos generacionales habilitados.
-    \item \textbf{Análisis de archivos Excel:} Se probó la detección automática de hojas, encabezados y mapeo de columnas en archivos con estructuras no estándar.
-    \item \textbf{Detección de cambios en re-cargas:} Se verificó el módulo de comparación de datos que identifica filas nuevas, modificadas y sin cambios entre una carga previa y la nueva.
+    \item \textbf{Regla de becas para madres solteras:} Se validó que el sistema rechace registros de becas de maternidad asignados al sexo masculino y que la cantidad de becarias no supere el total de mujeres matriculadas en el periodo correspondiente.
+    \item \textbf{Validación contra catálogo de ciclos generacionales:} Verificación de que el sistema rechace datasets con ciclos escolares no registrados previamente en el catálogo institucional.
+    \item \textbf{Análisis de hojas de cálculo complejas (Excel):} Pruebas de detección automática de libros multidimensionales, cabeceras desplazadas y mapeo semántico de columnas.
+    \item \textbf{Detección de diferencias en recargas (\textit{diff upsert}):} Verificación del clasificador de registros que categoriza filas nuevas, modificadas e idénticas en recargas masivas.
 \end{itemize}
 
-\subsection{Herramientas de Calidad de Código}
+\subsection{Herramientas de Calidad y Análisis Estático de Código}
 
-Adicionalmente a las pruebas funcionales, el proyecto aplica las siguientes herramientas de verificación estática configuradas en \texttt{pyproject.toml}:
+Adicionalmente a las pruebas funcionales, se configuró un pipeline de calidad de código en \texttt{pyproject.toml}:
 
 \begin{itemize}
-    \item \textbf{Ruff:} Linter con reglas de estilo, complejidad, buenas prácticas y seguridad.
-    \item \textbf{Mypy (modo estricto):} Verificación estática de tipos en todo el código del backend.
-    \item \textbf{pytest-cov:} Generación de informes de cobertura de código de las pruebas.
+    \item \textbf{Ruff:} Análisis estático de código para garantizar el apego a estándares PEP 8, detección de vulnerabilidades y reducción de complejidad ciclomática.
+    \item \textbf{Mypy (modo estricto):} Verificación estática de tipos en todo el backend para evitar errores de tipo en tiempo de ejecución.
+    \item \textbf{pytest-cov:} Medición continua de la cobertura de código en la suite de pruebas unitarias.
 \end{itemize}
-
-\newpage
-
-
-

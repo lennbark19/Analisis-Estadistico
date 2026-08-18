@@ -3,8 +3,7 @@
 \section*{ANEXOS}
 
 \appendix
-\renewcommand{\thesection}{Anexo \Alph{section}} 
-\addtocontents{toc}{\protect\fixAnexoToc}
+\renewcommand{\thesection}{Anexo \Alph{section}}
 
 
 
@@ -104,4 +103,11 @@ K-13 & Desglose por sexo en becas y caracterización & Desplegado \\
 \label{anexo:levantamiento_requisitos}
 El documento oficial del levantamiento de requisitos firmado se adjunta en las siguientes páginas.
 
-\includepdf[pages=-]{LevantamientoRequisitosFIRMADO.pdf}
+\IfFileExists{LevantamientoRequisitosFIRMADO.pdf}{%
+    \includepdf[pages=-]{LevantamientoRequisitosFIRMADO.pdf}%
+}{%
+    \vspace{1cm}
+    \begin{center}
+        \textit{[Nota: El archivo LevantamientoRequisitosFIRMADO.pdf se incluirá cuando esté disponible]}
+    \end{center}
+}

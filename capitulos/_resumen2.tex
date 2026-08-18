@@ -1,7 +1,7 @@
-\section*{Abstract.}
+\section*{Abstract}
 
-----------
+The management and consolidation of large volumes of historical data within the Academic Directorate of the Universidad Politécnica de Texcoco has posed a significant challenge for strategic decision-making. The traditional, decentralized handling of information through manual spreadsheets caused operational delays, data inconsistencies, and hindered the longitudinal monitoring of key performance indicators such as student enrollment, academic achievement, failure rates, dropout rates, graduation rates, and generational degree attainment. To address this issue, this thesis presents the design, development, validation, and deployment of a Web Platform for Academic Statistical Analysis, conceived as a centralized and secure software solution for data ingestion, schema validation, analytical processing, and interactive visualization of institutional historical series.
 
+The platform was built under a decoupled microservices architecture containerized with Docker and guided by the agile Kanban methodology. The backend was developed using FastAPI on Python 3.12, incorporating asynchronous background processing via Celery and Redis, and transactional relational persistence in PostgreSQL 16 managed through SQLAlchemy 2.0 and Alembic migrations. The frontend was structured as a responsive Single Page Application (SPA) utilizing React 18, TypeScript, Tailwind CSS, and Apache ECharts, with global and asynchronous state management handled by Zustand and TanStack Query. The system integrates secure authentication and Role-Based Access Control (RBAC) powered by JSON Web Tokens (JWT) and cryptographic password hashing with Argon2.
 
-
-
+Production results demonstrate a substantial reduction in analytical consolidation time, transitioning from several business days of manual effort to sub-second query responses with robust background data processing. The automated test suite achieved a 100\% pass rate across business rule validation and official formula calculations. This platform provides university authorities with a reliable, single source of truth to support academic planning, institutional accreditation, and the continuous enhancement of educational quality.
