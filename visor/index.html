@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visor de Tesis - Análisis estadístico para área de dirección académica escolar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #0b0f19;
+      --bg-surface: #111827;
+      --bg-sidebar: #0e1526;
+      --bg-hover: #1f293d;
+      --bg-active: #2563eb;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --border-color: #1f293d;
+      --accent: #3b82f6;
+      --accent-glow: rgba(59, 130, 246, 0.25);
+      --page-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      --card-bg: #161f33;
+    }
+
+    [data-theme="light"] {
+      --bg-main: #e2e8f0;
+      --bg-surface: #ffffff;
+      --bg-sidebar: #f8fafc;
+      --bg-hover: #f1f5f9;
+      --bg-active: #2563eb;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --accent: #2563eb;
+      --accent-glow: rgba(37, 99, 235, 0.15);
+      --page-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.05);
+      --card-bg: #ffffff;
+    }
+
+    [data-theme="sepia"] {
+      --bg-main: #dfd8c8;
+      --bg-surface: #f4ecd8;
+      --bg-sidebar: #ece4cf;
+      --bg-hover: #e2dac4;
+      --bg-active: #a16207;
+      --text-main: #433422;
+      --text-muted: #786650;
+      --border-color: #d6ccb4;
+      --accent: #b45309;
+      --accent-glow: rgba(180, 83, 9, 0.2);
+      --page-shadow: 0 15px 30px rgba(67, 52, 34, 0.15);
+      --card-bg: #f7f1e1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* TOP NAVBAR */
+    header {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-color);
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      z-index: 50;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.15);
+    }
+
+    .header-left, .header-center, .header-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .doc-title-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .badge-pdf {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .doc-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      max-width: 320px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-main);
+      height: 36px;
+      padding: 0 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.15s ease;
+    }
+
+    .btn:hover {
+      background: var(--bg-hover);
+      border-color: var(--border-color);
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn.active {
+      background: var(--bg-active);
+      color: #fff;
+    }
+
+    .btn-icon {
+      width: 36px;
+      padding: 0;
+    }
+
+    .btn svg {
+      width: 18px;
+      height: 18px;
+      stroke-width: 2;
+    }
+
+    .divider {
+      width: 1px;
+      height: 24px;
+      background-color: var(--border-color);
+      margin: 0 4px;
+    }
+
+    /* Page Navigation Control */
+    .page-nav-controls {
+      display: flex;
+      align-items: center;
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 2px 4px;
+    }
+
+    .page-input {
+      width: 44px;
+      height: 28px;
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      outline: none;
+    }
+
+    .page-total {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      margin-right: 6px;
+    }
+
+    .zoom-text {
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      color: var(--text-muted);
+      min-width: 48px;
+      text-align: center;
+    }
+
+    /* MAIN CONTENT LAYOUT */
+    .app-body {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 320px;
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s ease;
+      z-index: 20;
+    }
+
+    .sidebar.collapsed {
+      width: 0;
+      transform: translateX(-100%);
+      overflow: hidden;
+      border-right: none;
+    }
+
+    .sidebar-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--bg-surface);
+    }
+
+    .sidebar-tab {
+      flex: 1;
+      padding: 12px 0;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .sidebar-tab:hover {
+      color: var(--text-main);
+      background: var(--bg-hover);
+    }
+
+    .sidebar-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+      background: transparent;
+    }
+
+    .sidebar-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+    }
+
+    .sidebar-content::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .sidebar-content::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 3px;
+    }
+
+    /* TOC TREE */
+    .toc-item {
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 3px;
+      transition: all 0.15s;
+    }
+
+    .toc-item:hover {
+      background: var(--bg-hover);
+      color: var(--text-main);
+    }
+
+    .toc-item.active {
+      background: var(--card-bg);
+      color: var(--accent);
+      font-weight: 600;
+      border-left: 3px solid var(--accent);
+    }
+
+    .toc-item .toc-page {
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      opacity: 0.7;
+    }
+
+    .toc-chapter {
+      font-weight: 700;
+      color: var(--text-main);
+      margin-top: 10px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 10px;
+    }
+
+    /* THUMBNAILS GRID */
+    .thumbnails-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .thumbnail-card {
+      background: var(--card-bg);
+      border: 2px solid transparent;
+      border-radius: 8px;
+      padding: 6px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .thumbnail-card:hover {
+      border-color: var(--border-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .thumbnail-card.active {
+      border-color: var(--accent);
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    .thumbnail-img-wrapper {
+      position: relative;
+      aspect-ratio: 1 / 1.294;
+      background: #fff;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .thumbnail-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .thumbnail-num {
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      margin-top: 6px;
+      color: var(--text-muted);
+    }
+
+    /* VIEWER CONTAINER */
+    .viewer-wrapper {
+      flex: 1;
+      height: 100%;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 20px;
+      scroll-behavior: smooth;
+    }
+
+    .viewer-wrapper::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    .viewer-wrapper::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 5px;
+    }
+
+    .viewer-canvas {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+      transition: transform 0.15s ease-out;
+      transform-origin: top center;
+    }
+
+    .page-container {
+      position: relative;
+      box-shadow: var(--page-shadow);
+      border-radius: 4px;
+      background: #ffffff;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .page-container img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .page-number-tag {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      color: #ffffff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .page-container:hover .page-number-tag {
+      opacity: 1;
+    }
+
+    /* SPREAD MODE (2 Pages side by side) */
+    .mode-spread .viewer-canvas {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      max-width: 1700px;
+    }
+
+    .mode-spread .page-container {
+      max-width: calc(50% - 15px);
+    }
+
+    /* SINGLE PAGE MODE */
+    .mode-single .page-container {
+      display: none;
+    }
+
+    .mode-single .page-container.visible {
+      display: block;
+    }
+
+    /* FLOATING BOTTOM BAR */
+    .floating-bar {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 6px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      z-index: 40;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    [data-theme="light"] .floating-bar {
+      background: rgba(255, 255, 255, 0.85);
+      border-color: rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    /* MODAL KEYBOARD SHORTCUTS */
+    .shortcuts-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .shortcuts-modal.open {
+      display: flex;
+    }
+
+    .shortcuts-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      width: 440px;
+      padding: 24px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    }
+
+    .shortcut-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 13px;
+    }
+
+    kbd {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 900px) {
+      .doc-title { display: none; }
+      .sidebar { position: absolute; height: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-left">
+      <button class="btn btn-icon" id="btn-toggle-sidebar" title="Alternar panel lateral (T)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></svg>
+      </button>
+      <div class="doc-title-box">
+        <span class="badge-pdf">PDF</span>
+        <span class="doc-title" title="Análisis estadístico para área de dirección académica escolar">Tesis - UPTex (84 páginas)</span>
+      </div>
+    </div>
+
+    <!-- CENTER CONTROLS -->
+    <div class="header-center">
+      <div class="page-nav-controls">
+        <button class="btn btn-icon" id="btn-prev-page" title="Página anterior (←)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <input type="number" id="input-page" class="page-input" value="1" min="1" max="84">
+        <span class="page-total">/ 84</span>
+        <button class="btn btn-icon" id="btn-next-page" title="Página siguiente (→)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- ZOOM CONTROLS -->
+      <button class="btn btn-icon" id="btn-zoom-out" title="Reducir (-)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M8 11h6"/></svg>
+      </button>
+      <span class="zoom-text" id="zoom-value">100%</span>
+      <button class="btn btn-icon" id="btn-zoom-in" title="Aumentar (+)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg>
+      </button>
+      <button class="btn btn-icon" id="btn-zoom-fit" title="Ajustar al ancho">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
+      </button>
+    </div>
+
+    <!-- RIGHT ACTIONS -->
+    <div class="header-right">
+      <!-- VIEW MODE -->
+      <button class="btn btn-icon active" id="btn-mode-continuous" title="Modo Desplazamiento Continuo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+      </button>
+      <button class="btn btn-icon" id="btn-mode-single" title="Modo Página Individual">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="3" width="16" height="18" rx="2"/></svg>
+      </button>
+      <button class="btn btn-icon" id="btn-mode-spread" title="Modo Doble Página (Libro)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+      </button>
+
+      <div class="divider"></div>
+
+      <!-- THEME -->
+      <button class="btn btn-icon" id="btn-theme" title="Cambiar tema de color">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
+
+      <!-- FULLSCREEN -->
+      <button class="btn btn-icon" id="btn-fullscreen" title="Pantalla completa (F)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
+      </button>
+
+      <!-- DOWNLOAD -->
+      <a href="tesis.pdf" download="tesis.pdf" class="btn" style="background: var(--accent); color: white; border: none; text-decoration: none;" title="Descargar archivo original tesis.pdf">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Descargar
+      </a>
+
+      <!-- HELP -->
+      <button class="btn btn-icon" id="btn-help" title="Atajos de teclado">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- BODY -->
+  <div class="app-body">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-tabs">
+        <div class="sidebar-tab active" id="tab-toc">Índice</div>
+        <div class="sidebar-tab" id="tab-thumbs">Miniaturas (84)</div>
+      </div>
+
+      <!-- TOC VIEW -->
+      <div class="sidebar-content" id="toc-container">
+        <div class="toc-item" data-page="1"><span>Portada</span><span class="toc-page">1</span></div>
+        <div class="toc-item" data-page="2"><span>Autorización</span><span class="toc-page">2</span></div>
+        <div class="toc-item" data-page="3"><span>Agradecimientos</span><span class="toc-page">3</span></div>
+        <div class="toc-item" data-page="5"><span>Dedicatoria</span><span class="toc-page">5</span></div>
+        <div class="toc-item" data-page="7"><span>Resumen</span><span class="toc-page">7</span></div>
+        <div class="toc-item" data-page="8"><span>Abstract</span><span class="toc-page">8</span></div>
+        <div class="toc-item" data-page="9"><span>Índice General</span><span class="toc-page">9</span></div>
+        <div class="toc-item" data-page="13"><span>Índice de Figuras</span><span class="toc-page">13</span></div>
+        <div class="toc-item" data-page="14"><span>Índice de Tablas</span><span class="toc-page">14</span></div>
+
+        <div class="toc-item toc-chapter" data-page="15"><span>Capítulo 1: Introducción</span><span class="toc-page">15</span></div>
+        <div class="toc-item" data-page="16" style="padding-left:22px;"><span>1.1 Antecedentes</span><span class="toc-page">16</span></div>
+        <div class="toc-item" data-page="21" style="padding-left:22px;"><span>1.2 Planteamiento del Problema</span><span class="toc-page">21</span></div>
+        <div class="toc-item" data-page="23" style="padding-left:22px;"><span>1.3 Justificación</span><span class="toc-page">23</span></div>
+        <div class="toc-item" data-page="24" style="padding-left:22px;"><span>1.4 Objetivos</span><span class="toc-page">24</span></div>
+        <div class="toc-item" data-page="25" style="padding-left:22px;"><span>1.5 Estado del Arte</span><span class="toc-page">25</span></div>
+
+        <div class="toc-item toc-chapter" data-page="30"><span>Capítulo 2: Marco Teórico</span><span class="toc-page">30</span></div>
+        <div class="toc-item" data-page="30" style="padding-left:22px;"><span>2.1 Arquitectura Web Moderna</span><span class="toc-page">30</span></div>
+        <div class="toc-item" data-page="32" style="padding-left:22px;"><span>2.2 Tecnologías Backend (FastAPI, Celery...)</span><span class="toc-page">32</span></div>
+        <div class="toc-item" data-page="34" style="padding-left:22px;"><span>2.3 Tecnologías Frontend (React, TypeScript...)</span><span class="toc-page">34</span></div>
+        <div class="toc-item" data-page="36" style="padding-left:22px;"><span>2.4 Base de Datos e Infraestructura</span><span class="toc-page">36</span></div>
+        <div class="toc-item" data-page="38" style="padding-left:22px;"><span>2.5 Seguridad y Autenticación</span><span class="toc-page">38</span></div>
+
+        <div class="toc-item toc-chapter" data-page="39"><span>Capítulo 3: Desarrollo</span><span class="toc-page">39</span></div>
+        <div class="toc-item" data-page="39" style="padding-left:22px;"><span>3.1 Metodología Kanban</span><span class="toc-page">39</span></div>
+        <div class="toc-item" data-page="41" style="padding-left:22px;"><span>3.2 Requerimientos del Sistema</span><span class="toc-page">41</span></div>
+        <div class="toc-item" data-page="42" style="padding-left:22px;"><span>3.3 Arquitectura del Sistema</span><span class="toc-page">42</span></div>
+        <div class="toc-item" data-page="43" style="padding-left:22px;"><span>3.4 Modelo de Base de Datos</span><span class="toc-page">43</span></div>
+        <div class="toc-item" data-page="45" style="padding-left:22px;"><span>3.5 Backend API REST</span><span class="toc-page">45</span></div>
+        <div class="toc-item" data-page="46" style="padding-left:22px;"><span>3.6 Procesamiento con Pandas</span><span class="toc-page">46</span></div>
+        <div class="toc-item" data-page="47" style="padding-left:22px;"><span>3.7 Indicadores Académicos</span><span class="toc-page">47</span></div>
+        <div class="toc-item" data-page="48" style="padding-left:22px;"><span>3.8 Frontend y Módulos de Pantalla</span><span class="toc-page">48</span></div>
+        <div class="toc-item" data-page="58" style="padding-left:22px;"><span>3.9 Infraestructura y Despliegue</span><span class="toc-page">58</span></div>
+        <div class="toc-item" data-page="61" style="padding-left:22px;"><span>3.10 Pruebas Unitarias y de Reglas</span><span class="toc-page">61</span></div>
+
+        <div class="toc-item toc-chapter" data-page="64"><span>Capítulo 4: Resultados</span><span class="toc-page">64</span></div>
+        <div class="toc-item" data-page="64" style="padding-left:22px;"><span>4.1 Rendimiento y Procesamiento</span><span class="toc-page">64</span></div>
+        <div class="toc-item" data-page="66" style="padding-left:22px;"><span>4.2 Pruebas Automatizadas y Calidad</span><span class="toc-page">66</span></div>
+
+        <div class="toc-item toc-chapter" data-page="68"><span>Capítulo 5: Conclusiones</span><span class="toc-page">68</span></div>
+
+        <div class="toc-item toc-chapter" data-page="69"><span>ANEXOS</span><span class="toc-page">69</span></div>
+        <div class="toc-item" data-page="69" style="padding-left:22px;"><span>Anexo A: Manuales</span><span class="toc-page">69</span></div>
+        <div class="toc-item" data-page="71" style="padding-left:22px;"><span>Anexo B: Diagramas</span><span class="toc-page">71</span></div>
+        <div class="toc-item" data-page="76" style="padding-left:22px;"><span>Anexo C: Tarjetas Kanban</span><span class="toc-page">76</span></div>
+        <div class="toc-item" data-page="77" style="padding-left:22px;"><span>Anexo D: Requisitos Firmado</span><span class="toc-page">77</span></div>
+
+        <div class="toc-item toc-chapter" data-page="82"><span>Referencias</span><span class="toc-page">82</span></div>
+      </div>
+
+      <!-- THUMBNAILS VIEW -->
+      <div class="sidebar-content" id="thumbs-container" style="display: none;">
+        <div class="thumbnails-grid" id="thumbs-grid"></div>
+      </div>
+    </aside>
+
+    <!-- VIEWER WRAPPER -->
+    <main class="viewer-wrapper" id="viewer-wrapper">
+      <div class="viewer-canvas" id="viewer-canvas" style="width: 800px;">
+        <!-- Pages will be dynamically inserted here -->
+      </div>
+    </main>
+
+    <!-- FLOATING QUICK JUMP -->
+    <div class="floating-bar">
+      <button class="btn btn-icon" id="float-prev" title="Página anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <span style="font-size: 13px; font-weight: 600; font-family: 'JetBrains Mono', monospace;" id="float-counter">1 / 84</span>
+      <button class="btn btn-icon" id="float-next" title="Página siguiente">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- SHORTCUTS MODAL -->
+  <div class="shortcuts-modal" id="shortcuts-modal">
+    <div class="shortcuts-box">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="font-size: 16px; font-weight: 700;">Atajos de Teclado</h3>
+        <button class="btn btn-icon" id="btn-close-modal">✕</button>
+      </div>
+      <div class="shortcut-row"><span>Página siguiente</span><div><kbd>→</kbd> <kbd>Espacio</kbd> <kbd>AvPág</kbd></div></div>
+      <div class="shortcut-row"><span>Página anterior</span><div><kbd>←</kbd> <kbd>RePág</kbd></div></div>
+      <div class="shortcut-row"><span>Aumentar Zoom</span><div><kbd>+</kbd> o <kbd>Ctrl + Rueda</kbd></div></div>
+      <div class="shortcut-row"><span>Reducir Zoom</span><div><kbd>-</kbd></div></div>
+      <div class="shortcut-row"><span>Restablecer Zoom (100%)</span><div><kbd>0</kbd></div></div>
+      <div class="shortcut-row"><span>Alternar Barra Lateral</span><div><kbd>T</kbd></div></div>
+      <div class="shortcut-row"><span>Pantalla Completa</span><div><kbd>F</kbd></div></div>
+      <div class="shortcut-row"><span>Primera / Última Página</span><div><kbd>Inicio</kbd> / <kbd>Fin</kbd></div></div>
+    </div>
+  </div>
+
+  <script>
+    const TOTAL_PAGES = 84;
+    let currentPage = 1;
+    let currentZoom = 1.0;
+    let baseWidth = 800;
+    let viewMode = 'continuous'; // 'continuous' | 'single' | 'spread'
+    const themes = ['dark', 'light', 'sepia'];
+    let themeIndex = 0;
+
+    const viewerCanvas = document.getElementById('viewer-canvas');
+    const viewerWrapper = document.getElementById('viewer-wrapper');
+    const inputPage = document.getElementById('input-page');
+    const zoomValue = document.getElementById('zoom-value');
+    const floatCounter = document.getElementById('float-counter');
+    const thumbsGrid = document.getElementById('thumbs-grid');
+    const tocContainer = document.getElementById('toc-container');
+    const thumbsContainer = document.getElementById('thumbs-container');
+    const sidebar = document.getElementById('sidebar');
+
+    // Build Pages in Main Canvas
+    function initPages() {
+      for (let i = 1; i <= TOTAL_PAGES; i++) {
+        const padNum = String(i).padStart(2, '0');
+        const pageDiv = document.createElement('div');
+        pageDiv.className = 'page-container' + (i === 1 ? ' visible' : '');
+        pageDiv.id = `page-${i}`;
+        pageDiv.dataset.page = i;
+
+        const img = document.createElement('img');
+        img.src = `paginas/page-${padNum}.png`;
+        img.alt = `Página ${i}`;
+        img.loading = i <= 3 ? 'eager' : 'lazy';
+
+        const tag = document.createElement('div');
+        tag.className = 'page-number-tag';
+        tag.textContent = `Página ${i} de ${TOTAL_PAGES}`;
+
+        pageDiv.appendChild(img);
+        pageDiv.appendChild(tag);
+        viewerCanvas.appendChild(pageDiv);
+
+        // Thumbnail
+        const thumbDiv = document.createElement('div');
+        thumbDiv.className = 'thumbnail-card' + (i === 1 ? ' active' : '');
+        thumbDiv.id = `thumb-${i}`;
+        thumbDiv.dataset.page = i;
+        thumbDiv.onclick = () => goToPage(i);
+
+        const thumbWrapper = document.createElement('div');
+        thumbWrapper.className = 'thumbnail-img-wrapper';
+        const thumbImg = document.createElement('img');
+        thumbImg.src = `paginas/page-${padNum}.png`;
+        thumbImg.loading = 'lazy';
+        thumbWrapper.appendChild(thumbImg);
+
+        const thumbNum = document.createElement('div');
+        thumbNum.className = 'thumbnail-num';
+        thumbNum.textContent = `Pág. ${i}`;
+
+        thumbDiv.appendChild(thumbWrapper);
+        thumbDiv.appendChild(thumbNum);
+        thumbsGrid.appendChild(thumbDiv);
+      }
+    }
+
+    function updateZoom(newZoom) {
+      currentZoom = Math.min(Math.max(newZoom, 0.4), 3.0);
+      zoomValue.textContent = Math.round(currentZoom * 100) + '%';
+      viewerCanvas.style.width = Math.round(baseWidth * currentZoom) + 'px';
+    }
+
+    function fitToWidth() {
+      const availableWidth = viewerWrapper.clientWidth - 80;
+      baseWidth = availableWidth;
+      currentZoom = 1.0;
+      updateZoom(1.0);
+    }
+
+    function goToPage(pageNum) {
+      if (pageNum < 1) pageNum = 1;
+      if (pageNum > TOTAL_PAGES) pageNum = TOTAL_PAGES;
+      currentPage = pageNum;
+      inputPage.value = pageNum;
+      floatCounter.textContent = `${pageNum} / ${TOTAL_PAGES}`;
+
+      // Update sidebar active states
+      document.querySelectorAll('.toc-item').forEach(el => {
+        el.classList.toggle('active', parseInt(el.dataset.page) === pageNum);
+      });
+      document.querySelectorAll('.thumbnail-card').forEach(el => {
+        el.classList.toggle('active', parseInt(el.dataset.page) === pageNum);
+      });
+
+      if (viewMode === 'single') {
+        document.querySelectorAll('.page-container').forEach(el => {
+          el.classList.toggle('visible', parseInt(el.dataset.page) === pageNum);
+        });
+        viewerWrapper.scrollTop = 0;
+      } else {
+        const targetPage = document.getElementById(`page-${pageNum}`);
+        if (targetPage) {
+          targetPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    }
+
+    // Scroll Spy for continuous mode
+    viewerWrapper.addEventListener('scroll', () => {
+      if (viewMode === 'single') return;
+      const pages = document.querySelectorAll('.page-container');
+      const wrapperTop = viewerWrapper.getBoundingClientRect().top;
+      
+      let closestPage = 1;
+      let minDistance = Infinity;
+
+      pages.forEach(p => {
+        const rect = p.getBoundingClientRect();
+        const distance = Math.abs(rect.top - wrapperTop);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestPage = parseInt(p.dataset.page);
+        }
+      });
+
+      if (closestPage !== currentPage) {
+        currentPage = closestPage;
+        inputPage.value = currentPage;
+        floatCounter.textContent = `${currentPage} / ${TOTAL_PAGES}`;
+        document.querySelectorAll('.thumbnail-card').forEach(el => {
+          el.classList.toggle('active', parseInt(el.dataset.page) === currentPage);
+        });
+      }
+    });
+
+    // Event Listeners
+    document.getElementById('btn-prev-page').onclick = () => goToPage(currentPage - 1);
+    document.getElementById('btn-next-page').onclick = () => goToPage(currentPage + 1);
+    document.getElementById('float-prev').onclick = () => goToPage(currentPage - 1);
+    document.getElementById('float-next').onclick = () => goToPage(currentPage + 1);
+
+    inputPage.onchange = (e) => goToPage(parseInt(e.target.value) || 1);
+
+    document.getElementById('btn-zoom-in').onclick = () => updateZoom(currentZoom + 0.15);
+    document.getElementById('btn-zoom-out').onclick = () => updateZoom(currentZoom - 0.15);
+    document.getElementById('btn-zoom-fit').onclick = fitToWidth;
+
+    // View Modes
+    const modeBtns = {
+      continuous: document.getElementById('btn-mode-continuous'),
+      single: document.getElementById('btn-mode-single'),
+      spread: document.getElementById('btn-mode-spread'),
+    };
+
+    function setViewMode(mode) {
+      viewMode = mode;
+      document.body.classList.remove('mode-single', 'mode-spread');
+      Object.values(modeBtns).forEach(b => b.classList.remove('active'));
+      modeBtns[mode].classList.add('active');
+
+      if (mode === 'single') {
+        document.body.classList.add('mode-single');
+        goToPage(currentPage);
+      } else if (mode === 'spread') {
+        document.body.classList.add('mode-spread');
+        document.querySelectorAll('.page-container').forEach(el => el.classList.remove('visible'));
+      } else {
+        document.querySelectorAll('.page-container').forEach(el => el.classList.remove('visible'));
+        goToPage(currentPage);
+      }
+    }
+
+    modeBtns.continuous.onclick = () => setViewMode('continuous');
+    modeBtns.single.onclick = () => setViewMode('single');
+    modeBtns.spread.onclick = () => setViewMode('spread');
+
+    // Sidebar tabs
+    const tabToc = document.getElementById('tab-toc');
+    const tabThumbs = document.getElementById('tab-thumbs');
+    tabToc.onclick = () => {
+      tabToc.classList.add('active');
+      tabThumbs.classList.remove('active');
+      tocContainer.style.display = 'block';
+      thumbsContainer.style.display = 'none';
+    };
+    tabThumbs.onclick = () => {
+      tabThumbs.classList.add('active');
+      tabToc.classList.remove('active');
+      tocContainer.style.display = 'none';
+      thumbsContainer.style.display = 'block';
+      const activeThumb = document.getElementById(`thumb-${currentPage}`);
+      if (activeThumb) activeThumb.scrollIntoView({ block: 'center' });
+    };
+
+    // TOC Clicks
+    document.querySelectorAll('.toc-item').forEach(item => {
+      item.onclick = () => {
+        const page = parseInt(item.dataset.page);
+        if (page) goToPage(page);
+      };
+    });
+
+    // Sidebar Toggle
+    document.getElementById('btn-toggle-sidebar').onclick = () => {
+      sidebar.classList.toggle('collapsed');
+    };
+
+    // Theme Switch
+    document.getElementById('btn-theme').onclick = () => {
+      themeIndex = (themeIndex + 1) % themes.length;
+      document.documentElement.setAttribute('data-theme', themes[themeIndex]);
+    };
+
+    // Fullscreen
+    document.getElementById('btn-fullscreen').onclick = () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    };
+
+    // Shortcuts Modal
+    const modal = document.getElementById('shortcuts-modal');
+    document.getElementById('btn-help').onclick = () => modal.classList.add('open');
+    document.getElementById('btn-close-modal').onclick = () => modal.classList.remove('open');
+    modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('open'); };
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      if (e.target === inputPage) return;
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+        e.preventDefault();
+        goToPage(currentPage + 1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        goToPage(currentPage - 1);
+      } else if (e.key === '+' || e.key === '=') {
+        e.preventDefault();
+        updateZoom(currentZoom + 0.15);
+      } else if (e.key === '-') {
+        e.preventDefault();
+        updateZoom(currentZoom - 0.15);
+      } else if (e.key === '0') {
+        e.preventDefault();
+        baseWidth = 800;
+        updateZoom(1.0);
+      } else if (e.key.toLowerCase() === 't') {
+        sidebar.classList.toggle('collapsed');
+      } else if (e.key.toLowerCase() === 'f') {
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+        else document.exitFullscreen();
+      } else if (e.key === 'Home') {
+        goToPage(1);
+      } else if (e.key === 'End') {
+        goToPage(TOTAL_PAGES);
+      } else if (e.key === 'Escape') {
+        modal.classList.remove('open');
+      }
+    });
+
+    // Zoom with Ctrl + Wheel
+    viewerWrapper.addEventListener('wheel', (e) => {
+      if (e.ctrlKey) {
+        e.preventDefault();
+        if (e.deltaY < 0) updateZoom(currentZoom + 0.1);
+        else updateZoom(currentZoom - 0.1);
+      }
+    }, { passive: false });
+
+    // Initialize
+    initPages();
+  </script>
+</body>
+</html>

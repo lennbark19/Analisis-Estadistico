@@ -1,0 +1,422 @@
+[
+  {
+    "page": 1,
+    "first": "UNIVERSIDAD POLITÉCNICA",
+    "second": "DE TEXCOCO"
+  },
+  {
+    "page": 2,
+    "first": "Análisis estadístico para área de dirección",
+    "second": "académica escolar"
+  },
+  {
+    "page": 3,
+    "first": "Agradecimientos.",
+    "second": "Expreso mi más profundo agradecimiento a mi familia por brindarme la oportunidad de"
+  },
+  {
+    "page": 4,
+    "first": "Agradecimientos.",
+    "second": "En primer lugar, quiero agradecer a Dios por concederme cada día el privilegio de vivir y por"
+  },
+  {
+    "page": 5,
+    "first": "Dedicatoria.",
+    "second": "Dedico este trabajo de titulación a mi familia y a mis padres, por su sacrificio y fe"
+  },
+  {
+    "page": 6,
+    "first": "Dedicatoria.",
+    "second": "A mí mismo, por estos cuatro años de esfuerzo constante, enfrentando el reto de"
+  },
+  {
+    "page": 7,
+    "first": "Resumen",
+    "second": "La toma de decisiones estratégicas en las instituciones de educación superior depende de la"
+  },
+  {
+    "page": 8,
+    "first": "Abstract",
+    "second": "VIII"
+  },
+  {
+    "page": 9,
+    "first": "Índice general",
+    "second": "Resumen"
+  },
+  {
+    "page": 10,
+    "first": "2.3.",
+    "second": "2.4."
+  },
+  {
+    "page": 11,
+    "first": "3.3.2.",
+    "second": "Capa de Lógica de Negocio (Backend) . . . . . . . . . . . . . . ."
+  },
+  {
+    "page": 12,
+    "first": "4. Resultados",
+    "second": "4.1."
+  },
+  {
+    "page": 13,
+    "first": "Índice de figuras",
+    "second": "1.1. Dashboard estadístico sobre la publicación de datos abiertos por parte de las"
+  },
+  {
+    "page": 14,
+    "first": "Índice de tablas",
+    "second": "1.1. Cuadro comparativo y justificación técnica del stack tecnológico. . . . . . . ."
+  },
+  {
+    "page": 15,
+    "first": "Capítulo 1",
+    "second": "Introducción."
+  },
+  {
+    "page": 16,
+    "first": "1.1.",
+    "second": "Antecedentes"
+  },
+  {
+    "page": 17,
+    "first": "Figura 1.1: Dashboard estadístico sobre la publicación de datos abiertos por parte de las",
+    "second": "Instituciones de la Función Ejecutiva en el portal de datos abiertos del Ecuador"
+  },
+  {
+    "page": 18,
+    "first": "Figura 1.2: Dashboard para departamento de ventas",
+    "second": "4. Baltazar Alcaraz, K. (2024). Revisión sistemática del uso de tecnologías inteligentes enfocadas en los procesos de las industrias sostenibles. Centro Nacional"
+  },
+  {
+    "page": 19,
+    "first": "identificar 21 tecnologías inteligentes, entre las cuales destacan cinco pilares fundamentales:",
+    "second": "el Internet de las Cosas (IoT), el aprendizaje automático (Machine Learning), los gemelos"
+  },
+  {
+    "page": 20,
+    "first": "que optimiza la toma de decisiones y facilita la implementación de intervenciones tempranas",
+    "second": "para la retención estudiantil."
+  },
+  {
+    "page": 21,
+    "first": "1.2.",
+    "second": "Planteamiento del problema"
+  },
+  {
+    "page": 22,
+    "first": "En la Universidad Politécnica de Texcoco, el área de Dirección Académica tiene la tarea de",
+    "second": "controlar y revisar datos muy importantes, como la cantidad de alumnos que entran y salen,"
+  },
+  {
+    "page": 23,
+    "first": "través de los años, como ver si los cambios que ha hecho la escuela realmente han servido a",
+    "second": "lo largo del tiempo. Todo esto afecta directamente la administración de la universidad, ya"
+  },
+  {
+    "page": 24,
+    "first": "estrategias de retención estudiantil, evaluar la calidad de sus programas educativos, facilitar",
+    "second": "auditorías y, en última instancia, elevar su nivel de excelencia académica."
+  },
+  {
+    "page": 25,
+    "first": "1.5.",
+    "second": "Estado del Arte y Justificación Tecnológica"
+  },
+  {
+    "page": 26,
+    "first": "Tailwind CSS frente a librerías de componentes predefinidos (Bootstrap,",
+    "second": "Material UI): Se optó por una arquitectura de estilos basada en clases de utilidad"
+  },
+  {
+    "page": 27,
+    "first": "de peticiones concurrentes por segundo con latencia mínima, valida los esquemas de",
+    "second": "entrada y salida mediante Pydantic y genera automáticamente la especificación y documentación interactiva bajo el estándar OpenAPI."
+  },
+  {
+    "page": 28,
+    "first": "tensivo de memoria. La sesión se gestiona mediante tokens JWT sin estado con ciclo",
+    "second": "de vida diferenciado (Access Token de 15 minutos y Refresh Token de 7 días)."
+  },
+  {
+    "page": 29,
+    "first": "Componente /",
+    "second": "Capa"
+  },
+  {
+    "page": 30,
+    "first": "Capítulo 2",
+    "second": "Marco Teórico."
+  },
+  {
+    "page": 31,
+    "first": "2.1.1.",
+    "second": "Aplicaciones de una Sola Página (Single Page Application"
+  },
+  {
+    "page": 32,
+    "first": "2.1.4.",
+    "second": "Mapeo Objeto-Relacional (ORM)"
+  },
+  {
+    "page": 33,
+    "first": "baja latencia. Adicionalmente, genera de manera automática la documentación interactiva",
+    "second": "de la API bajo el estándar OpenAPI."
+  },
+  {
+    "page": 34,
+    "first": "2.2.6.",
+    "second": "Celery"
+  },
+  {
+    "page": 35,
+    "first": "durante la programación de las vistas y flujos de datos. Esto asegura que la comunicación",
+    "second": "entre la API del backend y las vistas de React comparta exactamente las mismas interfaces"
+  },
+  {
+    "page": 36,
+    "first": "2.3.6.",
+    "second": "TanStack Query (React Query)"
+  },
+  {
+    "page": 37,
+    "first": "compresión de índices, garantizando la persistencia e integridad de las series históricas de",
+    "second": "los indicadores académicos."
+  },
+  {
+    "page": 38,
+    "first": "2.5.",
+    "second": "Seguridad y Autenticación"
+  },
+  {
+    "page": 39,
+    "first": "Capítulo 3",
+    "second": "Desarrollo"
+  },
+  {
+    "page": 40,
+    "first": "3.1.1.",
+    "second": "Principios de Kanban Aplicados al Proyecto"
+  },
+  {
+    "page": 41,
+    "first": "Columna",
+    "second": "Backlog"
+  },
+  {
+    "page": 42,
+    "first": "3.3.",
+    "second": "Arquitectura del Sistema"
+  },
+  {
+    "page": 43,
+    "first": "Redis 7: Actúa como broker de mensajería entre FastAPI y los workers de Celery,",
+    "second": "almacenando temporalmente las tareas de procesamiento pendientes y sus resultados."
+  },
+  {
+    "page": 44,
+    "first": "Entidad",
+    "second": "subsistemas"
+  },
+  {
+    "page": 45,
+    "first": "3.5.",
+    "second": "Backend: API REST con FastAPI"
+  },
+  {
+    "page": 46,
+    "first": "3.6.",
+    "second": "Procesamiento de Datos: Pandas y Celery"
+  },
+  {
+    "page": 47,
+    "first": "evaluacion_academica: Calificaciones y promedios por programa educativo.",
+    "second": "titulacion: Cohortes generacionales, egresados y titulados."
+  },
+  {
+    "page": 48,
+    "first": "Todos los indicadores soportan filtros dinámicos por subsistema, ciclo escolar, cuatrimestre y",
+    "second": "programa educativo, calculándose en tiempo real sobre los datos almacenados en PostgreSQL."
+  },
+  {
+    "page": 49,
+    "first": "de refresco de 7 días). La interfaz ofrece retroalimentación visual inmediata ante credenciales",
+    "second": "inválidas y adapta los elementos visuales según el esquema de color del sistema operativo"
+  },
+  {
+    "page": 50,
+    "first": "Figura 3.2: Tablero ejecutivo principal (Dashboard) con indicadores consolidados.",
+    "second": "3.8.3."
+  },
+  {
+    "page": 51,
+    "first": "Figura 3.3: Módulo de análisis de matrícula y distribución por programa educativo.",
+    "second": "3.8.4."
+  },
+  {
+    "page": 52,
+    "first": "Figura 3.4: Módulo de rendimiento académico y análisis de promedios por carrera.",
+    "second": "3.8.5."
+  },
+  {
+    "page": 53,
+    "first": "Figura 3.5: Módulo de análisis de bajas escolares por reprobación y deserción.",
+    "second": "3.8.6."
+  },
+  {
+    "page": 54,
+    "first": "Figura 3.6: Módulo de eficiencia terminal y seguimiento de cohortes generacionales.",
+    "second": "3.8.7."
+  },
+  {
+    "page": 55,
+    "first": "Figura 3.7: Módulo de evaluación docente: comparativa entre alumnos y directivos.",
+    "second": "3.8.8."
+  },
+  {
+    "page": 56,
+    "first": "Figura 3.8: Módulo de caracterización estudiantil, inclusión social y becas.",
+    "second": "3.8.9."
+  },
+  {
+    "page": 57,
+    "first": "Figura 3.9: Módulo de ingestión asíncrona de archivos y reporte de validación.",
+    "second": "3.8.10."
+  },
+  {
+    "page": 58,
+    "first": "Figura 3.10: Módulo de administración de usuarios y control de acceso por roles.",
+    "second": "3.9."
+  },
+  {
+    "page": 59,
+    "first": "Aislamiento por Contenedores: Instalación del motor Docker y Docker Compose",
+    "second": "para ejecutar todos los servicios en espacios de nombres (namespaces) y grupos de"
+  },
+  {
+    "page": 60,
+    "first": "Redirección HTTPS Obligatoria: Redirección automática de todas las solicitudes",
+    "second": "entrantes en HTTP (puerto 80) hacia su versión cifrada HTTPS (puerto 443)."
+  },
+  {
+    "page": 61,
+    "first": "3.9.6.",
+    "second": "Integración y Despliegue Continuo (CI/CD)"
+  },
+  {
+    "page": 62,
+    "first": "Procesador CSV y Validación de Esquemas: Se cubrieron los siguientes casos de",
+    "second": "prueba:"
+  },
+  {
+    "page": 63,
+    "first": "3.10.3.",
+    "second": "Herramientas de Calidad y Análisis Estático de Código"
+  },
+  {
+    "page": 64,
+    "first": "Capítulo 4",
+    "second": "Resultados"
+  },
+  {
+    "page": 65,
+    "first": "manuales y copiara celdas de forma repetitiva, un proceso que tomaba entre 3 y 5 días",
+    "second": "hábiles y presentaba una alta tasa de error humano en fórmulas."
+  },
+  {
+    "page": 66,
+    "first": "Broker (Redis 7): Consumo de memoria inferior a 25 MB para la administración de",
+    "second": "colas y estados de tareas."
+  },
+  {
+    "page": 67,
+    "first": "Todas las pruebas automatizadas se ejecutaron con un resultado del 100 % de aprobación,",
+    "second": "asegurando que el sistema prevenga la entrada de datos inconsistentes y garantice la exactitud"
+  },
+  {
+    "page": 68,
+    "first": "Capítulo 5",
+    "second": "Conclusiones"
+  },
+  {
+    "page": 69,
+    "first": "ANEXOS",
+    "second": "Anexo A."
+  },
+  {
+    "page": 70,
+    "first": "Figura 2: Manual de Usuario",
+    "second": "56"
+  },
+  {
+    "page": 71,
+    "first": "Anexo B.",
+    "second": "Diagramas"
+  },
+  {
+    "page": 72,
+    "first": "Anexo B.2.",
+    "second": "Diagrama de Dominio"
+  },
+  {
+    "page": 73,
+    "first": "Anexo B.3.",
+    "second": "Diagrama de Servicios"
+  },
+  {
+    "page": 74,
+    "first": "Anexo B.4.",
+    "second": "Diagrama de Flujo"
+  },
+  {
+    "page": 75,
+    "first": "Figura 7: Tablero Kanban",
+    "second": "61"
+  },
+  {
+    "page": 76,
+    "first": "Anexo C.",
+    "second": "Tarjetas Kanban y Migraciones"
+  },
+  {
+    "page": 77,
+    "first": "Anexo D.",
+    "second": "Levantamiento de Requisitos Firmado"
+  },
+  {
+    "page": 78,
+    "first": "",
+    "second": ""
+  },
+  {
+    "page": 79,
+    "first": "",
+    "second": ""
+  },
+  {
+    "page": 80,
+    "first": "",
+    "second": ""
+  },
+  {
+    "page": 81,
+    "first": "",
+    "second": ""
+  },
+  {
+    "page": 82,
+    "first": "Referencias",
+    "second": "[1] I. Sommerville, Software Engineering, 10.a ed. Harlow, England: Pearson Education,"
+  },
+  {
+    "page": 83,
+    "first": "[12] A. Solem y contributors, Celery: Distributed Task Queue, 2024. dirección: https :",
+    "second": "//docs.celeryq.dev/en/stable/"
+  },
+  {
+    "page": 84,
+    "first": "[25] A. Biryukov, D. Dinu y D. Khovratovich, «Argon2 Memory-Hard Function for Password Hashing and Proof-of-Work Applications,» Internet Engineering Task Force (IETF),",
+    "second": "RFC 9106, 2021. dirección: https://datatracker.ietf.org/doc/html/rfc9106"
+  }
+]
