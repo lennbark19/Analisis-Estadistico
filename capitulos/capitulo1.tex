@@ -1,10 +1,72 @@
 \chapter{Introducción.}
 
- La administración educativa moderna requiere de herramientas tecnológicas capaces de transformar datos operativos en información estratégica. El presente documento detalla el diseño y desarrollo de la Plataforma de Análisis Estadístico para la Dirección Académica Escolar, un sistema integral creado para optimizar la toma de decisiones institucionales mediante la automatización y el procesamiento centralizado de datos. El objetivo principal de esta plataforma es agilizar la gestión y el análisis de indicadores académicos críticos. 
- El sistema abarca módulos fundamentales para el entorno escolar, tales como el seguimiento de la matrícula, eficiencia, rendimiento, procesos de titulación, asignación de becas, caracterización estudiantil y evaluaciones docentes. Para proporcionar una perspectiva analítica precisa y evaluar la evolución de la institución, la plataforma consolida y analiza información histórica a un plazo de 3 años hacia el pasado, permitiendo así identificar tendencias, ciclos generacionales y áreas de oportunidad con base en datos reales.  
+ La administración educativa moderna requiere de herramientas tecnológicas capaces de transformar datos operativos en información estratégica. El presente documento detalla el diseño y desarrollo de la Plataforma de Análisis Estadístico para la Dirección Académica Escolar de la Universidad Politecnica de Texcoco, un sistema integral creado para optimizar la toma de decisiones institucionales mediante la automatización y el procesamiento centralizado de datos. El objetivo principal de esta plataforma es agilizar la gestión y el análisis de indicadores académicos críticos. 
+ El sistema abarca módulos fundamentales para el entorno escolar, tales como el seguimiento de la matrícula, eficiencia terminal, aprovechamiento académico, procesos de titulación, asignación de becas, caracterización estudiantil y evaluaciones docentes. Para proporcionar una perspectiva analítica precisa y evaluar la evolución de la institución, la plataforma consolida y analiza información histórica a un plazo de 3 años hacia el pasado, permitiendo así identificar tendencias, ciclos generacionales y áreas de oportunidad con base en datos reales.  
  A través de una arquitectura robusta que contempla el procesamiento de datos en segundo plano, validación de cargas masivas de archivos y la generación dinámica de reportes, el proyecto busca eliminar los cuellos de botella asociados al manejo manual de la información. Los siguientes apartados de este documento profundizan en las especificaciones, requerimientos de software, arquitectura del sistema y las decisiones tecnológicas implementadas para consolidar esta solución en beneficio de la administración escolar.
 
 
+
+
+ \section{Objetivo General}
+
+Desarrollar un sistema web para el análisis y visualización de indicadores institucionales de la Universidad Politécnica de Texcoco, que permita el ingreso automático de datos académicos y administrativos, su procesamiento mediante rutinas estadísticas, y la representación de resultados con gráficos dinámicos, con el fin de facilitar la toma de decisiones basada en evidencia y mejorar la gestión estratégica de la institución.
+
+\subsection{Objetivos especificos:}
+
+\begin{itemize}
+    \item Analizar y estructurar los conjuntos de datos históricos de la institución (archivos CSV de matrícula, aprovechamiento, titulación y evaluación docente) para diseñar el modelo de base de datos relacional que soportará el sistema.
+\end{itemize}
+
+ \begin{itemize}
+     \item Desarrollar rutinas de procesamiento estadístico y métricas (eficiencia terminal, índice de reprobación, análisis de evaluación docente) capaces de ejecutarse automáticamente tras la carga de nuevos datos, generando indicadores actualizados en tiempo real.
+ \end{itemize}
+
+ \begin{itemize}
+     \item Implementar una interfaz web responsiva con visualización de datos mediante gráficos interactivos (tableros tipo dashboard) que faciliten la interpretación de indicadores clave y la comparación histórica de métricas institucionales.
+ \end{itemize}
+
+ \begin{itemize}
+     \item Establecer un sistema de autenticación y perfiles de usuario seguro para restringir el acceso a información sensible y permitir que cada usuario interactúe únicamente con las funcionalidades pertinentes.
+ \end{itemize}
+
+ \begin{itemize}
+     \item Ejecutar pruebas integrales de rendimiento, validación de datos y usabilidad para verificar que la generación de las gráficas interactivas sea exacta, fluida y cumpla con los requerimientos operativos de la universidad.
+ \end{itemize}
+
+\newpage
+\section{Planteamiento del problema}
+
+
+La Dirección Académica de la Universidad Politécnica de Texcoco ha enfrentado históricamente el reto de gestionar un volumen creciente de información escolar sin contar con una herramienta informática centralizada y especializada para el análisis estadístico de sus indicadores clave. 
+Tradicionalmente, el almacenamiento y la administración de los datos institucionales se han delegado en hojas de cálculo electrónicas, específicamente archivos de Microsoft Excel. Si bien este método ha sido una solución accesible para el registro inicial de datos, 
+la escala operativa de la universidad ha superado las capacidades de esta herramienta, debido a que la información correspondiente a la matrícula, la asignación de becas, el rendimiento, la eficiencia terminal, los ciclos generacionales y los procesos de titulación se encuentra dispersa en múltiples archivos individuales, cada uno estructurado con complejas estructuras de varias hojas de trabajo. 
+Esta fragmentación de la información provoca que cuando surge la necesidad de consultar datos específicos o consolidados, el personal académico deba navegar de forma manual a través de decenas de pestañas y archivos independientes, volviendo el proceso de búsqueda y manejo de información sumamente tedioso, propenso a errores humanos y tardado, lo que disminuye drásticamente la capacidad de respuesta institucional. Asimismo, la evaluación del desempeño escolar requiere analizar la evolución académica con una perspectiva de al menos tres años hacia el pasado. 
+Realizar este análisis histórico cruzando múltiples hojas de cálculo incrementa exponencialmente el riesgo de duplicidad, pérdida de consistencia en los datos y errores en la aplicación de fórmulas estadísticas, además de impedir la generación dinámica e inmediata de reportes ejecutivos o tableros visuales para los directivos.
+
+
+\newpage
+En la Universidad Politécnica de Texcoco, el área de Dirección Académica tiene la tarea de controlar y revisar datos muy importantes, como la cantidad de alumnos que entran y salen, el rendimiento académico de los estudiantes, la eficiencia terminal, la titulación, las becas y las evaluaciones. 
+Toda esta información sirve para que las autoridades de la escuela puedan planear mejoras y saber qué pasos dar en el futuro. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{imagenes/anexo1.png}
+    \caption{Análisis de la situación actual}
+    \label{fig:situacion_actual_anexo1}
+\end{figure}
+El gran detalle es que hoy en día todo este registro se hace a mano guardando los datos en archivos de Excel individuales. 
+Aunque este sistema ha servido por un tiempo, la realidad es que trabajar así provoca muchos dolores de cabeza: es facilísimo cometer errores al escribir los datos, buscar información se vuelve una tarea muy pesada y las tablas no permiten ver los cambios de forma rápida o directa. 
+Esto hace que sea muy difícil notar a tiempo cosas urgentes, como qué alumnos están a punto de dejar la escuela o en qué cuatrimestres específicos los estudiantes están bajando sus calificaciones y necesitan apoyo extra. No contar con un programa moderno e inteligente en la oficina de Dirección Académica frena la posibilidad de vigilar cómo va la universidad día con día. 
+En la actualidad, para poder armar un informe o hacer una comparación de datos, el personal tiene que revisar manualmente carpetas llenas de hojas de cálculo, lo que quita muchísimo tiempo y retrasa la entrega de respuestas a los directivos. 
+Además, tener la información regada por tantas partes complica juntarla toda en un solo lugar y bloquea la oportunidad de hacer estudios más completos a través de los años, como ver si los cambios que ha hecho la escuela realmente han servido a lo largo del tiempo. Todo esto afecta directamente la administración de la universidad, ya que las decisiones tardan en tomarse y se vuelve muy difícil proponer mejoras basadas en datos reales y ordenados.
+
+
+\section{Justificación}
+
+La gestión eficiente de la información académica es un factor crítico para el desarrollo y la mejora continua de cualquier institución de educación superior. Cuatrimestre a cuatrimestre, la Universidad Politécnica de Texcoco genera una cantidad masiva de datos vitales, tales como registros de matrícula, índices de reprobación y deserción, tasas de eficiencia terminal y resultados de las evaluaciones docentes. Sin embargo, el almacenamiento y análisis de esta información a través de hojas de cálculo aisladas y archivos de texto plano (CSV) presenta limitaciones significativas. Este manejo manual no solo hace que la consolidación de los datos sea un proceso lento y susceptible a errores humanos, sino que dificulta la visualización rápida de tendencias históricas, retrasando la capacidad de respuesta administrativa.
+
+El desarrollo de este sistema web de indicadores institucionales se justifica por la necesidad imperante de modernizar, centralizar y automatizar el procesamiento de dichos datos. Al implementar una plataforma tecnológica que permita el ingreso directo de los archivos estructurados y los transforme en tableros interactivos (dashboards), se elimina la redundancia operativa y se garantiza la integridad de la información. Esto permitirá a los coordinadores y directivos realizar cruces de información complejos en cuestión de segundos, como comparar el desempeño docente con los índices de aprovechamiento, o consultar el histórico de titulación de las últimas generaciones sin necesidad de buscar en múltiples archivos físicos o digitales.
+
+Además del ahorro sustancial en tiempos de procesamiento administrativo, el mayor impacto de este proyecto radica en su aporte a la toma de decisiones. Dotar a la Universidad Politécnica de Texcoco de una herramienta de inteligencia de datos con control de acceso seguro asegurará que las autoridades cuenten con métricas precisas, actualizadas y fáciles de interpretar. En consecuencia, la institución tendrá una base empírica sólida para fundamentar sus estrategias de retención estudiantil, evaluar la calidad de sus programas educativos, facilitar auditorías y, en última instancia, elevar su nivel de excelencia académica.
 
 
 \section{Antecedentes}
@@ -67,130 +129,36 @@ Para solucionar este inconveniente, los autores aplicaron una investigación de 
 Los resultados permitieron poner en funcionamiento un dashboard de control académico en tiempo real que visualiza el progreso estudiantil por asignatura, nivel, paralelo y periodos parciales, identificando promedios críticos y asignaturas con mayores tasas de reprobación (como Cálculo e Informática). El tablero brindó a los tutores y a la comisión académica una visión clara del desempeño docente y del aprendizaje estudiantil, reduciendo los tiempos de atención ante situaciones adversas y promoviendo la autorregulación en los estudiantes. El estudio concluyó que la implementación de tableros analíticos interactivos es fundamental para mitigar la deserción temprana y elevar la calidad de la gestión educativa superior.
 
 \newpage
-\section{Planteamiento del problema}
 
+\section{Estado del Arte}
 
-La Dirección Académica de la Universidad Politécnica de Texcoco ha enfrentado históricamente el reto de gestionar un volumen creciente de información escolar sin contar con una herramienta informática centralizada y especializada para el análisis estadístico de sus indicadores clave. 
-Tradicionalmente, el almacenamiento y la administración de los datos institucionales se han delegado en hojas de cálculo electrónicas, específicamente archivos de Microsoft Excel. Si bien este método ha sido una solución accesible para el registro inicial de datos, 
-la escala operativa de la universidad ha superado las capacidades de esta herramienta, debido a que la información correspondiente a la matrícula, la asignación de becas, el rendimiento, la eficiencia terminal, los ciclos generacionales y los procesos de titulación se encuentra dispersa en múltiples archivos individuales, cada uno estructurado con complejas estructuras de varias hojas de trabajo. 
-Esta fragmentación de la información provoca que cuando surge la necesidad de consultar datos específicos o consolidados, el personal académico deba navegar de forma manual a través de decenas de pestañas y archivos independientes, volviendo el proceso de búsqueda y manejo de información sumamente tedioso, propenso a errores humanos y tardado, lo que disminuye drásticamente la capacidad de respuesta institucional. Asimismo, la evaluación del desempeño escolar requiere analizar la evolución académica con una perspectiva de al menos tres años hacia el pasado. 
-Realizar este análisis histórico cruzando múltiples hojas de cálculo incrementa exponencialmente el riesgo de duplicidad, pérdida de consistencia en los datos y errores en la aplicación de fórmulas estadísticas, además de impedir la generación dinámica e inmediata de reportes ejecutivos o tableros visuales para los directivos.
-
-
-\newpage
-En la Universidad Politécnica de Texcoco, el área de Dirección Académica tiene la tarea de controlar y revisar datos muy importantes, como la cantidad de alumnos que entran y salen, el rendimiento académico de los estudiantes, la eficiencia terminal, la titulación, las becas y las evaluaciones. 
-Toda esta información sirve para que las autoridades de la escuela puedan planear mejoras y saber qué pasos dar en el futuro. 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{imagenes/anexo1.png}
-    \caption{Análisis de la situación actual}
-    \label{fig:situacion_actual_anexo1}
-\end{figure}
-El gran detalle es que hoy en día todo este registro se hace a mano guardando los datos en archivos de Excel individuales. 
-Aunque este sistema ha servido por un tiempo, la realidad es que trabajar así provoca muchos dolores de cabeza: es facilísimo cometer errores al escribir los datos, buscar información se vuelve una tarea muy pesada y las tablas no permiten ver los cambios de forma rápida o directa. 
-Esto hace que sea muy difícil notar a tiempo cosas urgentes, como qué alumnos están a punto de dejar la escuela o en qué cuatrimestres específicos los estudiantes están bajando sus calificaciones y necesitan apoyo extra. No contar con un programa moderno e inteligente en la oficina de Dirección Académica frena la posibilidad de vigilar cómo va la universidad día con día. 
-En la actualidad, para poder armar un informe o hacer una comparación de datos, el personal tiene que revisar manualmente carpetas llenas de hojas de cálculo, lo que quita muchísimo tiempo y retrasa la entrega de respuestas a los directivos. 
-Además, tener la información regada por tantas partes complica juntarla toda en un solo lugar y bloquea la oportunidad de hacer estudios más completos a través de los años, como ver si los cambios que ha hecho la escuela realmente han servido a lo largo del tiempo. Todo esto afecta directamente la administración de la universidad, ya que las decisiones tardan en tomarse y se vuelve muy difícil proponer mejoras basadas en datos reales y ordenados.
-
-
-\section{Justificación}
-
-La gestión eficiente de la información académica es un factor crítico para el desarrollo y la mejora continua de cualquier institución de educación superior. Cuatrimestre a cuatrimestre, la Universidad Politécnica de Texcoco genera una cantidad masiva de datos vitales, tales como registros de matrícula, índices de reprobación y deserción, tasas de eficiencia terminal y resultados de las evaluaciones docentes. Sin embargo, el almacenamiento y análisis de esta información a través de hojas de cálculo aisladas y archivos de texto plano (CSV) presenta limitaciones significativas. Este manejo manual no solo hace que la consolidación de los datos sea un proceso lento y susceptible a errores humanos, sino que dificulta la visualización rápida de tendencias históricas, retrasando la capacidad de respuesta administrativa.
-
-El desarrollo de este sistema web de indicadores institucionales se justifica por la necesidad imperante de modernizar, centralizar y automatizar el procesamiento de dichos datos. Al implementar una plataforma tecnológica que ingiera directamente los archivos estructurados y los transforme en tableros interactivos (dashboards), se elimina la redundancia operativa y se garantiza la integridad de la información. Esto permitirá a los coordinadores y directivos realizar cruces de información complejos en cuestión de segundos, como comparar el desempeño docente con los índices de aprovechamiento, o consultar el histórico de titulación de las últimas generaciones sin necesidad de buscar en múltiples archivos físicos o digitales.
-
-Además del ahorro sustancial en tiempos de procesamiento administrativo, el mayor impacto de este proyecto radica en su aporte a la toma de decisiones. Dotar a la Universidad Politécnica de Texcoco de una herramienta de inteligencia de datos con control de acceso seguro asegurará que las autoridades cuenten con métricas precisas, actualizadas y fáciles de interpretar. En consecuencia, la institución tendrá una base empírica sólida para fundamentar sus estrategias de retención estudiantil, evaluar la calidad de sus programas educativos, facilitar auditorías y, en última instancia, elevar su nivel de excelencia académica.
-
-
- \section{Objetivo General}
-
-Desarrollar un sistema web para el análisis y visualización de indicadores institucionales de la Universidad Politécnica de Texcoco, que permita la ingestión automática de datos académicos y administrativos, su procesamiento mediante rutinas estadísticas, y la representación de resultados con gráficos dinámicos, con el fin de facilitar la toma de decisiones basada en evidencia y mejorar la gestión estratégica de la institución.
-
-\subsection{Objetivos especificos:}
-
-\begin{itemize}
-    \item Analizar y estructurar los conjuntos de datos históricos de la institución (archivos CSV de matrícula, aprovechamiento, titulación y evaluación docente) para diseñar el modelo de base de datos relacional que soportará el sistema.
-\end{itemize}
-
- \begin{itemize}
-     \item Desarrollar rutinas de procesamiento estadístico y métricas (eficiencia terminal, índice de reprobación, análisis de evaluación docente) capaces de ejecutarse automáticamente tras la carga de nuevos datos, generando indicadores actualizados en tiempo real.
- \end{itemize}
-
- \begin{itemize}
-     \item Implementar una interfaz web responsiva con visualización de datos mediante gráficos interactivos (tableros tipo dashboard) que faciliten la interpretación de indicadores clave y la comparación histórica de métricas institucionales.
- \end{itemize}
-
- \begin{itemize}
-     \item Establecer un sistema de autenticación y perfiles de usuario seguro para restringir el acceso a información sensible y permitir que cada usuario interactúe únicamente con las funcionalidades pertinentes.
- \end{itemize}
-
- \begin{itemize}
-     \item Ejecutar pruebas integrales de rendimiento, validación de datos y usabilidad para verificar que la generación de las gráficas interactivas sea exacta, fluida y cumpla con los requerimientos operativos de la universidad.
- \end{itemize}
-
-\section{Estado del Arte y Justificación Tecnológica}
-
-El diseño y desarrollo de la Plataforma de Análisis Estadístico Académico requirió una evaluación rigurosa del estado del arte en arquitecturas de software, paradigmas de procesamiento asíncrono y herramientas de visualización interactiva. A continuación, se presenta la justificación técnica de las tecnologías y versiones seleccionadas para cada una de las capas del sistema, contrastándolas frente a los paradigmas tradicionales y las alternativas evaluadas en el ecosistema actual de desarrollo de software.
+El diseño y desarrollo de la Plataforma de Análisis Estadístico Académico requirió una evaluación rigurosa en arquitecturas de software, paradigmas de procesamiento asíncrono y herramientas de visualización interactiva \cite{sommerville2016, pressman2020, fowler2002}. 
 
 \subsection{Capa de Presentación y Visualización de Datos (Frontend)}
 
 Para la construcción de la interfaz de usuario se seleccionó una arquitectura basada en \textbf{React 18} junto con el lenguaje \textbf{TypeScript} y la herramienta de construcción \textbf{Vite}:
 \begin{itemize}
-    \item \textbf{React 18 frente a React 17 y frameworks monolíticos (Angular, Vue):} React 18 incorpora el motor de renderizado concurrente (\textit{Concurrent React}), el cual permite clasificar las actualizaciones de la interfaz en prioritarias (interacciones del usuario) y transicionales (renderizado de gráficos complejos). Esto evita el bloqueo del hilo principal de ejecución en el navegador cuando se filtran grandes volúmenes de datos históricos. A diferencia de frameworks monolíticos como Angular, el enfoque modular basado en componentes funcionales desacoplados y \textit{hooks} agiliza el mantenimiento y la reutilización del código.
-    \item \textbf{TypeScript:} La adopción de TypeScript proporciona un sistema de tipado estático estricto que previene errores de discordancia de tipos en tiempo de desarrollo, asegurando la consistencia entre los esquemas de datos expuestos por la API REST y las estructuras consumidas por la interfaz de usuario.
-    \item \textbf{Vite frente a Webpack:} El uso de Vite reduce drásticamente los tiempos de compilación y recarga en caliente (\textit{Hot Module Replacement} - HMR) al aprovechar el estándar nativo de módulos ECMAScript (ESM) en el navegador, eliminando la sobrecarga de empaquetado inicial requerida por herramientas tradicionales como Webpack.
-    \item \textbf{Tailwind CSS frente a librerías de componentes predefinidos (Bootstrap, Material UI):} Se optó por una arquitectura de estilos basada en clases de utilidad atómicas. Su compilador \textit{Just-In-Time} (JIT) analiza el código fuente y genera exclusivamente el código CSS estrictamente utilizado en producción (\textit{tree-shaking}), logrando un tamaño de paquete mínimo, alta velocidad de carga y una personalización visual completa sin depender de plantillas rígidas.
-    \item \textbf{Apache ECharts frente a Chart.js y D3.js:} Para la visualización de los indicadores institucionales, se implementó Apache ECharts debido a su motor de renderizado acelerado por hardware capaz de alternar dinámicamente entre \textit{Canvas} y \textit{SVG}. Mientras que librerías como Chart.js presentan degradación en el rendimiento al manipular series temporales densas, ECharts ofrece un manejo eficiente de memoria, capacidades analíticas nativas (zoom dimensional, cálculo de tendencias, tooltips interactivos) e interactividad fluida.
+    \item \textbf{React 18 frente a React 17 y frameworks monolíticos (Angular, Vue):} React 18 \cite{react2024} incorpora el motor de renderizado concurrente (\textit{Concurrent React}), el cual permite clasificar las actualizaciones de la interfaz en prioritarias (interacciones del usuario) y transicionales (renderizado de gráficos complejos). Esto evita el bloqueo del hilo principal de ejecución en el navegador cuando se filtran grandes volúmenes de datos históricos. A diferencia de frameworks monolíticos como Angular, el enfoque modular basado en componentes funcionales desacoplados y \textit{hooks} agiliza el mantenimiento y la reutilización del código.
+    \item \textbf{TypeScript:} La adopción de TypeScript \cite{bierman2014} proporciona un sistema de tipado estático estricto que previene errores de discordancia de tipos en tiempo de desarrollo, asegurando la consistencia entre los esquemas de datos expuestos por la API REST y las estructuras consumidas por la interfaz de usuario.
+    \item \textbf{Vite frente a Webpack:} El uso de Vite \cite{you2024} reduce drásticamente los tiempos de compilación y recarga en caliente (\textit{Hot Module Replacement} - HMR) al aprovechar el estándar nativo de módulos ECMAScript (ESM) en el navegador, eliminando la sobrecarga de empaquetado inicial requerida por herramientas tradicionales como Webpack.
+    \item \textbf{Tailwind CSS frente a librerías de componentes predefinidos (Bootstrap, Material UI):} Se optó por una arquitectura de estilos basada en clases de utilidad atómicas con Tailwind CSS \cite{wathan2024}. Su compilador \textit{Just-In-Time} (JIT) analiza el código fuente y genera exclusivamente el código CSS estrictamente utilizado en producción (\textit{tree-shaking}), logrando un tamaño de paquete mínimo, alta velocidad de carga y una personalización visual completa sin depender de plantillas rígidas.
+    \item \textbf{Apache ECharts frente a Chart.js y D3.js:} Para la visualización de los indicadores institucionales, se implementó Apache ECharts \cite{echarts2018} debido a su motor de renderizado acelerado por hardware capaz de alternar dinámicamente entre \textit{Canvas} y \textit{SVG}. Mientras que librerías como Chart.js presentan degradación en el rendimiento al manipular series temporales densas, ECharts ofrece un manejo eficiente de memoria, capacidades analíticas nativas (zoom dimensional, cálculo de tendencias, tooltips interactivos) e interactividad fluida.
 \end{itemize}
 
 \subsection{Capa de Lógica de Negocio y Procesamiento Asíncrono (Backend)}
 
 La capa de servicios y cómputo estadístico fue construida sobre el ecosistema de \textbf{Python 3.12} y el framework \textbf{FastAPI}:
 \begin{itemize}
-    \item \textbf{Python 3.12 frente a versiones anteriores (3.9/3.10) y lenguajes alternativos (Node.js, PHP):} Python es el estándar en analítica de datos y cálculo científico. La versión 3.12 implementa el intérprete adaptativo especializado (\textit{Specializing Adaptive Interpreter}) y un recolector de basura optimizado, incrementando la velocidad de ejecución y reduciendo el consumo de memoria en operaciones matriciales y tabulares intensivas.
-    \item \textbf{FastAPI frente a Django y Flask:} A diferencia de Django (arquitectura síncrona tradicional orientada a plantillas) o Flask (micro-framework que requiere configuración manual de extensiones), FastAPI opera de forma nativa sobre el estándar ASGI (\textit{Asynchronous Server Gateway Interface}) mediante \textit{Starlette}. Permite una alta tasa de peticiones concurrentes por segundo con latencia mínima, valida los esquemas de entrada y salida mediante \textit{Pydantic} y genera automáticamente la especificación y documentación interactiva bajo el estándar OpenAPI.
-    \item \textbf{Pandas y Celery frente a procesamiento síncrono:} La manipulación, saneamiento y agregación de los archivos tabulares históricos (CSV y Excel) se delega a \textit{Pandas} mediante estructuras de datos vectorizadas (\textit{DataFrames}). Para evitar el bloqueo del servidor web durante la ingestión de datasets masivos, se integró \textbf{Celery} con \textbf{Redis 7} como broker de mensajería, permitiendo desacoplar la validación y transformación de datos en procesos de trabajo en segundo plano (\textit{background workers}) de manera asíncrona y distribuida.
+    \item \textbf{Python 3.12 frente a versiones anteriores (3.9/3.10) y lenguajes alternativos (Node.js, PHP):} Python es el estándar en analítica de datos y cálculo científico \cite{python2024}. La versión 3.12 implementa el intérprete adaptativo especializado (\textit{Specializing Adaptive Interpreter}) y un recolector de basura optimizado, incrementando la velocidad de ejecución y reduciendo el consumo de memoria en operaciones matriciales y tabulares intensivas.
+    \item \textbf{FastAPI frente a Django y Flask:} A diferencia de Django (arquitectura síncrona tradicional orientada a plantillas) o Flask (micro-framework que requiere configuración manual de extensiones), FastAPI \cite{ramirez2024} opera de forma nativa sobre el estándar ASGI (\textit{Asynchronous Server Gateway Interface}) mediante \textit{Starlette}. Permite una alta tasa de peticiones concurrentes por segundo con latencia mínima, valida los esquemas de entrada y salida mediante \textit{Pydantic} y genera automáticamente la especificación y documentación interactiva bajo el estándar OpenAPI.
+    \item \textbf{Pandas y Celery frente a procesamiento síncrono:} La manipulación, saneamiento y agregación de los archivos tabulares históricos (CSV y Excel) se delega a \textit{Pandas} \cite{mckinney2010, mckinney2022} mediante estructuras de datos vectorizadas (\textit{DataFrames}). Para evitar el bloqueo del servidor web durante el ingreso de datasets masivos, se integró \textbf{Celery} \cite{solem2024} con \textbf{Redis 7} \cite{carlson2013} como broker de mensajería, permitiendo desacoplar la validación y transformación de datos en procesos de trabajo en segundo plano (\textit{background workers}) de manera asíncrona y distribuida.
 \end{itemize}
 
 \subsection{Capa de Persistencia, Seguridad e Infraestructura}
 
 \begin{itemize}
-    \item \textbf{PostgreSQL 16 frente a MySQL y bases de datos NoSQL (MongoDB):} El análisis estadístico institucional exige integridad referencial estricta, consistencia transaccional (cumplimiento riguroso de propiedades ACID) y soporte para consultas relacionales complejas. PostgreSQL 16 sobresale frente a soluciones NoSQL al garantizar la consistencia en el cruce de datos históricos (matrícula, titulación, becas) y supera a MySQL en el rendimiento de consultas analíticas avanzadas, optimización de escaneos paralelos y soporte nativo para operaciones atómicas de actualización e inserción combinada (\textit{upsert} mediante \texttt{ON CONFLICT}).
-    \item \textbf{SQLAlchemy 2.0 con driver asíncrono (\texttt{asyncpg}):} La versión 2.0 unifica la sintaxis declarativa del ORM y habilita la comunicación no bloqueante con la base de datos, garantizando que las consultas intensivas no detengan el bucle de eventos (\textit{event loop}) de FastAPI.
-    \item \textbf{Mecanismos de Seguridad (Argon2 y JWT):} El almacenamiento de credenciales se protege con el algoritmo de derivación de claves \textbf{Argon2} (ganador de la \textit{Password Hashing Competition} y estándar RFC 9106), el cual ofrece resistencia superior contra ataques de fuerza bruta basados en hardware (GPU/ASIC) gracias a su consumo intensivo de memoria. La sesión se gestiona mediante tokens \textbf{JWT} sin estado con ciclo de vida diferenciado (\textit{Access Token} de 15 minutos y \textit{Refresh Token} de 7 días).
-    \item \textbf{Docker y Nginx:} La infraestructura se virtualiza mediante contenedores \textbf{Docker} orquestados con \textbf{Docker Compose}, lo que elimina problemas de incompatibilidad de entornos y garantiza el despliegue idéntico en desarrollo y producción. En la capa perimetral, \textbf{Nginx} funge como proxy inverso de alto rendimiento, gestionando la terminación segura TLS/HTTPS y sirviendo los archivos estáticos de la aplicación con baja latencia.
+    \item \textbf{PostgreSQL 16 frente a MySQL y bases de datos NoSQL (MongoDB):} El análisis estadístico institucional exige integridad referencial estricta, consistencia transaccional (cumplimiento riguroso de propiedades ACID) y soporte para consultas relacionales complejas \cite{kleppmann2017}. PostgreSQL 16 \cite{postgresql2024} sobresale frente a soluciones NoSQL al garantizar la consistencia en el cruce de datos históricos (matrícula, titulación, becas) y supera a MySQL en el rendimiento de consultas analíticas avanzadas, optimización de escaneos paralelos y soporte nativo para operaciones atómicas de actualización e inserción combinada (\textit{upsert} mediante \texttt{ON CONFLICT}).
+    \item \textbf{SQLAlchemy 2.0 con driver asíncrono (\texttt{asyncpg}):} La versión 2.0 de SQLAlchemy \cite{bayer2024} unifica la sintaxis declarativa del ORM y habilita la comunicación no bloqueante con la base de datos, garantizando que las consultas intensivas no detengan el bucle de eventos (\textit{event loop}) de FastAPI.
+    \item \textbf{Mecanismos de Seguridad (Argon2 y JWT):} El almacenamiento de credenciales se protege con el algoritmo de derivación de claves \textbf{Argon2} (ganador de la \textit{Password Hashing Competition} y estándar RFC 9106 \cite{rfc9106}), el cual ofrece resistencia superior contra ataques de fuerza bruta basados en hardware (GPU/ASIC) gracias a su consumo intensivo de memoria. La sesión se gestiona mediante tokens \textbf{JWT} sin estado (estándar RFC 7519 \cite{rfc7519}) con ciclo de vida diferenciado (\textit{Access Token} de 15 minutos y \textit{Refresh Token} de 7 días).
+    \item \textbf{Docker y Nginx:} La infraestructura se virtualiza mediante contenedores \textbf{Docker} \cite{merkel2014} orquestados con \textbf{Docker Compose}, lo que elimina problemas de incompatibilidad de entornos y garantiza el despliegue idéntico en desarrollo y producción. En la capa perimetral, \textbf{Nginx} \cite{reese2008} funge como proxy inverso de alto rendimiento, gestionando la terminación segura TLS/HTTPS y sirviendo los archivos estáticos de la aplicación con baja latencia.
 \end{itemize}
-
-A continuación, la Tabla \ref{tab:justificacion_tecnologica} resume la comparativa y justificación técnica de las decisiones arquitectónicas implementadas.
-
-\begin{table}[H]
-\centering
-\small
-\begin{tabular}{|p{3cm}|p{3.2cm}|p{3.2cm}|p{4.8cm}|}
-\hline
-\textbf{Componente / Capa} & \textbf{Tecnología Elegida} & \textbf{Alternativas Evaluadas} & \textbf{Justificación Técnica Principal} \\
-\hline
-Interfaz de Usuario & React 18 + TypeScript & Angular, Vue.js, jQuery & Renderizado concurrente, tipado estático estricto y ecosistema reactivo modular. \\
-\hline
-Empaquetado Frontend & Vite & Webpack, Create React App & Compilación basada en ESM nativo y actualización instantánea en caliente (HMR). \\
-\hline
-Diseño y Estilos & Tailwind CSS & Bootstrap, Material UI & Clases de utilidad atómicas, purgado estricto de código en producción (JIT) y diseño adaptativo. \\
-\hline
-Visualización de Datos & Apache ECharts & Chart.js, D3.js & Renderizado acelerado por Canvas/SVG de alto rendimiento para series temporales densas. \\
-\hline
-Servicios y API REST & FastAPI + Python 3.12 & Django, Flask, Express.js & Asincronía nativa ASGI, validación de datos con Pydantic y documentación OpenAPI automática. \\
-\hline
-Procesamiento de Datos & Pandas + Celery + Redis 7 & Scripts síncronos, Cron jobs & Procesamiento vectorial en memoria y desacoplamiento de tareas pesadas en segundo plano. \\
-\hline
-Base de Datos & PostgreSQL 16 & MySQL, MariaDB, MongoDB & Conformidad ACID estricta, optimización de consultas analíticas y operaciones \textit{upsert}. \\
-\hline
-ORM y Acceso a Datos & SQLAlchemy 2.0 (\texttt{asyncpg}) & SQLAlchemy 1.4, Tortoise ORM & Soporte nativo asíncrono y prevención integrada contra inyección SQL. \\
-\hline
-Autenticación y Cifrado & JWT + Argon2 & Sesiones por cookies, SHA-256/Bcrypt & Autenticación sin estado (stateless) y algoritmo de hashing resistente a ataques por GPU/ASIC. \\
-\hline
-Infraestructura & Docker Compose + Nginx & Despliegue bare-metal, Apache HTTPD & Aislamiento de microservicios, reproducibilidad del entorno y proxy inverso con cifrado TLS. \\
-\hline
-\end{tabular}
-\caption{Cuadro comparativo y justificación técnica del stack tecnológico.}
-\label{tab:justificacion_tecnologica}
-\end{table}

@@ -1,10 +1,54 @@
 \chapter{Marco Teórico.}
 
-El desarrollo de sistemas de información modernos orientados al análisis estadístico institucional requiere la integración de múltiples tecnologías robustas, eficientes y escalables \cite{sommerville2016, pressman2020}. Este capítulo describe en detalle los fundamentos conceptuales y las herramientas de software empleadas para el diseño y construcción de la Plataforma de Análisis Estadístico Académico para la Universidad Politécnica de Texcoco. El marco de trabajo adoptado combina un backend de alto rendimiento asíncrono, una interfaz de usuario reactiva, procesamiento de datos en tiempo real mediante tareas en segundo plano y una infraestructura de contenedores para garantizar la portabilidad y la seguridad del sistema.
+
+% ============================================================
+\section{Metodología de Desarrollo: Kanban}
+\label{sec:metodologia-kanban}
+% ============================================================
+
+ \textbf{Kanban} como metodología ágil ligera, fundamentada en la gestión visual del flujo de trabajo \cite{anderson2010}. A diferencia de los marcos que estructuran el desarrollo en iteraciones fijas (\textit{sprints}) como Scrum \cite{scrumguide} o eXtreme Programming \cite{beck2004}, Kanban propone un \textbf{flujo continuo} donde las tareas avanzan de forma progresiva por un tablero visual dividido en columnas que representan los estados del proceso. El término proviene del japonés (\textit{señal visual} o \textit{tarjeta}) y fue concebido originalmente por Toyota en la manufactura para ser posteriormente adaptado a la ingeniería de software por David J. Anderson, quien formuló sus principios y prácticas esenciales \cite{anderson2010}.
+
+\subsection{Principios de Kanban en el Desarrollo de Software}
+
+Los cuatro principios fundamentales de Kanban que guían el desarrollo de software son:
+
+\begin{enumerate}
+    \item \textbf{Visualización del flujo de trabajo:} Todas las tareas de un proyecto se representan como tarjetas en un tablero, permitiendo al equipo identificar el estado de avance de cada componente en todo momento.
+
+    \item \textbf{Limitación del trabajo en progreso (WIP --- Work In Progress):} En cada etapa del tablero se limita el número de tareas activas simultáneamente. Esto evita la sobrecarga del equipo y asegura que cada módulo sea completado y validado antes de iniciar el siguiente.
+
+    \item \textbf{Gestión del flujo continuo:} En lugar de planificar iteraciones de duración fija, las tarjetas de trabajo fluyen de manera continua desde su concepción hasta su despliegue, priorizando aquellas funcionalidades con mayor impacto o valor para los usuarios.
+
+    \item \textbf{Mejora continua (Kaizen):} Durante el ciclo de vida del software se realizan revisiones periódicas en las que se analizan cuellos de botella, se corrigen decisiones de diseño y se refinan los procesos de trabajo.
+\end{enumerate}
+
+\subsection{Estructura de un Tablero Kanban}
+
+Un tablero Kanban típico se organiza en columnas principales que representan los estados del flujo de trabajo, por ejemplo:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|p{9cm}|}
+\hline
+\textbf{Columna} & \textbf{Descripción} \\
+\hline
+\textbf{Backlog} & Lista priorizada de todas las funcionalidades identificadas en el documento de requerimientos. \\
+\hline
+\textbf{Análisis} & Tareas en estudio de factibilidad técnica, definición del modelo de datos o diseño de la interfaz. \\
+\hline
+\textbf{En Desarrollo} & Tarjeta activamente codificada. Límite WIP: 2 tarjetas simultáneas. \\
+\hline
+\textbf{En Pruebas} & Funcionalidad implementada bajo verificación con pruebas automatizadas (\texttt{pytest}) y revisión manual. \\
+\hline
+\textbf{Desplegado} & Funcionalidad integrada a la rama principal y disponible en el entorno de producción mediante CI/CD. \\
+\hline
+\end{tabular}
+\caption{Columnas del tablero Kanban.}
+\end{table}
 
 \section{Arquitectura y Conceptos Web Modernos}
 
-Los sistemas empresariales de ingestión y visualización de datos requieren arquitecturas que separen claramente la lógica de presentación de la lógica de procesamiento \cite{fowler2002}. A continuación, se describen los enfoques teóricos que fundamentan la arquitectura implementada.
+Los sistemas de software modernos requieren arquitecturas que separen claramente la lógica de presentación de la lógica de procesamiento \cite{fowler2002}. 
 
 \subsection{Aplicaciones de una Sola Página (Single Page Application - SPA)}
 Una SPA es una aplicación web que interactúa con el usuario cargando dinámicamente el contenido del navegador en lugar de recargar páginas completas desde el servidor. Este enfoque mejora drásticamente la fluidez de la experiencia del usuario y disminuye el ancho de banda consumido, debido a que toda la estructura de la interfaz (HTML, CSS y JavaScript) se transfiere al inicio del ciclo de navegación. A partir de ese momento, las interacciones posteriores solicitan exclusivamente datos crudos (normalmente en formato JSON) al backend a través de llamadas asíncronas \cite{sommerville2016}.
@@ -22,10 +66,10 @@ El Mapeo Objeto-Relacional es un patrón de diseño y técnica de programación 
 
 \section{Tecnologías del Backend}
 
-El backend actúa como la capa de procesamiento y lógica de negocios del sistema. Ha sido estructurado bajo un ecosistema de Python de alto rendimiento y ejecución asíncrona.
+El backend actúa como la capa de procesamiento y lógica de negocios en una arquitectura web. Dentro del ecosistema de Python, existen diversas herramientas para lograr un alto rendimiento y una ejecución asíncrona robusta \cite{python2024, ramirez2024}.
 
 \subsection{Python 3.12}
-Python es un lenguaje de programación de alto nivel, interpretado y multiparadigma, ampliamente utilizado en el ámbito del análisis de datos y la ingeniería de software debido a su sintaxis legible y a su extenso ecosistema de bibliotecas científicas \cite{python2024}. La versión 3.12 introduce mejoras significativas en el recolector de basura, optimización de velocidad de ejecución en el intérprete CPython y soporte mejorado para tipos genéricos y tipado estático opcional (Type Hints), permitiendo escribir código más legible, seguro y con menor consumo de memoria en tareas que demandan un alto procesamiento numérico.
+Python es un lenguaje de programación de alto nivel, interpretado y multiparadigma, ampliamente utilizado en el ámbito del análisis de datos y la ingeniería de software debido a su sintaxis legible y a su extenso ecosistema de bibliotecas científicas. La versión 3.12 introduce mejoras significativas en el recolector de basura, optimización de velocidad de ejecución en el intérprete CPython y soporte mejorado para tipos genéricos y tipado estático opcional (Type Hints), permitiendo escribir código más legible, seguro y con menor consumo de memoria en tareas que demandan un alto procesamiento numérico \cite{python2024}.
 
 \subsection{FastAPI}
 FastAPI es un framework moderno de alto rendimiento diseñado para construir APIs con Python utilizando el tipado estándar del lenguaje \cite{ramirez2024}. Su excelente rendimiento es atribuible al uso de Starlette para las capacidades web y Pydantic para la serialización y validación de datos. FastAPI proporciona soporte nativo para programación asíncrona mediante las sentencias \texttt{async} y \texttt{await}, permitiendo al servidor manejar miles de peticiones simultáneas con baja latencia. Adicionalmente, genera de manera automática la documentación interactiva de la API bajo el estándar OpenAPI.
@@ -37,16 +81,16 @@ SQLAlchemy es un toolkit de SQL y un ORM para Python que proporciona potencia y 
 Alembic es la herramienta oficial de migraciones de bases de datos para SQLAlchemy \cite{alembic2024}. Permite gestionar la evolución del esquema de la base de datos a lo largo del tiempo, registrando cronológicamente cada modificación estructural (creación de tablas, nuevas columnas o índices) mediante archivos de migración escritos en Python. Esto garantiza la sincronización del modelo de datos de la aplicación con la base de datos física en los entornos de desarrollo, pruebas y producción de forma automática y reproducible.
 
 \subsection{Pandas}
-Pandas es la biblioteca estándar en la industria para el análisis y manipulación de datos en Python \cite{mckinney2010, mckinney2022}. Mediante el uso de estructuras de datos optimizadas en memoria llamadas DataFrames, Pandas permite leer, indexar, agrupar, filtrar y limpiar grandes volúmenes de datos provenientes de archivos tabulares como CSV y hojas de cálculo de Excel de manera extremadamente rápida. En este proyecto, Pandas se utiliza como el motor principal para procesar los datos de matrícula, rendimiento y egreso antes de ser cargados a la base de datos relacional.
+Pandas es la biblioteca estándar en la industria para el análisis y manipulación de datos en Python \cite{mckinney2010, mckinney2022}. Mediante el uso de estructuras de datos optimizadas en memoria llamadas DataFrames, Pandas permite leer, indexar, agrupar, filtrar y limpiar grandes volúmenes de datos provenientes de archivos tabulares como CSV y hojas de cálculo de Excel de manera extremadamente rápida. En el desarrollo de software orientado a datos, Pandas suele utilizarse como el motor principal para procesar, limpiar y transformar la información antes de ser cargada a una base de datos relacional.
 
 \subsection{Celery}
-Celery es una biblioteca para Python que implementa una cola de tareas asíncronas basada en el paso de mensajes distribuidos \cite{solem2024}. Se enfoca en operaciones en tiempo real, soportando también la programación de tareas periódicas. Celery permite desacoplar los procesos pesados de ingestión de CSV del flujo de ejecución de la API de FastAPI. Cuando un usuario sube un archivo, FastAPI registra el trabajo en Celery y le responde de inmediato al cliente, mientras que un proceso worker independiente ejecuta el análisis y validación del archivo en segundo plano sin interrumpir la disponibilidad de la plataforma.
+Celery es una biblioteca para Python que implementa una cola de tareas asíncronas basada en el paso de mensajes distribuidos \cite{solem2024}. Se enfoca en operaciones en tiempo real, soportando también la programación de tareas periódicas. Celery permite desacoplar los procesos computacionalmente costosos del flujo principal de ejecución web. Cuando se recibe una solicitud pesada, el servidor web registra el trabajo en Celery y responde de inmediato al cliente, mientras que un proceso worker independiente ejecuta la tarea compleja en segundo plano sin interrumpir la disponibilidad del sistema general.
 
 
 
 \section{Tecnologías del Frontend}
 
-El frontend es responsable de interactuar con el usuario final, presentar de manera visual y organizada los indicadores oficiales y permitir la carga y validación dinámica de archivos de datos.
+El frontend es la capa responsable de interactuar con el usuario final, presentar de manera visual la información estructurada y capturar los datos de entrada a través de interfaces dinámicas y accesibles \cite{sommerville2016, react2024}.
 
 \subsection{React 18}
 React es una biblioteca de JavaScript orientada a la creación de interfaces de usuario interactivas basadas en componentes reutilizables \cite{react2024}. React 18 introduce características clave como la renderización concurrente, que permite al navegador pausar y reanudar la actualización de los elementos visuales para mantener la fluidez en pantallas con alta carga computacional (como las gráficas estadísticas). Utiliza un modelo de representación en memoria llamado Virtual DOM para minimizar las operaciones de manipulación directa sobre el navegador, mejorando la velocidad de respuesta del frontend.
@@ -61,19 +105,19 @@ Vite es una herramienta moderna de construcción y empaquetamiento de aplicacion
 Tailwind CSS es un framework de hojas de estilo (CSS) basado en clases de utilidad de bajo nivel \cite{wathan2024}. En lugar de proporcionar componentes visuales preestablecidos y difíciles de personalizar, Tailwind ofrece clases atómicas que controlan de manera directa el margen, espaciado, colores, tipografía y diseño adaptivo (responsive) directamente en el código de marcado de React. Esto evita la escritura de archivos CSS adicionales y reduce drásticamente el peso final de los archivos estáticos compilados para producción.
 
 \subsection{Apache ECharts}
-Apache ECharts es una biblioteca de visualización de datos potente, interactiva y de código abierto escrita en JavaScript \cite{echarts2018}. Está optimizada para renderizar millones de puntos de datos de forma fluida mediante el uso de elementos vectoriales (SVG) o mapas de bits dinámicos (Canvas). En la plataforma escolar, ECharts se implementa para renderizar los gráficos de barras, líneas temporales y diagramas de dispersión necesarios para ilustrar de forma interactiva y dinámica los indicadores académicos de cada subsistema.
+Apache ECharts es una biblioteca de visualización de datos potente, interactiva y de código abierto escrita en JavaScript \cite{echarts2018}. Está optimizada para renderizar millones de puntos de datos de forma fluida mediante el uso de elementos vectoriales (SVG) o mapas de bits dinámicos (Canvas). Esta herramienta se implementa habitualmente para renderizar gráficos de barras, líneas temporales y diagramas de dispersión necesarios para ilustrar de forma interactiva información analítica o estadística compleja.
 
 \subsection{TanStack Query (React Query)}
-TanStack Query es una biblioteca declarativa de gestión de estado para aplicaciones React que simplifica el proceso de obtención, almacenamiento en caché, sincronización y actualización de datos asíncronos provenientes del backend \cite{linsley2024}. Elimina la necesidad de escribir estados locales redundantes para manejar el estado de carga (loading), error o éxito de las peticiones HTTP, y actualiza de forma transparente los tableros del frontend mediante estrategias inteligentes de invalidación de caché.
+TanStack Query es una biblioteca declarativa de gestión de estado para aplicaciones React que simplifica el proceso de obtención, almacenamiento en caché, sincronización y actualización de datos asíncronos provenientes del backend \cite{linsley2024}. Elimina la necesidad de escribir estados locales redundantes para manejar el estado de carga (loading), error o éxito de las peticiones HTTP, y actualiza de forma transparente los componentes visuales mediante estrategias inteligentes de invalidación de caché.
 
 \subsection{Zustand}
-Zustand es una biblioteca ligera de gestión de estado global para React basada en hooks \cite{kato2024}. Se caracteriza por su simplicidad sintáctica y por no requerir de arquitecturas complejas de proveedores de contexto (Context Providers). En este proyecto, Zustand se utiliza para sincronizar de manera eficiente las selecciones del panel de filtros globales (como el subsistema educativo, cuatrimestre y carrera) entre todos los componentes independientes que conforman los dashboards interactivos de la aplicación.
+Zustand es una biblioteca ligera de gestión de estado global para React basada en hooks \cite{kato2024}. Se caracteriza por su simplicidad sintáctica y por no requerir de arquitecturas complejas de proveedores de contexto (Context Providers). Zustand se utiliza frecuentemente para sincronizar de manera eficiente estados globales (como paneles de filtros o preferencias de usuario) entre diversos componentes independientes dentro de aplicaciones interactivas.
 
 
 
-\section{Base de Datos, Gestión de Tareas e Infraestructura}
+\section{Base de datos, gestión de tareas e infraestructura}
 
-La capa inferior del sistema provee el almacenamiento persistente de los datos académicos y escolares, la mediación de mensajes asíncronos y el entorno controlado de virtualización.
+La capa de infraestructura y persistencia provee el almacenamiento robusto de los datos, la mediación de mensajes asíncronos y el entorno controlado de virtualización necesario para la ejecución del software.
 
 \subsection{PostgreSQL 16}
 PostgreSQL es un sistema de gestión de bases de datos relacionales objeto-relacional altamente estable y de código abierto \cite{postgresql2024}. Destaca por su estricto cumplimiento de los estándares SQL, consistencia de datos y soporte integral para las propiedades ACID (Atomicidad, Consistencia, Aislamiento y Durabilidad) en entornos de alta concurrencia. La versión 16 incluye mejoras en el rendimiento de consultas lógicas paralelas, soporte avanzado de replicación y compresión de índices, garantizando la persistencia e integridad de las series históricas de los indicadores académicos.
@@ -85,20 +129,20 @@ Redis es un almacén de estructura de datos en memoria de código abierto utiliz
 Docker es una plataforma de software que permite automatizar el despliegue de aplicaciones dentro de contenedores de software ligeros y autónomos \cite{merkel2014}. Los contenedores aíslan la aplicación y sus dependencias (como la versión específica de Python, Node.js y librerías del sistema operativo) para garantizar que el software funcione de manera idéntica en cualquier entorno de hardware. Docker Compose es una herramienta para definir y arrancar aplicaciones multi-contenedor; mediante un archivo YAML simplifica la inicialización simultánea del frontend, backend, workers de Celery, base de datos PostgreSQL y caché Redis bajo una misma red virtual aislada y segura.
 
 \subsection{Nginx}
-Nginx es un servidor web y un proxy inverso de alto rendimiento diseñado para manejar de forma concurrente cientos de miles de peticiones HTTP con un bajo consumo de recursos de CPU y memoria \cite{reese2008}. En la infraestructura de producción, Nginx actúa como la puerta de acceso principal del sistema: se encarga de recibir todas las conexiones en el puerto de red público, servir directamente y con baja latencia los archivos estáticos generados por el compilador de React (HTML, JS, CSS) y redirigir dinámicamente las solicitudes destinadas a la API REST hacia el servidor de aplicaciones de FastAPI de forma segura.
+Nginx es un servidor web y un proxy inverso de alto rendimiento diseñado para manejar de forma concurrente cientos de miles de peticiones HTTP con un bajo consumo de recursos de CPU y memoria \cite{reese2008}. En una infraestructura de producción moderna, Nginx actúa habitualmente como la puerta de acceso principal: se encarga de recibir las conexiones de red, servir directamente y con baja latencia los archivos estáticos generados por herramientas del frontend y redirigir dinámicamente las solicitudes de API hacia el servidor de aplicaciones subyacente de forma segura.
 
 
 
 \section{Seguridad y Autenticación}
 
-El control de acceso y la integridad del sistema académico se fundamentan en esquemas de encriptación y autenticación sin estado de estándar industrial.
+El control de acceso y la integridad de los sistemas web modernos se fundamentan en esquemas de cifrado y autenticación sin estado basados en estándares de la industria.
 
 \subsection{JSON Web Token (JWT)}
-JWT es un estándar abierto (RFC 7519) que define una forma compacta y autónoma de transmitir información estructurada de manera segura entre las partes como un objeto JSON \cite{rfc7519}. La información está firmada digitalmente con una clave criptográfica secreta en el backend, lo que evita que el contenido sea manipulado por terceros. La plataforma implementa un esquema de autenticación sin estado compuesto por:
+JWT es un estándar abierto (RFC 7519) que define una forma compacta y autónoma de transmitir información estructurada de manera segura entre las partes como un objeto JSON \cite{rfc7519}. La información está firmada digitalmente con una clave criptográfica secreta en el backend, lo que evita que el contenido sea manipulado por terceros. Un esquema de autenticación sin estado común mediante JWT se compone típicamente de:
 \begin{itemize}
-    \item \textbf{Token de Acceso (Access Token):} Con una duración de 15 minutos, se incluye en las cabeceras HTTP de cada consulta para validar los permisos de usuario y el subsistema correspondiente.
-    \item \textbf{Token de Refresco (Refresh Token):} Con una duración de 7 días, se utiliza exclusivamente para solicitar un nuevo token de acceso válido sin forzar al usuario a ingresar sus credenciales nuevamente, reduciendo el riesgo de robo de identidad en la red.
+    \item \textbf{Token de Acceso (Access Token):} Un token de corta duración que se incluye en las cabeceras HTTP de cada consulta para validar los permisos e identidad del usuario.
+    \item \textbf{Token de Refresco (Refresh Token):} Un token de mayor duración que se utiliza exclusivamente para solicitar un nuevo token de acceso válido sin forzar al usuario a ingresar sus credenciales nuevamente, reduciendo la exposición a riesgos de robo de identidad.
 \end{itemize}
 
 \subsection{Argon2}
-Argon2 es una función moderna de hashing criptográfico para contraseñas, seleccionada como la ganadora de la Password Hashing Competition en 2015 y estandarizada bajo la RFC 9106 \cite{rfc9106}. A diferencia de los algoritmos de hashing tradicionales como MD5 o SHA-1, Argon2 está explícitamente diseñado para ser configurable y altamente resistente a ataques de fuerza bruta asistidos por hardware especializado (tarjetas gráficas GPUs o circuitos ASICs) mediante el control parametrizado del consumo de tiempo de CPU y, principalmente, el uso intensivo de bloques de memoria RAM (Memory-Hard Function). Esto garantiza que la información de acceso de los directores académicos se encuentre debidamente protegida ante cualquier intento de vulnerabilidad contundente.
+Argon2 es una función moderna de hashing criptográfico para contraseñas, seleccionada como la ganadora de la Password Hashing Competition en 2015 y estandarizada bajo la RFC 9106 \cite{rfc9106}. A diferencia de los algoritmos de hashing tradicionales como MD5 o SHA-1, Argon2 está explícitamente diseñado para ser configurable y altamente resistente a ataques de fuerza bruta asistidos por hardware especializado (tarjetas gráficas GPUs o circuitos ASICs) mediante el control parametrizado del consumo de tiempo de CPU y, principalmente, el uso intensivo de bloques de memoria RAM (Memory-Hard Function). Esto garantiza que la información de acceso de los usuarios se encuentre debidamente protegida frente a ataques avanzados orientados a la extracción de contraseñas.

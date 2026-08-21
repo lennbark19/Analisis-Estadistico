@@ -3,53 +3,10 @@
 En este capítulo se describe el proceso de diseño, construcción e implementación de la Plataforma de Análisis Estadístico Académico para la Universidad Politécnica de Texcoco, abarcando desde el marco metodológico adoptado hasta la especificación de requerimientos, la arquitectura técnica del sistema, el modelo de base de datos, el desarrollo del backend y frontend, el procesamiento analítico de información estadística y la infraestructura de despliegue continuo.
 
 % ============================================================
-\section{Metodología: Kanban}
-\label{sec:metodologia-kanban}
+\section{Metodología de Trabajo}
 % ============================================================
 
-Para el desarrollo de la plataforma se adoptó \textbf{Kanban} como metodología ágil ligera, fundamentada en la gestión visual del flujo de trabajo \cite{anderson2010}. A diferencia de los marcos que estructuran el desarrollo en iteraciones fijas (\textit{sprints}) como Scrum \cite{scrumguide} o eXtreme Programming \cite{beck2004}, Kanban propone un \textbf{flujo continuo} donde las tareas avanzan de forma progresiva por un tablero visual dividido en columnas que representan los estados del proceso. El término proviene del japonés (\textit{señal visual} o \textit{tarjeta}) y fue concebido originalmente por Toyota en la manufactura para ser posteriormente adaptado a la ingeniería de software por David J. Anderson, quien formuló sus principios y prácticas esenciales \cite{anderson2010}.
-
-\subsection{Principios de Kanban Aplicados al Proyecto}
-
-Los cuatro principios fundamentales de Kanban que guiaron el desarrollo de esta plataforma son:
-
-\begin{enumerate}
-    \item \textbf{Visualización del flujo de trabajo:} Todas las tareas del proyecto (funcionalidades, correcciones, optimización del esquema de base de datos) se representaron como tarjetas en un tablero, permitiendo al equipo identificar el estado de avance de cada componente en todo momento.
-
-    \item \textbf{Limitación del trabajo en progreso (WIP --- Work In Progress):} En cada etapa del tablero se limitó el número de tareas activas simultáneamente. Esto evitó la sobrecarga del equipo y aseguró que cada módulo fuera completado y validado antes de iniciar el siguiente.
-
-    \item \textbf{Gestión del flujo continuo:} En lugar de planificar iteraciones de duración fija, las tarjetas de trabajo fluyeron de manera continua desde el estado \textit{Pendiente} hasta \textit{Desplegado}, priorizando aquellas funcionalidades con mayor impacto en los usuarios de la Dirección Académica.
-
-    \item \textbf{Mejora continua (Kaizen):} Durante el desarrollo se realizaron reuniones periódicas de revisión en las que se analizaron cuellos de botella, se corrigieron decisiones de diseño previas y se refinaron tanto el esquema de datos como las interfaces de usuario.
-\end{enumerate}
-
-\subsection{Tablero Kanban del Proyecto}
-
-El tablero Kanban utilizado durante el desarrollo se organizó en cinco columnas principales:
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|p{9cm}|}
-\hline
-\textbf{Columna} & \textbf{Descripción} \\
-\hline
-\textbf{Backlog} & Lista priorizada de todas las funcionalidades identificadas en el documento de requerimientos. \\
-\hline
-\textbf{Análisis} & Tareas en estudio de factibilidad técnica, definición del modelo de datos o diseño de la interfaz. \\
-\hline
-\textbf{En Desarrollo} & Tarjeta activamente codificada. Límite WIP: 2 tarjetas simultáneas. \\
-\hline
-\textbf{En Pruebas} & Funcionalidad implementada bajo verificación con pruebas automatizadas (\texttt{pytest}) y revisión manual. \\
-\hline
-\textbf{Desplegado} & Funcionalidad integrada a la rama principal y disponible en el entorno de producción mediante CI/CD. \\
-\hline
-\end{tabular}
-\caption{Columnas del tablero Kanban.}
-\end{table}
-
-\subsection{Tarjetas Kanban Principales del Proyecto}
-
-En el Anexo \ref{anexo:kanban-migraciones} se resumen las tarjetas de trabajo más significativas que transitaron por el tablero Kanban a lo largo del desarrollo, asociadas a su correspondiente migración de base de datos. La progresión de estas tarjetas evidencia un desarrollo guiado por la retroalimentación continua de los usuarios de la Dirección Académica: cada reunión de revisión generó nuevas tarjetas o modificó las existentes, reflejando el principio ágil de \textit{responder al cambio sobre seguir un plan}.
+Para la organización y ejecución de todas las fases de construcción descritas en este capítulo, se aplicó la metodología ágil \textbf{Kanban} (cuyos fundamentos teóricos se detallaron previamente en la Sección \ref{sec:metodologia-kanban} del Capítulo 2). El uso de tableros visuales y la limitación del trabajo en progreso permitieron gestionar el flujo de desarrollo de manera eficiente, priorizando los requerimientos críticos de la Dirección Académica desde el análisis inicial hasta el despliegue final del sistema.
 
 % ============================================================
 \section{Requerimientos del Sistema}
@@ -354,14 +311,14 @@ Este módulo consolida la información socioeconómica y de inclusión de la com
     \label{fig:pantalla_caracterizacion}
 \end{figure}
 
-\subsection{Módulo de Ingestión y Validación de Archivos (Cargas Masivas)}
+\subsection{Módulo de Ingreso y Validación de Archivos (Cargas Masivas)}
 
 El módulo de cargas permite a los administradores escolares subir archivos en formato CSV o libros de Microsoft Excel con historiales de información. Al momento de la subida, la interfaz muestra el estado del procesamiento en tiempo real mediante sondeo asíncrono con Celery, indicando el número de filas totales, registros insertados exitosamente, registros actualizados mediante \textit{upsert} y una bitácora pormenorizada de filas rechazadas con indicación de la columna y tipo de error detectado.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.85\linewidth]{imagenes/pantalla_cargas.png}
-    \caption{Módulo de ingestión asíncrona de archivos y reporte de validación.}
+    \caption{Módulo de ingreso asíncrono de archivos y reporte de validación.}
     \label{fig:pantalla_cargas}
 \end{figure}
 
